@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://pacienteEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.clinic.web.screens.paciente">
+    <data>
+        <instance id="pacienteDc"
+                  class="com.company.clinic.entity.Paciente">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="pacienteDc">
+            <column width="350px">
+                <textField id="nombreField" property="nombre"/>
+                <textField id="apellidosField" property="apellidos"/>
+                <textField id="emailField" property="email"/>
+                <textField id="edadField" property="edad"/>
+                <textField id="dniField" property="dni"/>
+                <dateField id="fechaNacimientoField" property="fechaNacimiento"/>
+                <textArea id="descripcionField" property="descripcion" rows="5"/>
+                <lookupField id="generoField" property="genero"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

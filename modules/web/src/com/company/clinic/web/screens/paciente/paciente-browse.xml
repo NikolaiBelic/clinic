@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://pacienteBrowse.caption"
+        focusComponent="pacientesTable"
+        messagesPack="com.company.clinic.web.screens.paciente">
+    <data readOnly="true">
+        <collection id="pacientesDc"
+                    class="com.company.clinic.entity.Paciente">
+            <view extends="_minimal">
+                <property name="nombre"/>
+                <property name="apellidos"/>
+                <property name="email"/>
+                <property name="dni"/>
+            </view>
+            <loader id="pacientesDl">
+                <query>
+                    <![CDATA[select e from clinic_Paciente e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="pacientesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="pacientesTable"
+                dataLoader="pacientesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="pacientesTable"
+                    width="100%"
+                    dataContainer="pacientesDc">
+            <actions>
+                <action id="view" type="view"/>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="nombre"/>
+                <column id="apellidos"/>
+                <column id="email"/>
+                <column id="dni"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="viewBtn" action="pacientesTable.view"/>
+                <button id="createBtn" action="pacientesTable.create"/>
+                <button id="editBtn" action="pacientesTable.edit"/>
+                <button id="removeBtn" action="pacientesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

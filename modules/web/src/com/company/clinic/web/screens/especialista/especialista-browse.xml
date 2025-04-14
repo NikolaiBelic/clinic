@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://especialistaBrowse.caption"
+        focusComponent="especialistasTable"
+        messagesPack="com.company.clinic.web.screens.especialista">
+    <data readOnly="true">
+        <collection id="especialistasDc"
+                    class="com.company.clinic.entity.Especialista">
+            <view extends="_local"/>
+            <loader id="especialistasDl">
+                <query>
+                    <![CDATA[select e from clinic_Especialista e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="especialistasTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="especialistasTable"
+                dataLoader="especialistasDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="especialistasTable"
+                    width="100%"
+                    dataContainer="especialistasDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="nombre"/>
+                <column id="apellidos"/>
+                <column id="dni"/>
+                <column id="especialidad"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="especialistasTable.create"/>
+                <button id="editBtn" action="especialistasTable.edit"/>
+                <button id="removeBtn" action="especialistasTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

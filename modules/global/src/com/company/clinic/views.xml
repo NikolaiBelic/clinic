@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+
+    <view entity="clinic_Cita" name="cita-view">
+<!--        <property name="paciente" view="_minimal"/>-->
+<!--        <property name="especialista" view="_minimal"/>-->
+<!--        <property name="servicio" view="_minimal"/>-->
+        <property name="dia"/>
+        <property name="horaInicio"/>
+        <property name="horaFinal"/>
+        <property name="paciente" view="_local">
+            <property name="nombre"/>
+            <property name="apellidos"/>
+        </property>
+        <property name="especialista" view="especialista-view">
+<!--            <property name="nombre"/>-->
+<!--            <property name="apellidos"/>-->
+        </property>
+        <property name="servicio" view="_local">
+            <property name="descripcion"/>
+        </property>
+        <property name="pagado"/>
+
+    </view>
+    <view entity="clinic_Especialista" name="especialista-view">
+        <property name="nombre"/>
+        <property name="apellidos"/>
+        <property name="dni"/>
+        <property name="especialidad"/>
+    </view>
+</views>

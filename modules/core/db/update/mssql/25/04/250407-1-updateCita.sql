@@ -1,0 +1,1 @@
+drop index IDX_CLINIC_CITA_UNIQ_HORA on CLINIC_CITA ;
