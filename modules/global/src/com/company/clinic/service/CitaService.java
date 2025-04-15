@@ -12,4 +12,6 @@ public interface CitaService {
     List<Cita> getCitasPorEspecialista(UUID id);
 
     Cita getCita(UUID id);
+
+    public List<Cita> getAllCitasMS ();
 }

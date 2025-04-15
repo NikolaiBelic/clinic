@@ -7,4 +7,6 @@
         <item screen="clinic_Calendariomain" caption="mainMsg://menu_config.clinic_Calendariomain"/>
         <item screen="clinic_Cita.browse" caption="mainMsg://menu_config.clinic_Cita.browse"/>
     </menu>
+    <item screen="sys$Config.browse" caption="mainMsg://menu_config.sys$Config.browse"
+          insertAfter="performanceStatistics"/>
 </menu-config>
