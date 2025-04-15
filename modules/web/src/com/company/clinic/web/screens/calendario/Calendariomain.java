@@ -66,7 +66,7 @@ public class Calendariomain extends Screen {
 
                 updateCalendar(citas, calendario);
             } else {
-                List<Cita> citas = citaService.getAllCitas();
+                List<Cita> citas = citaService.getAllCitasMS();
 
                 updateCalendar(citas, calendario);
             }
@@ -108,13 +108,12 @@ public class Calendariomain extends Screen {
         getWindow().expand(vBox);
 
 
-        List<Cita> citas = citaService.getAllCitas();
+        List<Cita> citas = citaService.getAllCitasMS();
         for (Cita cita : citas) {
             generateEvents(cita, calendario);
         }
 
         calendario.addEventClickListener(e -> {
-            System.out.println(e.getCalendarEvent().getCaption());
             Cita cita = citaService.getCita(UUID.fromString(e.getCalendarEvent().getDescription()));
             Screen citaEditScreen = screenBuilders.editor(Cita.class, this)
                     .editEntity(cita)
@@ -130,7 +129,7 @@ public class Calendariomain extends Screen {
                            .withType(Notifications.NotificationType.TRAY)
                            .show();
 
-                   List<Cita> citasUpdated = citaService.getAllCitas();
+                   List<Cita> citasUpdated = citaService.getAllCitasMS();
                    updateCalendar(citasUpdated, calendario);
 
                } else {
@@ -181,19 +180,9 @@ public class Calendariomain extends Screen {
                 + cita.getEspecialista().getApellidos());*/
 
         String idEspecialista = cita.getEspecialista().getId().toString();
-        System.out.println(idEspecialista);
 
         calendarEvent.setStyleName(idEspecialista.toUpperCase());
 
         calendario.getEventProvider().addEvent(calendarEvent);
     }
-
-
-
-//    public List<Cita> getAllCitas() {
-//        LoadContext<Cita> loadContext = LoadContext.create(Cita.class)
-//                .setQuery(LoadContext.createQuery("select e from clinic_Cita e"))
-//                .setView("cita-view");
-//        return dataManager.loadList(loadContext);
-//    }
 }

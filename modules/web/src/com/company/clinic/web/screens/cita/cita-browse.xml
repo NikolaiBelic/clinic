@@ -4,7 +4,7 @@
         caption="msg://citaBrowse.caption"
         focusComponent="citasTable"
         messagesPack="com.company.clinic.web.screens.cita">
-    <data readOnly="true">
+    <!--<data readOnly="true">
         <collection id="citasDc"
                     class="com.company.clinic.entity.Cita">
             <view extends="_local">
@@ -18,16 +18,37 @@
                 </query>
             </loader>
         </collection>
+    </data>-->
+    <data>
+        <collection id="citasDc" class="com.company.clinic.entity.Cita"/>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="citasTable"
             spacing="true">
-        <filter id="filter"
+        <!--<filter id="filter"
                 applyTo="citasTable"
                 dataLoader="citasDl">
             <properties include=".*"/>
-        </filter>
+        </filter>-->
+        <groupBox spacing="true">
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <dateField id="filterDia" caption="Día" resolution="DAY" datatype="date"/>
+                    <timeField id="filterHoraInicio" caption="Hora Inicio" datatype="time"/>
+                    <timeField id="filterHoraFinal" caption="Hora Final" datatype="time"/>
+                    <textField id="filterPaciente" caption="Paciente"/>
+                    <textField id="filterEspecialista" caption="Especialista"/>
+                    <textField id="filterServicio" caption="Servicio"/>
+                </hbox>
+            </vbox>
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <checkBox id="filterPagado" caption="Pagado" align="MIDDLE_CENTER"/>
+                    <button id="filterBtn" caption="Filtrar"/>
+                </hbox>
+            </vbox>
+        </groupBox>
         <groupTable id="citasTable"
                     width="100%"
                     dataContainer="citasDc">

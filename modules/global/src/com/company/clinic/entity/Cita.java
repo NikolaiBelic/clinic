@@ -94,6 +94,7 @@ public class Cita extends StandardEntity {
     @Override
     public String toString() {
         return "Cita{" +
+                "id=" + getId() +
                 "horaInicio=" + horaInicio +
                 ", horaFinal=" + horaFinal +
                 ", paciente=" + (paciente != null ? paciente.getNombre() + " " + paciente.getApellidos() : "N/A") +

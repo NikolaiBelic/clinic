@@ -14,4 +14,6 @@ public interface CitaService {
     Cita getCita(UUID id);
 
     public List<Cita> getAllCitasMS ();
+
+    public void deleteLogicalDeletedCitas();
 }
