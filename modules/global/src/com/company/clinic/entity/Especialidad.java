@@ -7,12 +7,12 @@ import javax.annotation.Nullable;
 
 public enum Especialidad implements EnumClass<String> {
 
-    PSICOLOGIA("PSICOLOGIA"),
-    NUTRICION("NUTRICION"),
-    PODOLOGIA("PODOLOGIA"),
-    FISIOTERAPIA("FISIOTERAPIA"),
-    OFTALMOLOGIA("OFTALMOLOGIA"),
-    DERMATOLOGIA("DERMATOLOGIA");
+    PSICOLOGIA("Psicología"),
+    NUTRICION("Nutrición"),
+    PODOLOGIA("Podología"),
+    FISIOTERAPIA("Fisioterapia"),
+    OFTALMOLOGIA("Oftalmología"),
+    DERMATOLOGIA("Dermatología");
 
     private String id;
 

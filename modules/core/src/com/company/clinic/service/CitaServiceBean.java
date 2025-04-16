@@ -2,12 +2,11 @@ package com.company.clinic.service;
 
 import com.company.clinic.entity.Cita;
 import com.company.clinic.entity.Especialista;
-import com.company.clinic.entity.Paciente;
+import com.company.clinic.entity.pacientes.Paciente;
 import com.company.clinic.entity.Servicio;
 import com.haulmont.cuba.core.app.ConfigStorageService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
-import org.graalvm.compiler.code.DataSection;
 import org.slf4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

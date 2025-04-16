@@ -27,13 +27,13 @@ public class CitaBrowse extends StandardLookup<Cita> {
     private TimeField<Time> filterHoraFinal;
 
     @Inject
-    private TextField<String> filterPaciente;
+    private LookupField<String> filterPaciente;
 
     @Inject
-    private TextField<String> filterEspecialista;
+    private LookupField<String> filterEspecialista;
 
     @Inject
-    private TextField<String> filterServicio;
+    private LookupField<String> filterServicio;
 
     @Inject
     private CheckBox filterPagado;

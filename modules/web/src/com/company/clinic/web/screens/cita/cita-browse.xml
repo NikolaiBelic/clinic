@@ -37,9 +37,9 @@
                     <dateField id="filterDia" caption="Día" resolution="DAY" datatype="date"/>
                     <timeField id="filterHoraInicio" caption="Hora Inicio" datatype="time"/>
                     <timeField id="filterHoraFinal" caption="Hora Final" datatype="time"/>
-                    <textField id="filterPaciente" caption="Paciente"/>
-                    <textField id="filterEspecialista" caption="Especialista"/>
-                    <textField id="filterServicio" caption="Servicio"/>
+                    <lookupField id="filterPaciente" caption="Paciente"/>
+                    <lookupField id="filterEspecialista" caption="Especialista"/>
+                    <lookupField id="filterServicio" caption="Servicio"/>
                 </hbox>
             </vbox>
             <vbox spacing="true">

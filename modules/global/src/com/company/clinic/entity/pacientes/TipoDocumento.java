@@ -1,19 +1,17 @@
-package com.company.clinic.entity;
+package com.company.clinic.entity.pacientes;
 
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 
 import javax.annotation.Nullable;
 
-
-public enum Genero implements EnumClass<String> {
-
-    HOMBRE("Hombre"),
-    MUJER("Mujer"),
-    NO_BINARIO("No Binario");
+public enum TipoDocumento implements EnumClass<String> {
+    DNI("DNI"),
+    NIE("NIE"),
+    NIF("NIF");
 
     private String id;
 
-    Genero(String value) {
+    TipoDocumento(String value) {
         this.id = value;
     }
 
@@ -22,8 +20,8 @@ public enum Genero implements EnumClass<String> {
     }
 
     @Nullable
-    public static Genero fromId(String id) {
-        for (Genero at : Genero.values()) {
+    public static TipoDocumento fromId(String id) {
+        for (TipoDocumento at : TipoDocumento.values()) {
             if (at.getId().equals(id)) {
                 return at;
             }

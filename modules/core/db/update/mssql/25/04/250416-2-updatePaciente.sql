@@ -1,0 +1,5 @@
+exec sp_rename 'CLINIC_PACIENTE.DESCRIPCION', 'DESCRIPCION__U93853', 'COLUMN' ^
+exec sp_rename 'CLINIC_PACIENTE.DNI', 'DNI__U36573', 'COLUMN' ^
+alter table CLINIC_PACIENTE alter column DNI__U36573 varchar(9)  ;
+exec sp_rename 'CLINIC_PACIENTE.EDAD', 'EDAD__U90145', 'COLUMN' ^
+exec sp_rename 'CLINIC_PACIENTE.EMAIL', 'EMAIL__U06222', 'COLUMN' ^

@@ -5,7 +5,7 @@
         messagesPack="com.company.clinic.web.screens.paciente">
     <data>
         <instance id="pacienteDc"
-                  class="com.company.clinic.entity.Paciente">
+                  class="com.company.clinic.entity.pacientes.Paciente">
             <view extends="_local"/>
             <loader/>
         </instance>
@@ -17,11 +17,7 @@
             <column width="350px">
                 <textField id="nombreField" property="nombre"/>
                 <textField id="apellidosField" property="apellidos"/>
-                <textField id="emailField" property="email"/>
-                <textField id="edadField" property="edad"/>
-                <textField id="dniField" property="dni"/>
                 <dateField id="fechaNacimientoField" property="fechaNacimiento"/>
-                <textArea id="descripcionField" property="descripcion" rows="5"/>
                 <lookupField id="generoField" property="genero"/>
             </column>
         </form>

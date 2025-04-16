@@ -1,5 +1,6 @@
 package com.company.clinic.entity;
 
+import com.company.clinic.entity.pacientes.Paciente;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;

@@ -6,12 +6,12 @@
         messagesPack="com.company.clinic.web.screens.paciente">
     <data readOnly="true">
         <collection id="pacientesDc"
-                    class="com.company.clinic.entity.Paciente">
+                    class="com.company.clinic.entity.pacientes.Paciente">
             <view extends="_minimal">
                 <property name="nombre"/>
                 <property name="apellidos"/>
-                <property name="email"/>
-                <property name="dni"/>
+                <property name="fechaNacimiento"/>
+                <property name="genero"/>
             </view>
             <loader id="pacientesDl">
                 <query>
@@ -41,8 +41,8 @@
             <columns>
                 <column id="nombre"/>
                 <column id="apellidos"/>
-                <column id="email"/>
-                <column id="dni"/>
+                <column id="fechaNacimiento" caption="Fecha de Nacimiento"/>
+                <column id="genero"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
