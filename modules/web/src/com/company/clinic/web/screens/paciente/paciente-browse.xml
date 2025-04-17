@@ -4,7 +4,7 @@
         caption="msg://pacienteBrowse.caption"
         focusComponent="pacientesTable"
         messagesPack="com.company.clinic.web.screens.paciente">
-    <data readOnly="true">
+    <!--<data readOnly="true">
         <collection id="pacientesDc"
                     class="com.company.clinic.entity.pacientes.Paciente">
             <view extends="_minimal">
@@ -19,16 +19,19 @@
                 </query>
             </loader>
         </collection>
+    </data>-->
+    <data>
+        <collection id="pacientesDc" class="com.company.clinic.entity.pacientes.Paciente"/>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="pacientesTable"
             spacing="true">
-        <filter id="filter"
+        <!--<filter id="filter"
                 applyTo="pacientesTable"
                 dataLoader="pacientesDl">
             <properties include=".*"/>
-        </filter>
+        </filter>-->
         <groupTable id="pacientesTable"
                     width="100%"
                     dataContainer="pacientesDc">

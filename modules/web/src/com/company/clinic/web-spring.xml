@@ -13,6 +13,7 @@
             <map>
                 <entry key="clinic_CitaService" value="com.company.clinic.service.CitaService"/>
                 <entry key="clinic_EspecialistaService" value="com.company.clinic.service.EspecialistaService"/>
+                <entry key="clinic_PacienteService" value="com.company.clinic.service.paciente.PacienteService"/>
             </map>
         </property>
     </bean>

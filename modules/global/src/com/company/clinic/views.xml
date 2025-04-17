@@ -28,4 +28,37 @@
         <property name="dni"/>
         <property name="especialidad"/>
     </view>
+    <view entity="clinic_Paciente" name="paciente-view">
+        <property name="nombre"/>
+        <property name="apellidos"/>
+        <property name="fechaNacimiento"/>
+        <property name="genero"/>
+        <property name="datos_Administrativos" view="_local">
+            <property name="estadoPaciente"/>
+            <property name="responsableTratamientoDatos"/>
+            <property name="ciudadNacimiento"/>
+            <property name="nacionalidad"/>
+            <property name="provinciaNacimiento"/>
+            <property name="tipoDocumento"/>
+            <property name="numeroDocumento"/>
+        </property>
+        <property name="datosContacto" view="_local">
+            <property name="telefono"/>
+            <property name="email"/>
+            <property name="calle"/>
+            <property name="numero"/>
+            <property name="ciudad"/>
+            <property name="provincia"/>
+            <property name="codigoPostal"/>
+        </property>
+        <property name="datosFacturacion" view="_local">
+            <property name="nif"/>
+            <property name="nombre"/>
+            <property name="apellidos"/>
+            <property name="calle"/>
+            <property name="numero"/>
+            <property name="ciudad"/>
+            <property name="provincia"/>
+        </property>
+    </view>
 </views>
