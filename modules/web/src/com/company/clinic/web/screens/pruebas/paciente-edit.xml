@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://pacienteEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.clinic.web.screens.pruebas">
+    <data>
+        <instance id="pacienteDc"
+                  class="com.company.clinic.entity.pacientes.Paciente">
+            <view extends="_local">
+                <property name="datosAdministrativos" view="_minimal">
+                    <property name="estadoPaciente"/>
+                    <property name="responsableTratamientoDatos" view="_minimal"/>
+                    <property name="ciudadNacimiento"/>
+                    <property name="nacionalidad"/>
+                    <property name="provinciaNacimiento"/>
+                    <property name="tipoDocumento"/>
+                    <property name="numeroDocumento"/>
+                </property>
+                <property name="datosContacto" view="_minimal">
+                    <property name="telefono"/>
+                    <property name="email"/>
+                    <property name="calleContacto"/>
+                    <property name="numeroContacto"/>
+                    <property name="codigoPostal"/>
+                    <property name="ciudadContacto"/>
+                    <property name="provinciaContacto"/>
+                </property>
+                <property name="datosFacturacion" view="_minimal">
+                    <property name="nif"/>
+                    <property name="nombreFacturacion"/>
+                    <property name="apellidosFacturacion"/>
+                    <property name="calleFacturacion"/>
+                    <property name="numeroFacturacion"/>
+                    <property name="ciudadFacturacion"/>
+                    <property name="provinciaFacturacion"/>
+                </property>
+            </view>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="pacienteDc">
+            <column width="350px">
+                <textField id="nombreField" property="nombre"/>
+                <textField id="apellidosField" property="apellidos"/>
+                <dateField id="fechaNacimientoField" property="fechaNacimiento"/>
+                <lookupField id="generoField" property="genero"/>
+                <pickerField id="datosAdministrativosField" property="datosAdministrativos">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <pickerField id="datosContactoField" property="datosContacto">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <pickerField id="datosFacturacionField" property="datosFacturacion">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

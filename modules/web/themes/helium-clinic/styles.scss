@@ -1,0 +1,6 @@
+@import "helium-clinic-defaults";
+@import "helium-clinic";
+
+.helium-clinic {
+  @include helium-clinic;
+}

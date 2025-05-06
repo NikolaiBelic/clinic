@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://configEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.clinic.web.screens.config">
+    <data>
+        <instance id="configDc"
+                  class="com.haulmont.cuba.core.entity.Config">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="configDc">
+            <column width="350px">
+                <textField id="nameField" property="name"/>
+                <textArea id="valueField" property="value" rows="5"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

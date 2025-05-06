@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://redisBrowse.caption"
+        messagesPack="com.company.clinic.web.screens.redis">
+    <data>
+        <collection id="redisDc" class="com.company.clinic.entity.redis.Redis"/>
+    </data>
+    <layout>
+        <groupTable id="redisTable" width="100%" dataContainer="redisDc" multiselect="true">
+            <columns>
+                <column id="key" caption="Key"/>
+                <!--<column id="value" caption="Value"/>-->
+            </columns>
+            <buttonsPanel spacing="true">
+                <button id="btnView" caption="View" icon="font-icon:EYE" primary="true"/>
+                <button id="btnRemove" caption="Remove" icon="font-icon:TRASH"/>
+                <button id="btnRemoveAll" caption="Remove All" icon="font-icon:TRASH"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

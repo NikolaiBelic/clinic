@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+
+    <view entity="clinic_Cita" name="cita-view">
+<!--        <property name="paciente" view="_minimal"/>-->
+<!--        <property name="especialista" view="_minimal"/>-->
+<!--        <property name="servicio" view="_minimal"/>-->
+        <property name="dia"/>
+        <property name="horaInicio"/>
+        <property name="horaFinal"/>
+        <property name="paciente" view="_local">
+            <property name="nombre"/>
+            <property name="apellidos"/>
+        </property>
+        <property name="especialista" view="especialista-view">
+<!--            <property name="nombre"/>-->
+<!--            <property name="apellidos"/>-->
+        </property>
+        <property name="servicio" view="_local">
+            <property name="descripcion"/>
+        </property>
+        <property name="pagado"/>
+
+    </view>
+    <view entity="clinic_Especialista" name="especialista-view">
+        <property name="nombre"/>
+        <property name="apellidos"/>
+        <property name="dni"/>
+        <property name="especialidad"/>
+    </view>
+    <view entity="clinic_Paciente" name="paciente-view">
+        <property name="nombre"/>
+        <property name="apellidos"/>
+        <property name="fechaNacimiento"/>
+        <property name="genero"/>
+
+        <property name="datosAdministrativos" view="datosAdministrativos-view">
+        </property>
+
+        <property name="datosContacto" view="datosContacto-view">
+        </property>
+
+        <property name="datosFacturacion" view="datosFacturacion-view">
+        </property>
+    </view>
+
+    <view entity="clinic_Paciente" name="paciente-edit-view">
+        <property name="nombre"/>
+        <property name="apellidos"/>
+        <property name="fechaNacimiento"/>
+        <property name="genero"/>
+
+        <property name="datosAdministrativos" view="datosAdministrativos-view">
+        </property>
+
+        <property name="datosContacto" view="datosContacto-view">
+        </property>
+
+        <property name="datosFacturacion" view="datosFacturacion-view">
+        </property>
+    </view>
+
+
+    <view entity="clinic_DatosAdministrativos" name="datosAdministrativos-view">
+        <property name="estadoPaciente"/>
+        <property name="responsableTratamientoDatos"/>
+        <property name="ciudadNacimiento"/>
+        <property name="nacionalidad"/>
+        <property name="provinciaNacimiento"/>
+        <property name="tipoDocumento"/>
+        <property name="numeroDocumento"/>
+    </view>
+
+    <view entity="clinic_DatosContacto" name="datosContacto-view">
+        <property name="telefono"/>
+        <property name="email"/>
+        <property name="calleContacto"/>
+        <property name="numeroContacto"/>
+        <property name="ciudadContacto"/>
+        <property name="provinciaContacto"/>
+        <property name="codigoPostal"/>
+    </view>
+
+    <view entity="clinic_DatosFacturacion" name="datosFacturacion-view">
+        <property name="nif"/>
+        <property name="nombreFacturacion"/>
+        <property name="apellidosFacturacion"/>
+        <property name="calleFacturacion"/>
+        <property name="numeroFacturacion"/>
+        <property name="ciudadFacturacion"/>
+        <property name="provinciaFacturacion"/>
+    </view>
+    <view entity="clinic_Redis" name="redis-view">
+        <property name="key"/>
+        <!--<property name="value"/>-->
+    </view>
+</views>

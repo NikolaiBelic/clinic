@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application-clinic" insertBefore="administration" caption="mainMsg://menu_config.application-clinic">
+        <item screen="clinic_Paciente.browse" caption="mainMsg://menu_config.clinic_Paciente.browse"/>
+        <item screen="clinic_Especialista.browse" caption="mainMsg://menu_config.clinic_Especialista.browse"/>
+        <item screen="clinic_Servicio.browse" caption="mainMsg://menu_config.clinic_Servicio.browse"/>
+        <item screen="clinic_Calendariomain" caption="mainMsg://menu_config.clinic_Calendariomain"/>
+        <item screen="clinic_Cita.browse" caption="mainMsg://menu_config.clinic_Cita.browse"/>
+        <item screen="clinic_DatosEmpresa.browse" caption="mainMsg://menu_config.clinic_DatosEmpresa.browse"/>
+        <item screen="clinic_Paciente.browse2" caption="mainMsg://menu_config.clinic_Paciente.browse2"/>
+        <item screen="clinic_RedisBrowse" caption="mainMsg://menu_config.clinic_RedisBrowse"/>
+    </menu>
+    <item screen="sys$Config.browse" caption="mainMsg://menu_config.sys$Config.browse"
+          insertAfter="performanceStatistics"/>
+</menu-config>

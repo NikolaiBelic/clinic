@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://pacienteBrowse.caption"
+        focusComponent="pacientesTable"
+        messagesPack="com.company.clinic.web.screens.paciente">
+    <!--<data readOnly="true">
+        <collection id="pacientesDc"
+                    class="com.company.clinic.entity.pacientes.Paciente">
+            <view extends="_minimal">
+                <property name="nombre"/>
+                <property name="apellidos"/>
+                <property name="fechaNacimiento"/>
+                <property name="genero"/>
+            </view>
+            <loader id="pacientesDl">
+                <query>
+                    <![CDATA[select e from clinic_Paciente e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>-->
+    <data>
+        <collection id="pacienteDc" class="com.company.clinic.entity.pacientes.Paciente">
+            <view extends="paciente-view"/>
+            <loader id="pacientesDl"/>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="pacientesTable"
+            spacing="true">
+        <!--<filter id="filter"
+                applyTo="pacientesTable"
+                dataLoader="pacientesDl">
+            <properties include=".*"/>
+        </filter>-->
+        <groupBox id="filter" spacing="true">
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <textField id="nombre" caption="Nombre" width="150px"/>
+                    <textField id="apellidos" caption="Apellidos" width="200px"/>
+                    <dateField id="fechaNacimiento" caption="Fecha de Nacimiento"
+                               datatype="date" resolution="DAY"/>
+                    <lookupField id="genero" caption="Género" width="125px"
+                                 optionsEnum="com.company.clinic.entity.Genero"/>
+                    <lookupField id="estadoPaciente" caption="Estado Paciente" width="125px"
+                                 optionsEnum="com.company.clinic.entity.pacientes.EstadoPaciente"/>
+                </hbox>
+            </vbox>
+            <vbox spacing="true">
+                <hbox spacing="true">
+
+                    <textField id="ciudadNacimiento" caption="Ciudad Nacimiento" width="175px"/>
+                    <textField id="nacionalidad" caption="Nacionalidad" width="125px"/>
+                    <lookupField id="provinciaNacimiento" caption="Provincia Nacimiento" width="200px"
+                                 optionsEnum="com.company.clinic.entity.Provincia"/>
+                    <lookupField id="tipoDocumento" caption="Tipo Documento" width="100px"
+                                 optionsEnum="com.company.clinic.entity.pacientes.TipoDocumento"/>
+                    <textField id="numeroDocumento" caption="Número Documento" width="150px"/>
+                    <lookupField id="maxRegistros" caption="Max Registros" width="80px"/>
+                </hbox>
+            </vbox>
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <button id="refresh" caption="Aplicar" primary="true" shortcut="ENTER"/>
+                    <button id="clear" caption="Limpiar" shortcut="ENTER"/>
+                </hbox>
+            </vbox>
+        </groupBox>
+        <groupTable id="pacientesTable"
+                    width="100%"
+                    dataContainer="pacienteDc" multiselect="true">
+            <!--<actions>
+                <action id="view" type="view"/>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>-->
+            <columns>
+                <column id="nombre"/>
+                <column id="apellidos"/>
+                <column id="fechaNacimiento" caption="Fecha de Nacimiento"/>
+                <column id="genero"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="viewBtn" caption="Ver"/>
+                <button id="createBtn" caption="Crear"/>
+                <button id="editBtn" caption="Editar"/>
+                <button id="removeBtn" caption="Borrar"/>
+                <button id="excelBtn" caption="Excel" icon="font-icon:FILE_EXCEL_O"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

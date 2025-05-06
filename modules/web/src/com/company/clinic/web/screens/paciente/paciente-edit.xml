@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://pacienteEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.clinic.web.screens.paciente">
+    <data>
+        <instance id="pacienteDc"
+                  class="com.company.clinic.entity.pacientes.Paciente">
+            <view extends="paciente-edit-view"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="pacienteDc">
+            <hbox spacing="true">
+                <!-- Columna 1: Paciente y Datos Administrativos -->
+                <vbox spacing="true">
+                    <!-- Sección Paciente -->
+                    <vbox spacing="true">
+                        <label value="Paciente" align="MIDDLE_LEFT"/>
+                        <hbox spacing="true">
+                            <textField id="nombreField" caption="Nombre" required="true" property="nombre"/>
+                            <textField id="apellidosField" caption="Apellidos" required="true" property="apellidos"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <dateField id="fechaNacimientoField" caption="Fecha de Nacimiento"
+                                       required="true" datatype="date" resolution="DAY" property="fechaNacimiento"/>
+                            <lookupField id="generoField" caption="Género" required="true" property="genero"/>
+                        </hbox>
+                    </vbox>
+
+                    <!-- Sección Datos Administrativos -->
+                    <vbox spacing="true">
+                        <label value="Datos Administrativos" align="MIDDLE_LEFT"/>
+                        <hbox spacing="true">
+                            <lookupField id="estadoPacienteField" caption="Estado Paciente" property="estadoPaciente"
+                                        optionsEnum="com.company.clinic.entity.pacientes.EstadoPaciente"/>
+                            <textField id="ciudadNacimientoField" caption="Ciudad Nacimiento" property="ciudadNacimiento"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <textField id="nacionalidadField" caption="Nacionalidad" property="nacionalidad"/>
+                            <lookupField id="provinciaAdministrativoField" caption="Provincia Nacimiento" required="true"
+                                         optionsEnum="com.company.clinic.entity.Provincia" property="provinciaNacimiento"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <lookupField id="tipoDocumentoField" caption="Tipo Documento" required="true" property="tipoDocumento"
+                                         optionsEnum="com.company.clinic.entity.pacientes.TipoDocumento"/>
+                            <textField id="numeroDocumentoField" caption="Número Documento" property="numeroDocumento"/>
+                        </hbox>
+                    </vbox>
+                </vbox>
+
+                <!-- Columna 2: Datos de Contacto y Facturación -->
+                <vbox spacing="true">
+                    <!-- Sección Datos de Contacto -->
+                    <vbox spacing="true">
+                        <label value="Datos de Contacto" align="MIDDLE_LEFT"/>
+                        <hbox spacing="true">
+                            <textField id="telefonoField" caption="Teléfono" required="true" property="telefono"/>
+                            <textField id="emailField" caption="Email" required="true" property="email"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <textField id="calleField" caption="Calle" property="calleContacto"/>
+                            <textField id="numeroField" caption="Número" property="numeroContacto"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <textField id="codigoPostalField" caption="Código Postal" property="codigoPostal"/>
+                            <textField id="ciudadField" caption="Ciudad" property="ciudadContacto"/>
+                            <lookupField id="provinciaContactoField" caption="Provincia" required="true"
+                                         property="provinciaContacto"
+                                         optionsEnum="com.company.clinic.entity.Provincia"/>
+                        </hbox>
+                        <hbox>
+                            <checkBox id="mismoDatosFacturacionField"
+                                      caption="Usar los datos de contacto como datos de facturacion"
+                            />
+                        </hbox>
+                    </vbox>
+
+                    <!-- Sección Datos de Facturación -->
+                    <vbox id="datosFacturacion" spacing="true">
+                        <label value="Datos de Facturación" align="MIDDLE_LEFT"/>
+                        <hbox spacing="true">
+                            <textField id="nifField" caption="NIF" required="true" property="nif"/>
+                            <textField id="nombreFacturacionField" caption="Nombre" required="true" property="nombreFacturacion"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <textField id="apellidosFacturacionField" caption="Apellidos" required="true" property="apellidosFacturacion"/>
+                            <textField id="calleFacturacionField" caption="Calle" property="calleFacturacion"/>
+                        </hbox>
+                        <hbox spacing="true">
+                            <textField id="numeroFacturacionField" caption="Número" property="numeroFacturacion"/>
+                            <textField id="ciudadFacturacionField" caption="Ciudad" property="ciudadFacturacion"/>
+                            <lookupField id="provinciaFacturacionField" caption="Provincia" required="true"
+                                         optionsEnum="com.company.clinic.entity.Provincia" property="provinciaFacturacion"/>
+                        </hbox>
+                    </vbox>
+                </vbox>
+            </hbox>
+        </form>
+        <!--<form id="form" dataContainer="pacienteDc">
+            <column width="350px">
+                <textField id="nombreField" property="nombre"/>
+                <textField id="apellidosField" property="apellidos"/>
+                <dateField id="fechaNacimientoField" property="fechaNacimiento"/>
+                <lookupField id="generoField" property="genero"/>
+            </column>
+        </form>-->
+        <hbox id="editActions" spacing="true">
+            <button id="insertBtn"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

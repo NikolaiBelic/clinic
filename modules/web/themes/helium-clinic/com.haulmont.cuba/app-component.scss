@@ -1,0 +1,5 @@
+@import "../helium-clinic";
+
+@mixin com_haulmont_cuba {
+  @include helium-clinic;
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://citaBrowse.caption"
+        focusComponent="citasTable"
+        messagesPack="com.company.clinic.web.screens.cita">
+    <!--<data readOnly="true">
+        <collection id="citasDc"
+                    class="com.company.clinic.entity.Cita">
+            <view extends="_local">
+                <property name="paciente" view="_minimal"/>
+                <property name="especialista" view="especialista-view"/>
+                <property name="servicio" view="_minimal"/>
+            </view>
+            <loader id="citasDl">
+                <query>
+                    <![CDATA[select e from clinic_Cita e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>-->
+    <data>
+        <collection id="citasDc" class="com.company.clinic.entity.Cita"/>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="citasTable"
+            spacing="true">
+        <!--<filter id="filter"
+                applyTo="citasTable"
+                dataLoader="citasDl">
+            <properties include=".*"/>
+        </filter>-->
+        <groupBox spacing="true">
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <dateField id="filterDia" caption="Día" resolution="DAY" datatype="date"/>
+                    <timeField id="filterHoraInicio" caption="Hora Inicio" datatype="time"/>
+                    <timeField id="filterHoraFinal" caption="Hora Final" datatype="time"/>
+                    <lookupField id="filterPaciente" caption="Paciente"/>
+                    <lookupField id="filterEspecialista" caption="Especialista"/>
+                    <lookupField id="filterServicio" caption="Servicio"/>
+                </hbox>
+            </vbox>
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <checkBox id="filterPagado" caption="Pagado" align="MIDDLE_CENTER"/>
+                    <button id="filterBtn" caption="Filtrar"/>
+                </hbox>
+            </vbox>
+        </groupBox>
+        <groupTable id="citasTable"
+                    width="100%"
+                    dataContainer="citasDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="dia"/>
+                <column id="horaInicio"/>
+                <column id="horaFinal"/>
+                <column id="paciente"/>
+                <column id="especialista"/>
+                <column id="servicio"/>
+                <column id="pagado"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="citasTable.create"/>
+                <button id="editBtn" action="citasTable.edit"/>
+                <button id="removeBtn" action="citasTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
