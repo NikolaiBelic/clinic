@@ -104,8 +104,10 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
 
     @Inject
     private ReportService reportService;
+
     @Inject
     private ExportDisplay exportDisplay;
+
     @Inject
     private FileStorageService fileStorageService;
 
@@ -144,22 +146,21 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
     @Subscribe("editBtn")
     public void onEditBtnClick(Button.ClickEvent event) {
         Paciente selected = pacientesTable.getSingleSelected();
+
         if (selected != null) {
-            System.out.println("Paciente seleccionado para editar: " + selected.getId()); // Debug
+            Paciente fullPaciente = dataManager.load(Paciente.class)
+                    .id(selected.getId())
+                    .view("paciente-edit-view") // Asegúrate de que esta vista esté bien definida
+                    .one();
 
             Screen editor = screenBuilders.editor(Paciente.class, this)
                     .withScreenId("clinic_Paciente.edit")
-                    .editEntity(selected)
+                    .editEntity(fullPaciente)
                     .build();
 
-            editor.addAfterCloseListener(e -> {
-                if (e.closedWith(StandardOutcome.COMMIT)) {
-                    pacienteDc.setItems(pacienteService.getAllPacientes());
-                    pacientesTable.repaint();
-                }
-            });
             editor.show();
-        } else {
+        }
+        else {
             notifications.create()
                     .withCaption("Seleccione un paciente")
                     .show();
@@ -219,14 +220,14 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
                 .one();
 
 
-// Crear la lista de IDs de pacientes
- List<UUID> pacientesIds = selectedPacientes.stream()
-.map(Paciente::getId)
-.collect(Collectors.toList());
+        // Crear la lista de IDs de pacientes
+         List<UUID> pacientesIds = selectedPacientes.stream()
+        .map(Paciente::getId)
+        .collect(Collectors.toList());
 
-// Crear parámetros del reporte
- Map<String, Object> reportParams = new HashMap<>();
-reportParams.put("pacientesIds", pacientesIds);
+        // Crear parámetros del reporte
+         Map<String, Object> reportParams = new HashMap<>();
+        reportParams.put("pacientesIds", pacientesIds);
 
 
         // Ejecutar el reporte

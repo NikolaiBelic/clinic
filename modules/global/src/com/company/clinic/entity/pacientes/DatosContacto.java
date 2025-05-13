@@ -33,15 +33,15 @@ public class DatosContacto extends StandardEntity {
     private String ciudadContacto;
 
     @Column(name = "PROVINCIA")
-    private Provincia provinciaContacto;
+    private String provinciaContacto;
 
     // Modificar getter/setter:
     public Provincia getProvinciaContacto() {
-        return provinciaContacto;
+        return provinciaContacto == null ? null : Provincia.fromId(provinciaContacto);
     }
 
-    public void setProvinciaContacto(Provincia provinciaContacto) {
-        this.provinciaContacto = provinciaContacto;
+    public void setProvinciaContacto(Provincia provincia) {
+        this.provinciaContacto = provincia == null ? null : provincia.getId();
     }
 
     public String getCiudadContacto() {

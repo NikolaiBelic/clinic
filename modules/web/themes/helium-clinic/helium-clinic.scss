@@ -15,6 +15,24 @@
   /* Button */
   --button-primary-focused-border-color: #C6D1EC;
 
+  /* Custom */
+
+
+  --button-error-color: #feff92;
+
+  /* Paciente edit */
+    .formPaciente {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .formPaciente .field {
+        width: 100%;
+    }
+
+
+
   /* Calendar */
 
   /* Juan - Psicologia */

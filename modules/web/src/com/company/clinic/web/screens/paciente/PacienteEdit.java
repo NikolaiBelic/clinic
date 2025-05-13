@@ -3,6 +3,7 @@ package com.company.clinic.web.screens.paciente;
 import com.company.clinic.entity.Genero;
 import com.company.clinic.entity.Provincia;
 import com.company.clinic.entity.pacientes.*;
+import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
@@ -29,7 +30,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
     @Inject
     private LookupField<Genero> generoField;
 
-    @Inject
+    /*@Inject
     private LookupField<EstadoPaciente> estadoPacienteField;
 
     @Inject
@@ -93,16 +94,20 @@ public class PacienteEdit extends StandardEditor<Paciente> {
     private LookupField<Provincia> provinciaFacturacionField;
 
     @Inject
-    private VBoxLayout datosFacturacion;
+    private VBoxLayout datosFacturacion;*/
 
     @Inject
     private InstanceContainer<Paciente> pacienteDc;
+
     @Inject
     private Button insertBtn;
 
+    @Inject
+    private Metadata metadata;
+
     @Subscribe("insertBtn")
     public void onInsertBtnClick(Button.ClickEvent event) {
-        System.out.println("========== Paciente ========");
+        /*System.out.println("========== Paciente ========");
         System.out.println("Nombre: " + nombreField.getValue());
         System.out.println("Apellidos: " + apellidosField.getValue());
         System.out.println("Fecha de Nacimiento: " + fechaNacimientoField.getValue());
@@ -133,19 +138,54 @@ public class PacienteEdit extends StandardEditor<Paciente> {
         System.out.println("Calle Facturación: " + calleFacturacionField.getValue());
         System.out.println("Número Facturación: " + numeroFacturacionField.getValue());
         System.out.println("Ciudad Facturación: " + ciudadFacturacionField.getValue());
-        System.out.println("Provincia Facturación: " + provinciaFacturacionField.getValue().getId());
+        System.out.println("Provincia Facturación: " + provinciaFacturacionField.getValue().getId());*/
     }
 
-    @Subscribe("mismoDatosFacturacionField")
+    /*@Subscribe("mismoDatosFacturacionField")
     public void onMismoDatosFacturacionFieldValueChange(HasValue.ValueChangeEvent<Boolean> event) {
         if (event.getValue().equals(true)) {
             datosFacturacion.setVisible(false);
         } else {
             datosFacturacion.setVisible(true);
         }
+    }*/
+
+    @Subscribe
+    public void onAfterShow(AfterShowEvent event) {
+        Paciente paciente = pacienteDc.getItem();
+        System.out.println("Paciente cargado: " + paciente);
+        System.out.println("Nombre: " + paciente.getNombre());
+        System.out.println("Apellidos: " + paciente.getApellidos());
+        System.out.println("Fecha Nacimiento: " + paciente.getFechaNacimiento());
+        System.out.println("Género: " + paciente.getGenero());
+
+
     }
 
     @Subscribe
-    public void onInit(InitEvent event) {
+    public void onBeforeShow(BeforeShowEvent event) {
+        Paciente paciente = getEditedEntity();
+
+        if (paciente.getDatosAdministrativos() == null) {
+            DatosAdministrativos datos = metadata.create(DatosAdministrativos.class);
+            datos.setPaciente(paciente); // importante para mantener la relación bidireccional
+            paciente.setDatosAdministrativos(datos);
+        }
+
+        if (paciente.getDatosContacto() == null) {
+            DatosContacto datos = metadata.create(DatosContacto.class);
+            datos.setPaciente(paciente); // importante para mantener la relación bidireccional
+            paciente.setDatosContacto(datos);
+        }
+
+        if (paciente.getDatosFacturacion() == null) {
+            DatosFacturacion datos = metadata.create(DatosFacturacion.class);
+            datos.setPaciente(paciente); // importante para mantener la relación bidireccional
+            paciente.setDatosFacturacion(datos);
+        }
     }
+
+
+
+
 }
