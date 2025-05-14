@@ -136,9 +136,13 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
     public void onCreateBtnClick(Button.ClickEvent event) {
         Paciente nuevoPaciente = metadata.create(Paciente.class);
 
+        Map<String, Object> params = new HashMap<>();
+        params.put("modo", "crear");
+
         // Abrir la pantalla de edición con la nueva instancia
         Screen editor = screenBuilders.editor(Paciente.class, this)
                 .newEntity(nuevoPaciente)
+                .withOptions(new MapScreenOptions(params))
                 .build();
         editor.show();
     }
@@ -146,6 +150,9 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
     @Subscribe("editBtn")
     public void onEditBtnClick(Button.ClickEvent event) {
         Paciente selected = pacientesTable.getSingleSelected();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("modo", "editar");
 
         if (selected != null) {
             Paciente fullPaciente = dataManager.load(Paciente.class)
@@ -156,6 +163,7 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
             Screen editor = screenBuilders.editor(Paciente.class, this)
                     .withScreenId("clinic_Paciente.edit")
                     .editEntity(fullPaciente)
+                    .withOptions(new MapScreenOptions(params))
                     .build();
 
             editor.show();

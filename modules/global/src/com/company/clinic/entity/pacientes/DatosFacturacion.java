@@ -9,21 +9,29 @@ import javax.persistence.*;
 @Entity(name = "clinic_DatosFacturacion")
 public class DatosFacturacion extends StandardEntity {
     private static final long serialVersionUID = 3355345576781141606L;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PACIENTE_ID")
     private Paciente paciente;
+
     @Column(name = "NIF", length = 9)
     private String nif;
+
     @Column(name = "NOMBRE", length = 50)
     private String nombreFacturacion;
+
     @Column(name = "APELLIDOS", length = 100)
     private String apellidosFacturacion;
+
     @Column(name = "CALLE", length = 150)
     private String calleFacturacion;
+
     @Column(name = "NUMERO", length = 50)
     private String numeroFacturacion;
+
     @Column(name = "CIUDAD", length = 50)
     private String ciudadFacturacion;
+
     @Column(name = "PROVINCIA")
     private String provinciaFacturacion;
 

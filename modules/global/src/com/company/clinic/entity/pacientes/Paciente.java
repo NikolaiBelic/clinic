@@ -1,6 +1,7 @@
 package com.company.clinic.entity.pacientes;
 
 import com.company.clinic.entity.Genero;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 

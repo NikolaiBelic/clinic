@@ -160,8 +160,9 @@ public class PacienteServiceBean implements PacienteService {
     public Paciente createPaciente(Paciente paciente) {
         String urlPacientes = configStorageService.getDbProperty("URL-PACIENTES");
         String urlPacientesCreate = "/create";
+        String fullUrl = urlPacientes + urlPacientesCreate;
 
-        log.info(urlPacientes);
+        log.info(fullUrl);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -172,13 +173,12 @@ public class PacienteServiceBean implements PacienteService {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<Paciente> responseEntity = restTemplate.exchange(
-                urlPacientes + urlPacientesCreate,
+                fullUrl,
                 HttpMethod.POST,
                 entity,
                 Paciente.class);
 
         return responseEntity.getBody();
-
     }
 
 }
