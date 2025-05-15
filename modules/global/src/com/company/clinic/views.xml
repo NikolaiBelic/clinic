@@ -63,7 +63,6 @@
 
     <view entity="clinic_DatosAdministrativos" name="datosAdministrativos-view">
         <property name="estadoPaciente"/>
-        <property name="responsableTratamientoDatos"/>
         <property name="ciudadNacimiento"/>
         <property name="nacionalidad"/>
         <property name="provinciaNacimiento"/>
@@ -74,21 +73,21 @@
     <view entity="clinic_DatosContacto" name="datosContacto-view">
         <property name="telefono"/>
         <property name="email"/>
-        <property name="calleContacto"/>
-        <property name="numeroContacto"/>
-        <property name="ciudadContacto"/>
-        <property name="provinciaContacto"/>
+        <property name="calle"/>
+        <property name="numero"/>
+        <property name="ciudad"/>
+        <property name="provincia"/>
         <property name="codigoPostal"/>
     </view>
 
     <view entity="clinic_DatosFacturacion" name="datosFacturacion-view">
         <property name="nif"/>
-        <property name="nombreFacturacion"/>
-        <property name="apellidosFacturacion"/>
-        <property name="calleFacturacion"/>
-        <property name="numeroFacturacion"/>
-        <property name="ciudadFacturacion"/>
-        <property name="provinciaFacturacion"/>
+        <property name="nombre"/>
+        <property name="apellidos"/>
+        <property name="calle"/>
+        <property name="numero"/>
+        <property name="ciudad"/>
+        <property name="provincia"/>
     </view>
     <view entity="clinic_Redis" name="redis-view">
         <property name="key"/>

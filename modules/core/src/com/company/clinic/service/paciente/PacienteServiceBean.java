@@ -170,7 +170,7 @@ public class PacienteServiceBean implements PacienteService {
 
         Gson gson = new GsonBuilder()
                 .serializeNulls()
-                .setDateFormat("yyyy-MM-dd")
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
                 .addSerializationExclusionStrategy(new ExclusionStrategy() {
                     @Override
                     public boolean shouldSkipField(FieldAttributes f) {
@@ -189,6 +189,7 @@ public class PacienteServiceBean implements PacienteService {
                 .create();
 
         String jsonPaciente = gson.toJson(paciente);
+        System.out.println(jsonPaciente);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");

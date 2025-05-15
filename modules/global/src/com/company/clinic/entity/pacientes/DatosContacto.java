@@ -21,35 +21,35 @@ public class DatosContacto extends StandardEntity {
     private String email;
 
     @Column(name = "CALLE", length = 150)
-    private String calleContacto;
+    private String calle;
 
     @Column(name = "NUMERO", length = 50)
-    private String numeroContacto;
+    private String numero;
 
     @Column(name = "CODIGO_POSTAL", length = 5)
     private String codigoPostal;
 
     @Column(name = "CIUDAD", length = 30)
-    private String ciudadContacto;
+    private String ciudad;
 
     @Column(name = "PROVINCIA")
-    private String provinciaContacto;
+    private String provincia;
 
     // Modificar getter/setter:
-    public Provincia getProvinciaContacto() {
-        return provinciaContacto == null ? null : Provincia.fromId(provinciaContacto);
+    public Provincia getProvincia() {
+        return provincia == null ? null : Provincia.fromId(provincia);
     }
 
-    public void setProvinciaContacto(Provincia provincia) {
-        this.provinciaContacto = provincia == null ? null : provincia.getId();
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia == null ? null : provincia.getId();
     }
 
-    public String getCiudadContacto() {
-        return ciudadContacto;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCiudadContacto(String ciudad) {
-        this.ciudadContacto = ciudad;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
     public String getCodigoPostal() {
@@ -60,20 +60,20 @@ public class DatosContacto extends StandardEntity {
         this.codigoPostal = codigoPostal;
     }
 
-    public String getNumeroContacto() {
-        return numeroContacto;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNumeroContacto(String numero) {
-        this.numeroContacto = numero;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public String getCalleContacto() {
-        return calleContacto;
+    public String getCalle() {
+        return calle;
     }
 
-    public void setCalleContacto(String calle) {
-        this.calleContacto = calle;
+    public void setCalle(String calle) {
+        this.calle = calle;
     }
 
     public Paciente getPaciente() {

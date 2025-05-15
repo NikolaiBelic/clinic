@@ -18,10 +18,6 @@ public class DatosAdministrativos extends StandardEntity {
     @Column(name = "ESTADO_PACIENTE")
     private String estadoPaciente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESPONSABLE_TRATAMIENTO_DATOS_ID")
-    private DatosEmpresa responsableTratamientoDatos;
-
     @Column(name = "CIUDAD_NACIMIENTO", length = 50)
     private String ciudadNacimiento;
 
@@ -75,14 +71,6 @@ public class DatosAdministrativos extends StandardEntity {
 
     public void setCiudadNacimiento(String ciudadNacimiento) {
         this.ciudadNacimiento = ciudadNacimiento;
-    }
-
-    public DatosEmpresa getResponsableTratamientoDatos() {
-        return responsableTratamientoDatos;
-    }
-
-    public void setResponsableTratamientoDatos(DatosEmpresa responsableTratamientoDatos) {
-        this.responsableTratamientoDatos = responsableTratamientoDatos;
     }
 
     public EstadoPaciente getEstadoPaciente() {

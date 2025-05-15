@@ -62,15 +62,15 @@
                     <column>
                         <textField id="telefonoField" caption="Teléfono"
                                    property="datosContacto.telefono" width="125px"/>
-                        <textField id="calleField" caption="Calle" property="datosContacto.calleContacto" width="205px"/>
-                        <textField id="ciudadField" caption="Ciudad" property="datosContacto.ciudadContacto" width="200px"/>
+                        <textField id="calleField" caption="Calle" property="datosContacto.calle" width="205px"/>
+                        <textField id="ciudadField" caption="Ciudad" property="datosContacto.ciudad" width="200px"/>
                     </column>
                     <column>
                         <textField id="emailField" caption="Email" property="datosContacto.email"
                                    width="200px"/>
-                        <textField id="numeroField" caption="Número" property="datosContacto.numeroContacto" width="150px"/>
+                        <textField id="numeroField" caption="Número" property="datosContacto.numero" width="150px"/>
                         <lookupField id="provinciaContactoField" caption="Provincia"
-                                     property="datosContacto.provinciaContacto"
+                                     property="datosContacto.provincia"
                                      optionsEnum="com.company.clinic.entity.Provincia" width="200px"/>
                     </column>
                     <column>
@@ -90,23 +90,23 @@
                     <column>
                         <textField id="nifField" caption="NIF" property="datosFacturacion.nif"
                                    width="125px"/>
-                        <textField id="calleFacturacionField" caption="Calle" property="datosFacturacion.calleFacturacion"
+                        <textField id="calleFacturacionField" caption="Calle" property="datosFacturacion.calle"
                                    width="205px"/>
-                        <textField id="ciudadFacturacionField" caption="Ciudad" property="datosFacturacion.ciudadFacturacion"
+                        <textField id="ciudadFacturacionField" caption="Ciudad" property="datosFacturacion.ciudad"
                                    width="200px"/>
                     </column>
                     <column>
                         <textField id="nombreFacturacionField" caption="Nombre"
-                                   property="datosFacturacion.nombreFacturacion" width="125px"/>
-                        <textField id="numeroFacturacionField" caption="Número" property="datosFacturacion.numeroFacturacion"
+                                   property="datosFacturacion.nombre" width="125px"/>
+                        <textField id="numeroFacturacionField" caption="Número" property="datosFacturacion.numero"
                                    width="150px"/>
                         <lookupField id="provinciaFacturacionField" caption="Provincia" width="200px"
                                      optionsEnum="com.company.clinic.entity.Provincia"
-                                     property="datosFacturacion.provinciaFacturacion"/>
+                                     property="datosFacturacion.provincia"/>
                     </column>
                     <column>
                         <textField id="apellidosFacturacionField" caption="Apellidos"
-                                   property="datosFacturacion.apellidosFacturacion" width="125px"/>
+                                   property="datosFacturacion.apellidos" width="125px"/>
                     </column>
                 </form>
             </groupBox>

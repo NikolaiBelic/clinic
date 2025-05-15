@@ -18,22 +18,22 @@ public class DatosFacturacion extends StandardEntity {
     private String nif;
 
     @Column(name = "NOMBRE", length = 50)
-    private String nombreFacturacion;
+    private String nombre;
 
     @Column(name = "APELLIDOS", length = 100)
-    private String apellidosFacturacion;
+    private String apellidos;
 
     @Column(name = "CALLE", length = 150)
-    private String calleFacturacion;
+    private String calle;
 
     @Column(name = "NUMERO", length = 50)
-    private String numeroFacturacion;
+    private String numero;
 
     @Column(name = "CIUDAD", length = 50)
-    private String ciudadFacturacion;
+    private String ciudad;
 
     @Column(name = "PROVINCIA")
-    private String provinciaFacturacion;
+    private String provincia;
 
     public Paciente getPaciente() {
         return paciente;
@@ -43,52 +43,52 @@ public class DatosFacturacion extends StandardEntity {
         this.paciente = paciente;
     }
 
-    public Provincia getProvinciaFacturacion() {
-        return provinciaFacturacion == null ? null : Provincia.fromId(provinciaFacturacion);
+    public Provincia getProvincia() {
+        return provincia == null ? null : Provincia.fromId(provincia);
     }
 
-    public void setProvinciaFacturacion(Provincia provincia) {
-        this.provinciaFacturacion = provincia == null ? null : provincia.getId();
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia == null ? null : provincia.getId();
     }
 
-    public String getCiudadFacturacion() {
-        return ciudadFacturacion;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCiudadFacturacion(String ciudad) {
-        this.ciudadFacturacion = ciudad;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
-    public String getNumeroFacturacion() {
-        return numeroFacturacion;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNumeroFacturacion(String numero) {
-        this.numeroFacturacion = numero;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public String getCalleFacturacion() {
-        return calleFacturacion;
+    public String getCalle() {
+        return calle;
     }
 
-    public void setCalleFacturacion(String calle) {
-        this.calleFacturacion = calle;
+    public void setCalle(String calle) {
+        this.calle = calle;
     }
 
-    public String getApellidosFacturacion() {
-        return apellidosFacturacion;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setApellidosFacturacion(String apellidos) {
-        this.apellidosFacturacion = apellidos;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public String getNombreFacturacion() {
-        return nombreFacturacion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreFacturacion(String nombre) {
-        this.nombreFacturacion = nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNif() {
