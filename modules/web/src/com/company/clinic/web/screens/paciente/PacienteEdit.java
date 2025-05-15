@@ -4,6 +4,10 @@ import com.company.clinic.entity.Genero;
 import com.company.clinic.entity.Provincia;
 import com.company.clinic.entity.pacientes.*;
 import com.company.clinic.service.paciente.PacienteService;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.components.*;
@@ -133,7 +137,32 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
     @Subscribe("insertBtn")
     public void onInsertBtnClick(Button.ClickEvent event) {
-            if ("crear".equals(modoPantalla)) {
+
+        /*Gson gson = new GsonBuilder()
+            .serializeNulls() // Opcional: incluye campos nulo
+            .create();*/
+
+        /*Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        String name = f.getName();
+                        return name.equals("dynamicAttributes") || name.startsWith("_persistence_") || name.startsWith("__")
+                                || (f.getDeclaringClass().getSimpleName().startsWith("Datos") && name.equals("paciente"));
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .setPrettyPrinting()
+                .create();*/
+
+
+
+        if ("crear".equals(modoPantalla)) {
                 // lógica para modo creación
                 // Paciente
                 Paciente paciente = dataManager.create(Paciente.class);
@@ -143,7 +172,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 Genero genero = generoField.getValue() != null ?
                         Genero.fromId(generoField.getValue().getId()): null;
                 paciente.setGenero(genero);
-                System.out.println("PG: " + genero);
+                System.out.println("ID: " + paciente.getId());
 
                 // Datos administrativos
                 DatosAdministrativos datosAdministrativos= dataManager.create(DatosAdministrativos.class);
@@ -184,10 +213,18 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                         Provincia.fromId(provinciaFacturacionField.getValue().getId()) : null;
                 datosFacturacion.setProvinciaFacturacion(provinciaFacturacion);
 
-
+                datosAdministrativos.setPaciente(paciente);
                 paciente.setDatosAdministrativos(datosAdministrativos);
+
+                datosContacto.setPaciente(paciente);
                 paciente.setDatosContacto(datosContacto);
+
+                datosFacturacion.setPaciente(paciente);
                 paciente.setDatosFacturacion(datosFacturacion);
+
+                /*String jsonPaciente = gson.toJson(paciente);
+                System.out.println("JSON generado: " + jsonPaciente);*/
+
 
                 try {
                     pacienteService.createPaciente(paciente);

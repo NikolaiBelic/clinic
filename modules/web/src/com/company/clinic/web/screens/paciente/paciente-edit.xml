@@ -17,13 +17,13 @@
             <groupBox caption="Paciente" spacing="true">
                 <form id="formPaciente" dataContainer="pacienteDc" captionPosition="TOP">
                     <column>
-                        <textField id="nombreField" caption="Nombre" required="true" property="nombre" width="150px"/>
+                        <textField id="nombreField" caption="Nombre" property="nombre" width="150px"/>
                         <dateField id="fechaNacimientoField" caption="Fecha de Nacimiento" width="150px"
-                                   required="true" resolution="DAY" property="fechaNacimiento"/>
+                                   resolution="DAY" property="fechaNacimiento"/>
                     </column>
                     <column>
-                        <textField id="apellidosField" caption="Apellidos" required="true" property="apellidos" width="200px"/>
-                        <lookupField id="generoField" caption="Género" required="true" property="genero" width="125px"
+                        <textField id="apellidosField" caption="Apellidos" property="apellidos" width="200px"/>
+                        <lookupField id="generoField" caption="Género" property="genero" width="125px"
                                  optionsEnum="com.company.clinic.entity.Genero"/>
                     </column>
                 </form>
@@ -32,7 +32,7 @@
             <groupBox caption="Datos administrativos" spacing="true" icon="font-icon:ADDRESS_BOOK">
                 <form id="formDa" dataContainer="pacienteDc" captionPosition="TOP">
                     <column>
-                        <lookupField id="tipoDocumentoField" caption="Tipo Documento" required="true"
+                        <lookupField id="tipoDocumentoField" caption="Tipo Documento"
                                      property="datosAdministrativos.tipoDocumento"
                                      optionsEnum="com.company.clinic.entity.pacientes.TipoDocumento" width="110px"/>
                         <lookupField id="estadoPacienteField" caption="Estado Paciente"
@@ -48,7 +48,7 @@
                     <column>
                         <textField id="nacionalidadField" caption="Nacionalidad"
                                    property="datosAdministrativos.nacionalidad" width="125px"/>
-                        <lookupField id="provinciaAdministrativoField" caption="Provincia Nacimiento" required="true"
+                        <lookupField id="provinciaAdministrativoField" caption="Provincia Nacimiento"
                                      optionsEnum="com.company.clinic.entity.Provincia"
                                      property="datosAdministrativos.provinciaNacimiento" width="200px"/>
                     </column>
@@ -60,16 +60,16 @@
             <groupBox caption="Datos de contacto" spacing="true">
                 <form id="formDc" dataContainer="pacienteDc" captionPosition="TOP">
                     <column>
-                        <textField id="telefonoField" caption="Teléfono" required="true"
+                        <textField id="telefonoField" caption="Teléfono"
                                    property="datosContacto.telefono" width="125px"/>
                         <textField id="calleField" caption="Calle" property="datosContacto.calleContacto" width="205px"/>
                         <textField id="ciudadField" caption="Ciudad" property="datosContacto.ciudadContacto" width="200px"/>
                     </column>
                     <column>
-                        <textField id="emailField" caption="Email" required="true" property="datosContacto.email"
+                        <textField id="emailField" caption="Email" property="datosContacto.email"
                                    width="200px"/>
                         <textField id="numeroField" caption="Número" property="datosContacto.numeroContacto" width="150px"/>
-                        <lookupField id="provinciaContactoField" caption="Provincia" required="true"
+                        <lookupField id="provinciaContactoField" caption="Provincia"
                                      property="datosContacto.provinciaContacto"
                                      optionsEnum="com.company.clinic.entity.Provincia" width="200px"/>
                     </column>
@@ -88,7 +88,7 @@
             <groupBox caption="Datos de facturación" spacing="true">
                 <form id="formDf" dataContainer="pacienteDc" captionPosition="TOP">
                     <column>
-                        <textField id="nifField" caption="NIF" required="true" property="datosFacturacion.nif"
+                        <textField id="nifField" caption="NIF" property="datosFacturacion.nif"
                                    width="125px"/>
                         <textField id="calleFacturacionField" caption="Calle" property="datosFacturacion.calleFacturacion"
                                    width="205px"/>
@@ -96,16 +96,16 @@
                                    width="200px"/>
                     </column>
                     <column>
-                        <textField id="nombreFacturacionField" caption="Nombre" required="true"
+                        <textField id="nombreFacturacionField" caption="Nombre"
                                    property="datosFacturacion.nombreFacturacion" width="125px"/>
                         <textField id="numeroFacturacionField" caption="Número" property="datosFacturacion.numeroFacturacion"
                                    width="150px"/>
-                        <lookupField id="provinciaFacturacionField" caption="Provincia" required="true" width="200px"
+                        <lookupField id="provinciaFacturacionField" caption="Provincia" width="200px"
                                      optionsEnum="com.company.clinic.entity.Provincia"
                                      property="datosFacturacion.provinciaFacturacion"/>
                     </column>
                     <column>
-                        <textField id="apellidosFacturacionField" caption="Apellidos" required="true"
+                        <textField id="apellidosFacturacionField" caption="Apellidos"
                                    property="datosFacturacion.apellidosFacturacion" width="125px"/>
                     </column>
                 </form>

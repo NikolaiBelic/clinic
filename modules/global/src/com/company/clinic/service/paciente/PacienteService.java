@@ -29,5 +29,5 @@ public interface PacienteService {
 
     public Long getTotalFiltros(Map<String, Object> params);
 
-    public Paciente createPaciente(Paciente paciente);
+    public String createPaciente(Paciente paciente);
 }

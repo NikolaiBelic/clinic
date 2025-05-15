@@ -1,6 +1,10 @@
 package com.company.clinic.service.paciente;
 
 import com.company.clinic.entity.pacientes.Paciente;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.haulmont.cuba.core.app.ConfigStorageService;
 import org.slf4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
@@ -157,26 +161,48 @@ public class PacienteServiceBean implements PacienteService {
         return responseEntity.getBody();
     }
 
-    public Paciente createPaciente(Paciente paciente) {
+    public String createPaciente(Paciente paciente) {
         String urlPacientes = configStorageService.getDbProperty("URL-PACIENTES");
         String urlPacientesCreate = "/create";
         String fullUrl = urlPacientes + urlPacientesCreate;
 
         log.info(fullUrl);
 
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        String name = f.getName();
+                        return name.equals("dynamicAttributes") || name.startsWith("_persistence_") || name.startsWith("__")
+                                || name.equals("id") || name.equals("version") ||
+                        (f.getDeclaringClass().getSimpleName().startsWith("Datos") && name.equals("paciente"));
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .setPrettyPrinting()
+                .create();
+
+        String jsonPaciente = gson.toJson(paciente);
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("Traking-Id" , UUID.randomUUID().toString());
 
-        HttpEntity<Paciente> entity = new HttpEntity<>(paciente, headers);
+        HttpEntity<String> entity = new HttpEntity<>(jsonPaciente, headers);
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Paciente> responseEntity = restTemplate.exchange(
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
                 fullUrl,
                 HttpMethod.POST,
                 entity,
-                Paciente.class);
+                String.class);
 
         return responseEntity.getBody();
     }

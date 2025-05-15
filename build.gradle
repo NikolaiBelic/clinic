@@ -9,6 +9,14 @@ buildscript {
                 password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
             }
         }
+
+        maven {
+            url 'https://repo.cuba-platform.com/content/groups/premium'
+            credentials {
+                username('210504022564')
+                password('liLUmknW70Uh')
+            }
+        }
         
     }
     dependencies {
@@ -38,6 +46,7 @@ dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
     appComponent('com.haulmont.addon.helium:helium-global:0.4.1')
     appComponent ("com.haulmont.reports:reports-global:$cubaVersion")
+    appComponent('com.haulmont.addon.bproc:bproc-global:1.2.2')
 }
 
 def mssql = 'com.microsoft.sqlserver:mssql-jdbc:7.2.2.jre8'
