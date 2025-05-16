@@ -49,6 +49,12 @@
         <property name="apellidos"/>
         <property name="fechaNacimiento"/>
         <property name="genero"/>
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
+        <property name="deleteTs"/>
+        <property name="deletedBy"/>
 
         <property name="datosAdministrativos" view="datosAdministrativos-view">
         </property>
@@ -68,6 +74,12 @@
         <property name="provinciaNacimiento"/>
         <property name="tipoDocumento"/>
         <property name="numeroDocumento"/>
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
+        <property name="deleteTs"/>
+        <property name="deletedBy"/>
     </view>
 
     <view entity="clinic_DatosContacto" name="datosContacto-view">
@@ -78,6 +90,12 @@
         <property name="ciudad"/>
         <property name="provincia"/>
         <property name="codigoPostal"/>
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
+        <property name="deleteTs"/>
+        <property name="deletedBy"/>
     </view>
 
     <view entity="clinic_DatosFacturacion" name="datosFacturacion-view">
@@ -88,6 +106,12 @@
         <property name="numero"/>
         <property name="ciudad"/>
         <property name="provincia"/>
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
+        <property name="deleteTs"/>
+        <property name="deletedBy"/>
     </view>
     <view entity="clinic_Redis" name="redis-view">
         <property name="key"/>

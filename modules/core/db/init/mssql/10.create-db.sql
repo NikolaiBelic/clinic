@@ -128,7 +128,6 @@ create table CLINIC_DATOS_ADMINISTRATIVOS (
     --
     PACIENTE_ID uniqueidentifier,
     ESTADO_PACIENTE varchar(50),
-    RESPONSABLE_TRATAMIENTO_DATOS_ID uniqueidentifier,
     CIUDAD_NACIMIENTO varchar(50),
     NACIONALIDAD varchar(50),
     PROVINCIA_NACIMIENTO varchar(50),

@@ -15,6 +15,7 @@
                 <entry key="clinic_EspecialistaService" value="com.company.clinic.service.EspecialistaService"/>
                 <entry key="clinic_PacienteService" value="com.company.clinic.service.paciente.PacienteService"/>
                 <entry key="clinic_RedisService" value="com.company.clinic.service.redis.RedisService"/>
+                <entry key="clinic_PruebaService" value="com.company.clinic.service.PruebaService"/>
             </map>
         </property>
     </bean>

@@ -1,5 +1,8 @@
 package com.company.clinic.service.paciente;
 
+import com.company.clinic.entity.pacientes.DatosAdministrativos;
+import com.company.clinic.entity.pacientes.DatosContacto;
+import com.company.clinic.entity.pacientes.DatosFacturacion;
 import com.company.clinic.entity.pacientes.Paciente;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -176,8 +179,7 @@ public class PacienteServiceBean implements PacienteService {
                     public boolean shouldSkipField(FieldAttributes f) {
                         String name = f.getName();
                         return name.equals("dynamicAttributes") || name.startsWith("_persistence_") || name.startsWith("__")
-                                || name.equals("id") || name.equals("version") ||
-                        (f.getDeclaringClass().getSimpleName().startsWith("Datos") && name.equals("paciente"));
+                                || name.equals("id") || name.equals("version");
                     }
 
                     @Override
@@ -208,4 +210,58 @@ public class PacienteServiceBean implements PacienteService {
         return responseEntity.getBody();
     }
 
+    public String updatePaciente(Paciente paciente) {
+        String urlPacientes = configStorageService.getDbProperty("URL-PACIENTES");
+        String urlPacientesCreate = "/update";
+        String fullUrl = urlPacientes + urlPacientesCreate;
+
+        log.info(fullUrl);
+
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        String name = f.getName();
+                        String declaringClassName = f.getDeclaringClass().getSimpleName();
+
+                        return name.equals("dynamicAttributes")
+                                || name.startsWith("_persistence_")
+                                || name.startsWith("__")
+                                || (name.equals("paciente") && (
+                                declaringClassName.equals("DatosAdministrativos")
+                                        || declaringClassName.equals("DatosContacto")
+                                        || declaringClassName.equals("DatosFacturacion")
+                        ));
+                }
+
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .setPrettyPrinting()
+                .create();
+
+        String jsonPaciente = gson.toJson(paciente);
+        System.out.println(jsonPaciente);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Traking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<String> entity = new HttpEntity<>(jsonPaciente, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.PUT,
+                entity,
+                String.class);
+
+        return responseEntity.getBody();
+    }
 }

@@ -137,7 +137,7 @@
             </groupBox>-->
         </hbox>
         <hbox id="editActions" spacing="true">
-            <button id="insertBtn" caption="Editar" primary="true"/>
+            <button id="insertBtn" caption="Editar" primary="true" icon="font-icon:PENCIL"/>
             <button id="closeBtn" action="windowClose" stylename="danger"/>
         </hbox>
     </layout>

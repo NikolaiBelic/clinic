@@ -166,6 +166,10 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
                     .withOptions(new MapScreenOptions(params))
                     .build();
 
+            editor.addAfterCloseListener(afterCloseEvent -> {
+                pacientesDl.load();
+            });
+
             editor.show();
         }
         else {

@@ -30,4 +30,6 @@ public interface PacienteService {
     public Long getTotalFiltros(Map<String, Object> params);
 
     public String createPaciente(Paciente paciente);
+
+    public String updatePaciente(Paciente paciente);
 }

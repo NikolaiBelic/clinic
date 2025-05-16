@@ -14,6 +14,7 @@ import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.util.OperationResult;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
@@ -124,6 +125,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
     @Inject
     private UserSession userSession;
+
     @Inject
     private Notifications notifications;
 
@@ -149,30 +151,6 @@ public class PacienteEdit extends StandardEditor<Paciente> {
     public void onInsertBtnClick(Button.ClickEvent event) {
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Madrid"));
         Date fechaHoraEspana = Date.from(zonedDateTime.toInstant());
-
-        /*Gson gson = new GsonBuilder()
-            .serializeNulls() // Opcional: incluye campos nulo
-            .create();*/
-
-        /*Gson gson = new GsonBuilder()
-                .serializeNulls()
-                .addSerializationExclusionStrategy(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        String name = f.getName();
-                        return name.equals("dynamicAttributes") || name.startsWith("_persistence_") || name.startsWith("__")
-                                || (f.getDeclaringClass().getSimpleName().startsWith("Datos") && name.equals("paciente"));
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
-                .setPrettyPrinting()
-                .create();*/
-
-
 
         if ("crear".equals(modoPantalla)) {
                 if (nombreField.getValue() == null || apellidosField.getValue() == null ||
@@ -252,71 +230,115 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
                 paciente.setDatosFacturacion(datosFacturacion);
 
-            /*Gson gson = new GsonBuilder()
-                    .serializeNulls()
-                    .setDateFormat("yyyy-MM-dd")
-                    .addSerializationExclusionStrategy(new ExclusionStrategy() {
-                        @Override
-                        public boolean shouldSkipField(FieldAttributes f) {
-                            String name = f.getName();
-                            return name.equals("dynamicAttributes") || name.startsWith("_persistence_") || name.startsWith("__")
-                                    || name.equals("id") || name.equals("version");
-                        }
-
-                        @Override
-                        public boolean shouldSkipClass(Class<?> clazz) {
-                            return false;
-                        }
-                    })
-                    .setPrettyPrinting()
-                    .create();*/
-
-                /*String jsonPaciente = gson.toJson(paciente);
-                System.out.println("JSON generado: " + jsonPaciente);*/
-
-
                 try {
                     pacienteService.createPaciente(paciente);
+                    notifications.create()
+                            .withCaption("¡Paciente guardado correctamente!")
+                            .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                            .withType(Notifications.NotificationType.TRAY)
+                            .show();
+
+                    closeWithDiscard();
+
                 } catch (Exception e) {
                     System.out.println("Error insertando paciente");
                 }
 
             } else if ("editar".equals(modoPantalla)) {
+                Paciente paciente = getEditedEntity();
 
-            System.out.println("Hora en España: " + fechaHoraEspana);
+            System.out.println("Paciente ID: " + paciente.getId());
+            System.out.println("CreateTs: " + paciente.getCreateTs());
+            System.out.println("Version: " + paciente.getVersion());
+
+                paciente.setNombre(nombreField.getValue());
+                paciente.setApellidos(apellidosField.getValue());
+                paciente.setFechaNacimiento(fechaNacimientoField.getValue());
+                Genero genero = generoField.getValue() != null ?
+                        Genero.fromId(generoField.getValue().getId()): null;
+                paciente.setGenero(genero);
+                paciente.setCreateTs(paciente.getCreateTs());
+                paciente.setCreatedBy(paciente.getCreatedBy());
+                paciente.setUpdateTs(fechaHoraEspana);
+                paciente.setUpdatedBy(userSession.getUser().getLogin());
+                paciente.setVersion(paciente.getVersion());
+
+                // Datos administrativos
+                DatosAdministrativos datosAdministrativos= metadata.create(DatosAdministrativos.class);
+                TipoDocumento tipoDocumento = tipoDocumentoField.getValue() != null ?
+                        TipoDocumento.fromId(tipoDocumentoField.getValue().getId()) : null;
+                datosAdministrativos.setTipoDocumento(tipoDocumento);
+                datosAdministrativos.setNumeroDocumento(numeroDocumentoField.getValue());
+                datosAdministrativos.setNacionalidad(nacionalidadField.getValue());
+                EstadoPaciente estadoPaciente = estadoPacienteField.getValue() != null ?
+                        EstadoPaciente.fromId(estadoPacienteField.getValue().getId()) : null;
+                datosAdministrativos.setEstadoPaciente(estadoPaciente);
+                datosAdministrativos.setCiudadNacimiento(ciudadNacimientoField.getValue());
+                Provincia provinciaNacimiento = provinciaAdministrativoField.getValue() != null ?
+                        Provincia.fromId(provinciaAdministrativoField.getValue().getId()) : null;
+                datosAdministrativos.setProvinciaNacimiento(provinciaNacimiento);
+                datosAdministrativos.setCreateTs(paciente.getDatosAdministrativos().getCreateTs());
+                datosAdministrativos.setCreatedBy(paciente.getDatosAdministrativos().getCreatedBy());
+                datosAdministrativos.setUpdateTs(fechaHoraEspana);
+                datosAdministrativos.setUpdatedBy(userSession.getUser().getLogin());
+                datosAdministrativos.setVersion(paciente.getDatosAdministrativos().getVersion());
+
+                // Datos contacto
+                DatosContacto datosContacto = dataManager.create(DatosContacto.class);
+                datosContacto.setTelefono(telefonoField.getValue());
+                datosContacto.setEmail(emailField.getValue());
+                datosContacto.setCalle(calleField.getValue());
+                datosContacto.setNumero(numeroField.getValue());
+                datosContacto.setCiudad(ciudadField.getValue());
+                Provincia provinciaContacto = provinciaContactoField.getValue() != null ?
+                        Provincia.fromId(provinciaContactoField.getValue().getId()) : null;
+                datosContacto.setProvincia(provinciaContacto);
+                datosContacto.setCodigoPostal(codigoPostalField.getValue());
+                datosContacto.setCreateTs(paciente.getDatosContacto().getCreateTs());
+                datosContacto.setCreatedBy(paciente.getDatosContacto().getCreatedBy());
+                datosContacto.setUpdateTs(fechaHoraEspana);
+                datosContacto.setUpdatedBy(userSession.getUser().getLogin());
+                datosContacto.setVersion(paciente.getDatosContacto().getVersion());
+
+                // Datos facturacion
+                DatosFacturacion datosFacturacion = dataManager.create(DatosFacturacion.class);
+                datosFacturacion.setNif(nifField.getValue());
+                datosFacturacion.setNombre(nombreFacturacionField.getValue());
+                datosFacturacion.setApellidos(apellidosFacturacionField.getValue());
+                datosFacturacion.setCalle(calleFacturacionField.getValue());
+                datosFacturacion.setNumero(numeroFacturacionField.getValue());
+                datosFacturacion.setCiudad(ciudadFacturacionField.getValue());
+                Provincia provinciaFacturacion = provinciaFacturacionField.getValue() != null ?
+                        Provincia.fromId(provinciaFacturacionField.getValue().getId()) : null;
+                datosFacturacion.setProvincia(provinciaFacturacion);
+                datosFacturacion.setCreateTs(paciente.getDatosFacturacion().getCreateTs());
+                datosFacturacion.setCreatedBy(paciente.getDatosFacturacion().getCreatedBy());
+                datosFacturacion.setUpdateTs(fechaHoraEspana);
+                datosFacturacion.setUpdatedBy(userSession.getUser().getLogin());
+                datosFacturacion.setVersion(paciente.getDatosFacturacion().getVersion());
+
+                paciente.setDatosAdministrativos(datosAdministrativos);
+
+                paciente.setDatosContacto(datosContacto);
+
+                paciente.setDatosFacturacion(datosFacturacion);
+
+                try {
+                    pacienteService.updatePaciente(paciente);
+                    notifications.create()
+                            .withCaption("¡Paciente guardado correctamente!")
+                            .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                            .withType(Notifications.NotificationType.TRAY)
+                            .show();
+                    closeWithDiscard();
+
+                } catch (Exception e) {
+                    System.out.println("Error insertando paciente");
+                }
             }
-        System.out.println("========== Paciente ========");
-        System.out.println("Nombre: " + nombreField.getValue());
-        System.out.println("Apellidos: " + apellidosField.getValue());
-        System.out.println("Fecha de Nacimiento: " + fechaNacimientoField.getValue());
-        System.out.println("Género: " + generoField.getValue().getId());
-
-        /*System.out.println("========== Datos Administrativos ========");
-        System.out.println("Estado Paciente: " + estadoPacienteField.getValue().getId());
-        System.out.println("Ciudad Nacimiento: " + ciudadNacimientoField.getValue());
-        System.out.println("Nacionalidad: " + nacionalidadField.getValue());
-        System.out.println("Provincia Nacimiento: " + provinciaAdministrativoField.getValue().getId());
-        System.out.println("Tipo Documento: " + tipoDocumentoField.getValue().getId());
-        System.out.println("Número Documento: " + numeroDocumentoField.getValue());
-
-        System.out.println("========== Datos de Contacto ========");
-        System.out.println("Teléfono: " + telefonoField.getValue());
-        System.out.println("Email: " + emailField.getValue());
-        System.out.println("Calle: " + calleField.getValue());
-        System.out.println("Número: " + numeroField.getValue());
-        System.out.println("Código Postal: " + codigoPostalField.getValue());
-        System.out.println("Ciudad: " + ciudadField.getValue());
-        System.out.println("Provincia: " + provinciaContactoField.getValue().getId());
-
-        System.out.println("========== Datos de Facturación ========");
-        System.out.println("NIF: " + nifField.getValue());
-        System.out.println("Nombre Facturación: " + nombreFacturacionField.getValue());
-        System.out.println("Apellidos Facturación: " + apellidosFacturacionField.getValue());
-        System.out.println("Calle Facturación: " + calleFacturacionField.getValue());
-        System.out.println("Número Facturación: " + numeroFacturacionField.getValue());
-        System.out.println("Ciudad Facturación: " + ciudadFacturacionField.getValue());
-        System.out.println("Provincia Facturación: " + provinciaFacturacionField.getValue().getId());*/
     }
+
+
 
     @Subscribe("mismosDatosContactoFacturacion")
     public void onMismosDatosContactoFacturacionValueChange(HasValue.ValueChangeEvent<Boolean> event) {
@@ -334,25 +356,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
-        Paciente paciente = getEditedEntity();
 
-        if (paciente.getDatosAdministrativos() == null) {
-            DatosAdministrativos datos = metadata.create(DatosAdministrativos.class);
-            datos.setPaciente(paciente); // importante para mantener la relación bidireccional
-            paciente.setDatosAdministrativos(datos);
-        }
-
-        if (paciente.getDatosContacto() == null) {
-            DatosContacto datos = metadata.create(DatosContacto.class);
-            datos.setPaciente(paciente); // importante para mantener la relación bidireccional
-            paciente.setDatosContacto(datos);
-        }
-
-        if (paciente.getDatosFacturacion() == null) {
-            DatosFacturacion datos = metadata.create(DatosFacturacion.class);
-            datos.setPaciente(paciente); // importante para mantener la relación bidireccional
-            paciente.setDatosFacturacion(datos);
-        }
     }
 
 
