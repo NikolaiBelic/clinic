@@ -8,6 +8,7 @@ import com.company.clinic.service.paciente.PacienteService;
 import com.haulmont.cuba.core.app.FileStorageService;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.*;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
@@ -18,6 +19,7 @@ import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.clinic.entity.pacientes.Paciente;
 import com.haulmont.cuba.gui.screen.LookupComponent;
+import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.reports.app.service.ReportService;
 import com.haulmont.reports.entity.Report;
 import com.haulmont.yarg.reporting.ReportOutputDocument;
@@ -111,6 +113,12 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
     @Inject
     private FileStorageService fileStorageService;
 
+    @Inject
+    private UserSession userSession;
+
+    @Inject
+    private Dialogs dialogs;
+
     @Subscribe
     public void onInit(InitEvent event) {
         maxRegistros.setOptionsList(Arrays.asList(20l, 50l, 100l, 200l, 500l));
@@ -144,6 +152,9 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
                 .newEntity(nuevoPaciente)
                 .withOptions(new MapScreenOptions(params))
                 .build();
+        editor.addAfterCloseListener(afterCloseEvent -> {
+           pacientesDl.load();
+        });
         editor.show();
     }
 
@@ -177,6 +188,46 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
                     .withCaption("Seleccione un paciente")
                     .show();
         }
+    }
+
+    @Subscribe("removeBtn")
+    public void onRemoveBtnClick(Button.ClickEvent event) {
+        Set<Paciente> pacientes = pacientesTable.getSelected();
+
+        if (pacientes.isEmpty()) {
+            notifications.create()
+                    .withCaption("Seleccione al menos un paciente")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        List<UUID> pacientesIds = pacientes.stream()
+                .map(Paciente::getId)
+                .collect(Collectors.toList());
+        System.out.println(pacientesIds);
+
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("ids", pacientesIds);
+        datos.put("deletedBy", userSession.getUser().getLogin());
+
+        dialogs.createOptionDialog()
+                .withCaption("¿Desea elminiar los paciente seleccionados?")
+                .withMessage("Esta acción no se puede deshacer.")
+                .withWidth("550px")
+                .withActions(
+                        new DialogAction(DialogAction.Type.OK).withHandler(e -> {
+                            // Lógica para eliminar los pacientes
+                            pacienteService.softDeletePacientes(datos);
+                            pacientesDl.load();
+                            notifications.create()
+                                    .withCaption("Pacientes eliminados correctamente")
+                                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                                    .show();
+                        }),
+                        new DialogAction(DialogAction.Type.CANCEL)
+                )
+                .show();
     }
 
     @Install(to = "pacientesDl", target = Target.DATA_LOADER)

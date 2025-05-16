@@ -32,4 +32,6 @@ public interface PacienteService {
     public String createPaciente(Paciente paciente);
 
     public String updatePaciente(Paciente paciente);
+
+    public void softDeletePacientes(Map<String, Object> pacientes);
 }

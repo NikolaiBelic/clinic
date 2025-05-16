@@ -15,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -263,5 +264,32 @@ public class PacienteServiceBean implements PacienteService {
                 String.class);
 
         return responseEntity.getBody();
+    }
+
+    public void softDeletePacientes(Map<String, Object> pacientes) {
+        String urlPacientes = configStorageService.getDbProperty("URL-PACIENTES");
+        String urlPacientesCreate = "/soft-delete";
+        String fullUrl = urlPacientes + urlPacientesCreate;
+
+        log.info(fullUrl);
+
+        // Serializar el Map a JSON para el log
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonPacientes = gson.toJson(pacientes);
+        log.info("JSON enviado: {}", jsonPacientes);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Traking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(pacientes, headers);
+
+        RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.PATCH,
+                entity,
+                Void.class);
     }
 }

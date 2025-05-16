@@ -317,6 +317,9 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 datosFacturacion.setUpdatedBy(userSession.getUser().getLogin());
                 datosFacturacion.setVersion(paciente.getDatosFacturacion().getVersion());
 
+
+            System.out.println("Tipo de dato de fechaHoraEspana: " + fechaHoraEspana.getClass().getName());
+
                 paciente.setDatosAdministrativos(datosAdministrativos);
 
                 paciente.setDatosContacto(datosContacto);
