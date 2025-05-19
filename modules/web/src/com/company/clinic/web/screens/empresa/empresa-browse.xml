@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://datosEmpresaBrowse.caption"
-        focusComponent="datosEmpresasTable"
-        messagesPack="com.company.clinic.web.screens.datosempresa">
+        caption="msg://empresaBrowse.caption"
+        focusComponent="empresasTable"
+        messagesPack="com.company.clinic.web.screens.empresa">
     <data readOnly="true">
-        <collection id="datosEmpresasDc"
-                    class="com.company.clinic.entity.DatosEmpresa">
+        <collection id="empresasDc"
+                    class="com.company.clinic.entity.Empresa">
             <view extends="_local"/>
-            <loader id="datosEmpresasDl">
+            <loader id="empresasDl">
                 <query>
                     <![CDATA[select e from clinic_DatosEmpresa e]]>
                 </query>
@@ -17,16 +17,16 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="datosEmpresasTable"
+    <layout expand="empresasTable"
             spacing="true">
         <filter id="filter"
-                applyTo="datosEmpresasTable"
-                dataLoader="datosEmpresasDl">
+                applyTo="empresasTable"
+                dataLoader="empresasDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="datosEmpresasTable"
+        <groupTable id="empresasTable"
                     width="100%"
-                    dataContainer="datosEmpresasDc">
+                    dataContainer="empresasDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -42,9 +42,9 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="datosEmpresasTable.create"/>
-                <button id="editBtn" action="datosEmpresasTable.edit"/>
-                <button id="removeBtn" action="datosEmpresasTable.remove"/>
+                <button id="createBtn" action="empresasTable.create"/>
+                <button id="editBtn" action="empresasTable.edit"/>
+                <button id="removeBtn" action="empresasTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -1,5 +1,6 @@
 package com.company.clinic.entity;
 
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.Column;
@@ -9,17 +10,23 @@ import javax.validation.constraints.NotNull;
 
 @Table(name = "CLINIC_DATOS_EMPRESA")
 @Entity(name = "clinic_DatosEmpresa")
-public class DatosEmpresa extends StandardEntity {
+@NamePattern("%s | nombre")
+public class Empresa extends StandardEntity {
     private static final long serialVersionUID = 4533828163285666987L;
+
     @NotNull
     @Column(name = "NOMBRE", nullable = false, length = 150)
     private String nombre;
+
     @Column(name = "DIRECCION")
     private String direccion;
+
     @Column(name = "NIF", length = 9)
     private String nif;
+
     @Column(name = "TELEFONO", length = 9)
     private String telefono;
+
     @Column(name = "EMAIL", length = 75)
     private String email;
 

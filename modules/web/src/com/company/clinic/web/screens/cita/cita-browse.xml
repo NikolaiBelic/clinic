@@ -20,7 +20,10 @@
         </collection>
     </data>-->
     <data>
-        <collection id="citasDc" class="com.company.clinic.entity.Cita"/>
+        <collection id="citasDc" class="com.company.clinic.entity.Cita">
+            <view extends="cita-view"/>
+            <loader id="citasDl"/>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -31,21 +34,22 @@
                 dataLoader="citasDl">
             <properties include=".*"/>
         </filter>-->
-        <groupBox spacing="true">
+        <groupBox id="filter" spacing="true">
             <vbox spacing="true">
                 <hbox spacing="true">
-                    <dateField id="filterDia" caption="Día" resolution="DAY" datatype="date"/>
-                    <timeField id="filterHoraInicio" caption="Hora Inicio" datatype="time"/>
-                    <timeField id="filterHoraFinal" caption="Hora Final" datatype="time"/>
-                    <lookupField id="filterPaciente" caption="Paciente"/>
-                    <lookupField id="filterEspecialista" caption="Especialista"/>
-                    <lookupField id="filterServicio" caption="Servicio"/>
+                    <dateField id="dia" caption="Día" resolution="DAY" datatype="date"/>
+                    <timeField id="horaInicio" caption="Hora Inicio" datatype="time"/>
+                    <timeField id="horaFinal" caption="Hora Final" datatype="time"/>
+                    <lookupField id="paciente" caption="Paciente"/>
+                    <lookupField id="especialista" caption="Especialista"/>
+                    <lookupField id="servicio" caption="Servicio"/>
                 </hbox>
             </vbox>
             <vbox spacing="true">
                 <hbox spacing="true">
                     <checkBox id="filterPagado" caption="Pagado" align="MIDDLE_CENTER"/>
-                    <button id="filterBtn" caption="Filtrar"/>
+                    <lookupField id="maxRegistros" caption="Max Registros" width="80px"/>
+                    <button id="aplicar" caption="Aplicar"/>
                 </hbox>
             </vbox>
         </groupBox>

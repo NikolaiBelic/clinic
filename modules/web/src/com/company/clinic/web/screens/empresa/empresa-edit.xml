@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        caption="msg://datosEmpresaEdit.caption"
+        caption="msg://empresaEdit.caption"
         focusComponent="form"
-        messagesPack="com.company.clinic.web.screens.datosempresa">
+        messagesPack="com.company.clinic.web.screens.empresa">
     <data>
-        <instance id="datosEmpresaDc"
-                  class="com.company.clinic.entity.DatosEmpresa">
+        <instance id="empresaDc"
+                  class="com.company.clinic.entity.Empresa">
             <view extends="_local"/>
             <loader/>
         </instance>
@@ -13,7 +13,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="datosEmpresaDc">
+        <form id="form" dataContainer="empresaDc">
             <column width="350px">
                 <textField id="nombreField" property="nombre"/>
                 <textField id="direccionField" property="direccion"/>

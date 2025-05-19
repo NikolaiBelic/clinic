@@ -52,6 +52,11 @@
                                      optionsEnum="com.company.clinic.entity.Provincia"
                                      property="datosAdministrativos.provinciaNacimiento" width="200px"/>
                     </column>
+                    <column>
+                        <textField id="empresa" caption="Responable del tratamiento de datos" editable="false"
+                                   property="datosAdministrativos.responsableTratamientoDatos.nombre" />
+                        <label></label>
+                    </column>
                 </form>
             </groupBox>
         </hbox>

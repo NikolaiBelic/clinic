@@ -5,18 +5,20 @@
 <!--        <property name="paciente" view="_minimal"/>-->
 <!--        <property name="especialista" view="_minimal"/>-->
 <!--        <property name="servicio" view="_minimal"/>-->
+        <property name="id"/>
         <property name="dia"/>
         <property name="horaInicio"/>
         <property name="horaFinal"/>
-        <property name="paciente" view="_local">
+        <property name="paciente">
             <property name="nombre"/>
             <property name="apellidos"/>
         </property>
-        <property name="especialista" view="especialista-view">
-<!--            <property name="nombre"/>-->
-<!--            <property name="apellidos"/>-->
+        <property name="especialista">
+            <property name="id"/>
+            <property name="nombre"/>
+            <property name="especialidad"/>
         </property>
-        <property name="servicio" view="_local">
+        <property name="servicio">
             <property name="descripcion"/>
         </property>
         <property name="pagado"/>
@@ -69,6 +71,7 @@
 
     <view entity="clinic_DatosAdministrativos" name="datosAdministrativos-view">
         <property name="estadoPaciente"/>
+        <property name="responsableTratamientoDatos" view="_local"/>
         <property name="ciudadNacimiento"/>
         <property name="nacionalidad"/>
         <property name="provinciaNacimiento"/>

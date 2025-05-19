@@ -1,29 +1,24 @@
 package com.company.clinic.web.screens.paciente;
 
+import com.company.clinic.entity.Empresa;
 import com.company.clinic.entity.Genero;
 import com.company.clinic.entity.Provincia;
 import com.company.clinic.entity.pacientes.*;
 import com.company.clinic.service.paciente.PacienteService;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
-import com.haulmont.cuba.gui.util.OperationResult;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import javax.swing.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 @UiController("clinic_Paciente.edit")
 @UiDescriptor("paciente-edit.xml")
@@ -113,6 +108,15 @@ public class PacienteEdit extends StandardEditor<Paciente> {
     private Metadata metadata;
 
     @Inject
+    private Form formPaciente;
+
+    @Inject
+    private Form formDc;
+
+    @Inject
+    private Form formDa;
+
+    @Inject
     private Form formDf;
 
     @Inject
@@ -129,6 +133,13 @@ public class PacienteEdit extends StandardEditor<Paciente> {
     @Inject
     private Notifications notifications;
 
+    @Inject
+    private TextField<String> empresa;
+
+    @Inject
+    private CheckBox mismosDatosContactoFacturacion;
+
+
     @Subscribe
     public void onInit(InitEvent event) {
         ScreenOptions screenOptions = event.getOptions();
@@ -140,9 +151,42 @@ public class PacienteEdit extends StandardEditor<Paciente> {
             if ("crear".equals(modoPantalla)) {
                 // lógica para modo creación
                 insertBtn.setCaption("Crear");
+
+                empresa.setValueSource(null);
+                empresa.setValue("Klinicalia | Servicios médicos");
+
             } else if ("editar".equals(modoPantalla)) {
                 // lógica para modo edición
                 insertBtn.setCaption("Editar");
+            } else if ("ver".equals(modoPantalla)) {
+                insertBtn.setVisible(false);
+
+                // Iterar sobre todos los componentes del formulario
+                formPaciente.getComponents().forEach(component -> {
+                    if (component instanceof Field) {
+                        ((Field<?>) component).setEditable(false);
+                    }
+                });
+
+                formDa.getComponents().forEach(component -> {
+                    if (component instanceof Field) {
+                        ((Field<?>) component).setEditable(false);
+                    }
+                });
+
+                formDc.getComponents().forEach(component -> {
+                    if (component instanceof Field) {
+                        ((Field<?>) component).setEditable(false);
+                    }
+                });
+
+                formDf.getComponents().forEach(component -> {
+                    if (component instanceof Field) {
+                        ((Field<?>) component).setEditable(false);
+                    }
+                });
+
+                mismosDatosContactoFacturacion.setEditable(false);
             }
         }
     }
@@ -186,6 +230,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 EstadoPaciente estadoPaciente = estadoPacienteField.getValue() != null ?
                         EstadoPaciente.fromId(estadoPacienteField.getValue().getId()) : null;
                 datosAdministrativos.setEstadoPaciente(estadoPaciente);
+                /*datosAdministrativos.setResponsableTratamientoDatos(responsable);*/
                 datosAdministrativos.setCiudadNacimiento(ciudadNacimientoField.getValue());
                 Provincia provinciaNacimiento = provinciaAdministrativoField.getValue() != null ?
                         Provincia.fromId(provinciaAdministrativoField.getValue().getId()) : null;
@@ -264,7 +309,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 paciente.setVersion(paciente.getVersion());
 
                 // Datos administrativos
-                DatosAdministrativos datosAdministrativos= metadata.create(DatosAdministrativos.class);
+                DatosAdministrativos datosAdministrativos= paciente.getDatosAdministrativos();
                 TipoDocumento tipoDocumento = tipoDocumentoField.getValue() != null ?
                         TipoDocumento.fromId(tipoDocumentoField.getValue().getId()) : null;
                 datosAdministrativos.setTipoDocumento(tipoDocumento);
@@ -284,7 +329,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 datosAdministrativos.setVersion(paciente.getDatosAdministrativos().getVersion());
 
                 // Datos contacto
-                DatosContacto datosContacto = dataManager.create(DatosContacto.class);
+                DatosContacto datosContacto = paciente.getDatosContacto();
                 datosContacto.setTelefono(telefonoField.getValue());
                 datosContacto.setEmail(emailField.getValue());
                 datosContacto.setCalle(calleField.getValue());
@@ -301,7 +346,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 datosContacto.setVersion(paciente.getDatosContacto().getVersion());
 
                 // Datos facturacion
-                DatosFacturacion datosFacturacion = dataManager.create(DatosFacturacion.class);
+                DatosFacturacion datosFacturacion = paciente.getDatosFacturacion();
                 datosFacturacion.setNif(nifField.getValue());
                 datosFacturacion.setNombre(nombreFacturacionField.getValue());
                 datosFacturacion.setApellidos(apellidosFacturacionField.getValue());
@@ -317,8 +362,6 @@ public class PacienteEdit extends StandardEditor<Paciente> {
                 datosFacturacion.setUpdatedBy(userSession.getUser().getLogin());
                 datosFacturacion.setVersion(paciente.getDatosFacturacion().getVersion());
 
-
-            System.out.println("Tipo de dato de fechaHoraEspana: " + fechaHoraEspana.getClass().getName());
 
                 paciente.setDatosAdministrativos(datosAdministrativos);
 
@@ -354,15 +397,6 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
-        Paciente paciente = pacienteDc.getItem();
+        /*Paciente paciente = pacienteDc.getItem();*/
     }
-
-    @Subscribe
-    public void onBeforeShow(BeforeShowEvent event) {
-
-    }
-
-
-
-
 }

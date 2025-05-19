@@ -8,7 +8,7 @@
         <class>com.company.clinic.entity.Expediente</class>
         <class>com.company.clinic.entity.Cita</class>
         <class>com.company.clinic.entity.pacientes.DatosAdministrativos</class>
-        <class>com.company.clinic.entity.DatosEmpresa</class>
+        <class>com.company.clinic.entity.Empresa</class>
         <class>com.company.clinic.entity.pacientes.DatosContacto</class>
         <class>com.company.clinic.entity.pacientes.DatosFacturacion</class>
     </persistence-unit>

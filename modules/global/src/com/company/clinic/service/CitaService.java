@@ -2,6 +2,7 @@ package com.company.clinic.service;
 
 import com.company.clinic.entity.Cita;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface CitaService {
@@ -16,4 +17,6 @@ public interface CitaService {
     public List<Cita> getAllCitasMS ();
 
     public void deleteLogicalDeletedCitas();
+
+    public List<Cita> findCitasByFiltro(Map<String, Object> params);
 }

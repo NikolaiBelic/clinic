@@ -15,6 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import java.sql.Time;
@@ -41,6 +42,37 @@ public class CitaServiceBean implements CitaService {
         return dataManager.loadList(loadContext);
     }
 
+    public List<Cita> findCitasByFiltro(Map<String, Object> params) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String urlCitasFilter = "/filtro";
+        String fullUrl = urlCitas + urlCitasFilter;
+
+        int page = Integer.parseInt(params.remove("page").toString());
+        int size = Integer.parseInt(params.remove("size").toString());
+
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(fullUrl)
+                .queryParam("page", page)
+                .queryParam("size", size);
+
+        log.info(uriComponentsBuilder.toUriString());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Tracking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(params, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<Cita>> responseEntity = restTemplate.exchange(
+                uriComponentsBuilder.toUriString(),
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<List<Cita>>() {});
+
+        return responseEntity.getBody();
+    }
+
 
     public List<Cita> getCitasPorEspecialista(UUID id) {
         LoadContext<Cita> loadContext = LoadContext.create(Cita.class)
@@ -63,10 +95,8 @@ public class CitaServiceBean implements CitaService {
     @Override
     public List<Cita> getAllCitasMS() {
         String urlCitas = configStorageService.getDbProperty("URL-CITAS");
-        String endPoint = "/citas";
-        String url = urlCitas + endPoint;
 
-        log.info(url);
+        log.info(urlCitas);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -77,7 +107,7 @@ public class CitaServiceBean implements CitaService {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<Map<String, Object>>> responseEntity = restTemplate.exchange(
-                url,
+                urlCitas,
                 HttpMethod.GET,
                 entity,
                 new ParameterizedTypeReference<List<Map<String, Object>>>() {});

@@ -1,6 +1,6 @@
 package com.company.clinic.entity.pacientes;
 
-import com.company.clinic.entity.DatosEmpresa;
+import com.company.clinic.entity.Empresa;
 import com.company.clinic.entity.Provincia;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
@@ -17,6 +17,10 @@ public class DatosAdministrativos extends StandardEntity {
 
     @Column(name = "ESTADO_PACIENTE")
     private String estadoPaciente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESPONSABLE_TRATAMIENTO_DATOS_ID")
+    private Empresa responsableTratamientoDatos;
 
     @Column(name = "CIUDAD_NACIMIENTO", length = 50)
     private String ciudadNacimiento;
@@ -87,5 +91,13 @@ public class DatosAdministrativos extends StandardEntity {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public Empresa getResponsableTratamientoDatos() {
+        return responsableTratamientoDatos;
+    }
+
+    public void setResponsableTratamientoDatos(Empresa responsableTratamientoDatos) {
+        this.responsableTratamientoDatos = responsableTratamientoDatos;
     }
 }

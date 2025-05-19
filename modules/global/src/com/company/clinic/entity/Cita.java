@@ -2,6 +2,8 @@ package com.company.clinic.entity;
 
 import com.company.clinic.entity.pacientes.Paciente;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,7 +25,9 @@ public class Cita extends StandardEntity {
     @NotNull
     @Column(name = "HORA_FINAL", nullable = false)
     private Time horaFinal;
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(DeletePolicy.CASCADE)
     @JoinColumn(name = "PACIENTE_ID")
     private Paciente paciente;
     @ManyToOne(fetch = FetchType.LAZY)

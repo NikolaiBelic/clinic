@@ -6,9 +6,8 @@
         <item screen="clinic_Servicio.browse" caption="mainMsg://menu_config.clinic_Servicio.browse"/>
         <item screen="clinic_Calendariomain" caption="mainMsg://menu_config.clinic_Calendariomain"/>
         <item screen="clinic_Cita.browse" caption="mainMsg://menu_config.clinic_Cita.browse"/>
-        <item screen="clinic_DatosEmpresa.browse" caption="mainMsg://menu_config.clinic_DatosEmpresa.browse"/>
-        <item screen="clinic_Paciente.browse2" caption="mainMsg://menu_config.clinic_Paciente.browse2"/>
         <item screen="clinic_RedisBrowse" caption="mainMsg://menu_config.clinic_RedisBrowse"/>
+        <item screen="clinic_DatosEmpresa.browse" caption="mainMsg://menu_config.clinic_DatosEmpresa.browse"/>
     </menu>
     <item screen="sys$Config.browse" caption="mainMsg://menu_config.sys$Config.browse"
           insertAfter="performanceStatistics"/>

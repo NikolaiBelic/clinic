@@ -12,6 +12,7 @@ import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 
@@ -138,6 +139,28 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
                 }
             }
         });
+
+        pacientesTable.setItemClickAction(new BaseAction("itemClick")
+                .withHandler(actionPerformedEvent -> {
+                    Paciente selected = pacientesTable.getSingleSelected();
+                    if (selected != null) {
+                        Map<String, Object> params = new HashMap<>();
+                        params.put("modo", "ver");
+
+                        Paciente fullPaciente = dataManager.load(Paciente.class)
+                                .id(selected.getId())
+                                .view("paciente-edit-view")
+                                .one();
+
+                        Screen editor = screenBuilders.editor(Paciente.class, this)
+                                .withScreenId("clinic_Paciente.edit")
+                                .editEntity(fullPaciente)
+                                .withOptions(new MapScreenOptions(params))
+                                .build();
+
+                        editor.show();
+                    }
+                }));
     }
 
     @Subscribe("createBtn")
@@ -150,6 +173,7 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
         // Abrir la pantalla de edición con la nueva instancia
         Screen editor = screenBuilders.editor(Paciente.class, this)
                 .newEntity(nuevoPaciente)
+                .withScreenClass(PacienteEdit.class)
                 .withOptions(new MapScreenOptions(params))
                 .build();
         editor.addAfterCloseListener(afterCloseEvent -> {
@@ -160,35 +184,74 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
 
     @Subscribe("editBtn")
     public void onEditBtnClick(Button.ClickEvent event) {
-        Paciente selected = pacientesTable.getSingleSelected();
+        Set<Paciente> selectedPacientes = pacientesTable.getSelected();
+
+        if (selectedPacientes.size() != 1) {
+            notifications.create()
+                    .withCaption("Debe seleccionar exactamente un paciente")
+                    .withType(Notifications.NotificationType.WARNING)
+                    .show();
+            return;
+        }
+
+        Paciente selected = selectedPacientes.iterator().next();
 
         Map<String, Object> params = new HashMap<>();
         params.put("modo", "editar");
 
-        if (selected != null) {
-            Paciente fullPaciente = dataManager.load(Paciente.class)
-                    .id(selected.getId())
-                    .view("paciente-edit-view") // Asegúrate de que esta vista esté bien definida
-                    .one();
+        Paciente fullPaciente = dataManager.load(Paciente.class)
+                .id(selected.getId())
+                .view("paciente-edit-view") // Asegúrate de que esta vista esté bien definida
+                .one();
 
-            Screen editor = screenBuilders.editor(Paciente.class, this)
-                    .withScreenId("clinic_Paciente.edit")
-                    .editEntity(fullPaciente)
-                    .withOptions(new MapScreenOptions(params))
-                    .build();
+        Screen editor = screenBuilders.editor(Paciente.class, this)
+                .withScreenId("clinic_Paciente.edit")
+                .editEntity(fullPaciente)
+                .withOptions(new MapScreenOptions(params))
+                .build();
 
-            editor.addAfterCloseListener(afterCloseEvent -> {
-                pacientesDl.load();
-            });
+        editor.addAfterCloseListener(afterCloseEvent -> {
+            pacientesDl.load();
+        });
 
-            editor.show();
-        }
-        else {
-            notifications.create()
-                    .withCaption("Seleccione un paciente")
-                    .show();
-        }
+        editor.show();
     }
+
+    @Subscribe("viewBtn")
+    public void onViewBtnClick(Button.ClickEvent event) {
+        Set<Paciente> selectedPacientes = pacientesTable.getSelected();
+
+        if (selectedPacientes.size() != 1) {
+            notifications.create()
+                    .withCaption("Debe seleccionar exactamente un paciente")
+                    .withType(Notifications.NotificationType.WARNING)
+                    .show();
+            return;
+        }
+
+        Paciente selected = selectedPacientes.iterator().next();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("modo", "ver");
+
+        Paciente fullPaciente = dataManager.load(Paciente.class)
+                .id(selected.getId())
+                .view("paciente-edit-view") // Asegúrate de que esta vista esté bien definida
+                .one();
+
+        Screen editor = screenBuilders.editor(Paciente.class, this)
+                .withScreenId("clinic_Paciente.edit")
+                .editEntity(fullPaciente)
+                .withOptions(new MapScreenOptions(params))
+                .build();
+
+        editor.addAfterCloseListener(afterCloseEvent -> {
+            pacientesDl.load();
+        });
+
+        editor.show();
+    }
+
 
     @Subscribe("removeBtn")
     public void onRemoveBtnClick(Button.ClickEvent event) {
