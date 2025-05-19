@@ -8,6 +8,7 @@
         <item screen="clinic_Cita.browse" caption="mainMsg://menu_config.clinic_Cita.browse"/>
         <item screen="clinic_RedisBrowse" caption="mainMsg://menu_config.clinic_RedisBrowse"/>
         <item screen="clinic_DatosEmpresa.browse" caption="mainMsg://menu_config.clinic_DatosEmpresa.browse"/>
+        <item screen="clinic_Receta" caption="mainMsg://menu_config.clinic_Receta"/>
     </menu>
     <item screen="sys$Config.browse" caption="mainMsg://menu_config.sys$Config.browse"
           insertAfter="performanceStatistics"/>

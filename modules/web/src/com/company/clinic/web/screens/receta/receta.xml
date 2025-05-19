@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://receta.caption"
+        messagesPack="com.company.clinic.web.screens.receta">
+    <layout>
+        <groupBox id="recetaBox" caption="Receta" spacing="true">
+            <pickerField id="paciente" caption="Paciente" metaClass="clinic_Paciente"/>
+            <pickerField id="especialista" caption="Especialista" metaClass="clinic_Especialista"/>
+            <textArea id="descripcion" caption="Descripción"/>
+            <hbox>
+                <button id="enviar" caption="Enviar"/>
+            </hbox>
+            <hbox>
+                <button id="validar" caption="Validar"/>
+                <button id="denegar" caption="Denegar"/>
+            </hbox>
+        </groupBox>
+    </layout>
+</window>

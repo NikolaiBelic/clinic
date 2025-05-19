@@ -73,6 +73,28 @@ public class CitaServiceBean implements CitaService {
         return responseEntity.getBody();
     }
 
+    @Override
+    public Long getTotalFiltros(Map<String, Object> params) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String urlCitasFilter = "/filtro/total";
+        String fullUrl = urlCitas + urlCitasFilter;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Tracking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(params, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.POST,
+                entity,
+                Long.class);
+
+        return responseEntity.getBody();
+    }
 
     public List<Cita> getCitasPorEspecialista(UUID id) {
         LoadContext<Cita> loadContext = LoadContext.create(Cita.class)

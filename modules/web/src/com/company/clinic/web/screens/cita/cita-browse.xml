@@ -40,16 +40,23 @@
                     <dateField id="dia" caption="Día" resolution="DAY" datatype="date"/>
                     <timeField id="horaInicio" caption="Hora Inicio" datatype="time"/>
                     <timeField id="horaFinal" caption="Hora Final" datatype="time"/>
-                    <lookupField id="paciente" caption="Paciente"/>
-                    <lookupField id="especialista" caption="Especialista"/>
-                    <lookupField id="servicio" caption="Servicio"/>
+                    <pickerField id="paciente" caption="Paciente" metaClass="clinic_Paciente"/>
+                    <pickerField id="especialista" caption="Especialista" metaClass="clinic_Especialista"/>
+                    <pickerField id="servicio" caption="Servicio" metaClass="clinic_Servicio">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
                 </hbox>
             </vbox>
             <vbox spacing="true">
                 <hbox spacing="true">
-                    <checkBox id="filterPagado" caption="Pagado" align="MIDDLE_CENTER"/>
+
+                    <lookupField id="pagado" caption="Estado del pago" nullOptionVisible="true" nullName="Todos"/>
                     <lookupField id="maxRegistros" caption="Max Registros" width="80px"/>
                     <button id="aplicar" caption="Aplicar"/>
+                    <button id="clear" caption="Limpiar"/>
                 </hbox>
             </vbox>
         </groupBox>

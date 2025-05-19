@@ -1,8 +1,16 @@
 package com.company.clinic.web.screens.cita;
 
+import com.company.clinic.entity.Especialidad;
+import com.company.clinic.entity.Especialista;
+import com.company.clinic.entity.Servicio;
 import com.company.clinic.entity.pacientes.Paciente;
 import com.company.clinic.service.CitaService;
+import com.company.clinic.web.screens.servicio.ServicioBrowse;
+import com.haulmont.cuba.core.entity.BaseUuidEntity;
+import com.haulmont.cuba.core.global.DataLoadContext;
 import com.haulmont.cuba.core.global.LoadContext;
+import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -11,21 +19,16 @@ import com.company.clinic.entity.Cita;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 
 import javax.inject.Inject;
-import java.sql.Date;
 import java.sql.Time;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @UiController("clinic_Cita.browse")
 @UiDescriptor("cita-browse.xml")
 @LookupComponent("citasTable")
 @LoadDataBeforeShow
 public class CitaBrowse extends StandardLookup<Cita> {
-
     @Inject
-    private CheckBox filterPagado;
+    private LookupField pagado;
 
     @Inject
     CitaService citaService;
@@ -45,6 +48,27 @@ public class CitaBrowse extends StandardLookup<Cita> {
     @Inject
     private Button aplicar;
 
+    @Inject
+    private TimeField<Date> horaFinal;
+
+    @Inject
+    private TimeField<Date> horaInicio;
+
+    @Inject
+    private Button clear;
+
+    @Inject
+    private PickerField<Especialista> especialista;
+
+    @Inject
+    private Notifications notifications;
+
+    @Inject
+    private ScreenBuilders screenBuilders;
+
+    @Inject
+    private PickerField<Servicio> servicio;
+
     @Subscribe
     public void onInit(InitEvent event) {
         maxRegistros.setOptionsList(Arrays.asList(20l, 50l, 100l, 200l, 500l));
@@ -56,6 +80,20 @@ public class CitaBrowse extends StandardLookup<Cita> {
             citasDl.setFirstResult(0);
             citasDl.load();
         });
+
+        clear.addClickListener(c -> {
+            for (Component component : filter.getComponents()) {
+                if (component instanceof HasValue && !Objects.equals(component.getId(), "maxRegistros")) {
+                    ((HasValue) component).setValue(null);
+                }
+            }
+        });
+
+
+        Map<String, Boolean> opcionesPagado = new LinkedHashMap<>();
+        opcionesPagado.put("Pagado", true);
+        opcionesPagado.put("No pagado", false);
+        pagado.setOptionsMap(opcionesPagado);
     }
 
     public List<Cita> loadData (LoadContext<Cita> loadContext) {
@@ -76,6 +114,13 @@ public class CitaBrowse extends StandardLookup<Cita> {
         return loadData(loadContext);
     }
 
+    @Install(to = "citasTable", subject = "rowsCountTotalCountDelegate")
+    private Long citasTableRowsCountTotalCountDelegate(DataLoadContext dataLoadContext) {
+        return citaService.getTotalFiltros(getFiltros());
+    }
+
+
+
     public Map<String, Object> getFiltros() {
         Map<String, Object> filtros = new HashMap<>();
 
@@ -83,7 +128,16 @@ public class CitaBrowse extends StandardLookup<Cita> {
             if (item instanceof HasValue) {
                 Object valueObj = ((HasValue<?>) item).getValue();
                 if (valueObj != null && !valueObj.toString().isEmpty()) {
-                    filtros.put(item.getId(), valueObj);
+
+                    if (valueObj instanceof BaseUuidEntity) {
+                        UUID valorFinal = ((BaseUuidEntity) valueObj).getId();
+                        System.out.println(valorFinal);
+                        filtros.put(item.getId(), valorFinal);
+                    } else {
+                        filtros.put(item.getId(), valueObj);
+                    }
+
+
 
                     System.out.println("Filtro: " + item.getId() + ", Valor: " + valueObj + ", Tipo: " + valueObj.getClass().getName());
                 }
@@ -92,4 +146,35 @@ public class CitaBrowse extends StandardLookup<Cita> {
 
         return filtros;
     }
+
+    @Subscribe("servicio.lookup")
+    public void onServicioLookup(Action.ActionPerformedEvent event) {
+        Especialista especialista = this.especialista.getValue();
+
+        if (especialista == null) {
+            notifications.create()
+                    .withCaption("ERROR")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .withType(Notifications.NotificationType.ERROR)
+                    .withDescription("Debe seleccionar un especialista primero")
+                    .withHideDelayMs(1000)
+                    .show();
+        } else {
+            openServicios(especialista.getEspecialidad());
+        }
+    }
+
+    private void openServicios(Especialidad especialidad) {
+        ServicioBrowse servicioBrowse = screenBuilders.lookup(Servicio.class, this)
+                .withScreenClass(ServicioBrowse.class)
+                .withLaunchMode(OpenMode.DIALOG)
+                .withSelectHandler(services -> {
+                    Servicio servicio = services.iterator().next();
+                    this.servicio.setValue(servicio);
+                })
+                .build();
+        servicioBrowse.setEspecialidad(especialidad);
+        servicioBrowse.show();
+    }
+
 }

@@ -19,4 +19,6 @@ public interface CitaService {
     public void deleteLogicalDeletedCitas();
 
     public List<Cita> findCitasByFiltro(Map<String, Object> params);
+
+    public Long getTotalFiltros(Map<String, Object> params);
 }
