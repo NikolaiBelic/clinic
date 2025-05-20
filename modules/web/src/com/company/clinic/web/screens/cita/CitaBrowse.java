@@ -5,10 +5,12 @@ import com.company.clinic.entity.Especialista;
 import com.company.clinic.entity.Servicio;
 import com.company.clinic.entity.pacientes.Paciente;
 import com.company.clinic.service.CitaService;
+import com.company.clinic.web.screens.paciente.PacienteEdit;
 import com.company.clinic.web.screens.servicio.ServicioBrowse;
 import com.haulmont.cuba.core.entity.BaseUuidEntity;
 import com.haulmont.cuba.core.global.DataLoadContext;
 import com.haulmont.cuba.core.global.LoadContext;
+import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
@@ -68,6 +70,8 @@ public class CitaBrowse extends StandardLookup<Cita> {
 
     @Inject
     private PickerField<Servicio> servicio;
+    @Inject
+    private Metadata metadata;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -177,4 +181,23 @@ public class CitaBrowse extends StandardLookup<Cita> {
         servicioBrowse.show();
     }
 
+    @Subscribe("createBtn")
+    public void onCreateBtnClick(Button.ClickEvent event) {
+        Cita nuevaCita = metadata.create(Cita.class);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("modo", "crear");
+
+        // Abrir la pantalla de edición con la nueva instancia
+        Screen editor = screenBuilders.editor(Cita.class, this)
+                .newEntity(nuevaCita)
+                .withScreenClass(CitaEdit.class)
+                .withOptions(new MapScreenOptions(params))
+                .withLaunchMode(OpenMode.DIALOG)
+                .build();
+        editor.addAfterCloseListener(afterCloseEvent -> {
+            citasDl.load();
+        });
+        editor.show();
+    }
 }

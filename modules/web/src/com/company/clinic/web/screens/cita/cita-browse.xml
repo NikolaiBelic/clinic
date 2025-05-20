@@ -80,7 +80,7 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="citasTable.create"/>
+                <button id="createBtn" caption="Crear" primary="true"/>
                 <button id="editBtn" action="citasTable.edit"/>
                 <button id="removeBtn" action="citasTable.remove"/>
             </buttonsPanel>

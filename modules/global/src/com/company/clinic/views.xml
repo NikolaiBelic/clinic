@@ -22,7 +22,6 @@
             <property name="descripcion"/>
         </property>
         <property name="pagado"/>
-
     </view>
     <view entity="clinic_Especialista" name="especialista-view">
         <property name="nombre"/>

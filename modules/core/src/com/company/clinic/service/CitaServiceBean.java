@@ -4,9 +4,12 @@ import com.company.clinic.entity.Cita;
 import com.company.clinic.entity.Especialista;
 import com.company.clinic.entity.pacientes.Paciente;
 import com.company.clinic.entity.Servicio;
+import com.google.gson.*;
 import com.haulmont.cuba.core.app.ConfigStorageService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
+import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.View;
 import org.slf4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -18,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
+import java.lang.reflect.Type;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +38,8 @@ public class CitaServiceBean implements CitaService {
 
     @Inject
     private Logger log;
+    @Inject
+    private Metadata metadata;
 
     public List<Cita> getAllCitas() {
         LoadContext<Cita> loadContext = LoadContext.create(Cita.class)
@@ -94,6 +100,67 @@ public class CitaServiceBean implements CitaService {
                 Long.class);
 
         return responseEntity.getBody();
+    }
+
+    public String createCita(Cita cita) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String urlCitasCreate = "/create";
+        String fullUrl = urlCitas + urlCitasCreate;
+
+        log.info("Enviando cita a: {}", fullUrl);
+
+        // 1. Crear estructura manual con el formato exacto requerido
+        Map<String, Object> citaJson = new LinkedHashMap<>(); // LinkedHashMap mantiene el orden
+        citaJson.put("dia", new SimpleDateFormat("yyyy-MM-dd").format(cita.getDia()));
+        citaJson.put("horaInicio", formatTime(cita.getHoraInicio()));
+        citaJson.put("horaFinal", formatTime(cita.getHoraFinal()));
+        citaJson.put("pagado", cita.getPagado());
+
+        // Campos de auditoría
+        citaJson.put("createTs", formatDateTime(cita.getCreateTs()));
+        citaJson.put("createdBy", cita.getCreatedBy());
+        citaJson.put("updateTs", formatDateTime(cita.getUpdateTs()));
+
+        // Relaciones con estructura {id: 'valor'}
+        citaJson.put("paciente", Collections.singletonMap(
+                "id", cita.getPaciente() != null ? cita.getPaciente().getId().toString() : null));
+        citaJson.put(
+                "especialista", Collections.singletonMap("id", cita.getEspecialista() != null ? cita.getEspecialista().getId().toString() : null));
+        citaJson.put(
+                "servicio", Collections.singletonMap("id", cita.getServicio() != null ? cita.getServicio().getId().toString() : null));
+
+        // 2. Configurar Gson
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .setPrettyPrinting()
+                .create();
+
+        String jsonCita = gson.toJson(citaJson);
+        System.out.println(jsonCita);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Traking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<String> entity = new HttpEntity<>(jsonCita, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.POST,
+                entity,
+                String.class);
+
+        return responseEntity.getBody();
+    }
+
+    private String formatTime(Time time) {
+        return time != null ? new SimpleDateFormat("HH:mm:ss").format(time) : null;
+    }
+
+    private String formatDateTime(Date date) {
+        return date != null ? new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(date) : null;
     }
 
     public List<Cita> getCitasPorEspecialista(UUID id) {

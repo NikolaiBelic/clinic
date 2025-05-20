@@ -14,39 +14,54 @@
             <loader/>
         </instance>
     </data>
-    <dialogMode height="600"
-                width="800"/>
-    <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="citaDc">
-            <column width="350px">
-                <dateField id="diaField" property="dia"/>
-                <timeField id="horaInicioField" property="horaInicio"/>
-                <timeField id="horaFinalField" property="horaFinal"/>
-                <pickerField id="pacienteField" property="paciente">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <pickerField id="especialistaField" property="especialista">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <pickerField id="servicioField" property="servicio">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <checkBox id="pagadoField" property="pagado"/>
-            </column>
-        </form>
-        <hbox id="editActions" spacing="true">
+    <dialogMode height="350"
+                width="1000"/>
+    <layout spacing="true" width="100%">
+        <groupBox caption="Gestión de citas" width="AUTO">
+            <form id="form" dataContainer="citaDc" captionPosition="TOP" css="margin-bottom: 20px;">
+                <column>
+                    <dateField id="dia" property="dia" />
+                    <pickerField id="paciente" property="paciente">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                </column>
+                <column>
+                    <timeField id="horaInicio" property="horaInicio" width="75px"/>
+                    <pickerField id="especialista" property="especialista">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                </column>
+                <column>
+                    <timeField id="horaFinal" property="horaFinal" width="75px"/>
+                    <pickerField id="servicio" property="servicio">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                </column>
+                <column>
+                    <label></label>
+                    <checkBox id="pagado" property="pagado"/>
+                </column>
+            </form>
+
+            <buttonsPanel spacing="true">
+                <button id="insertBtn" caption="Guardar" icon="font-icon:CHECK" primary="true"/>
+                <button id="closeBtn" caption="Cancelar" stylename="danger" icon="font-icon:BAN"/>
+                <button id="btnFactura" caption="Factura" icon="font-icon:PAPERCLIP"/>
+            </buttonsPanel>
+        </groupBox>
+        <!--<hbox spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>
             <button id="btnFactura" caption="Factura" icon="font-icon:PAPERCLIP"/>
-        </hbox>
+        </hbox>-->
     </layout>
 </window>
