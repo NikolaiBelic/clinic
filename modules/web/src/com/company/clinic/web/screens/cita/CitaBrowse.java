@@ -9,20 +9,25 @@ import com.company.clinic.web.screens.paciente.PacienteEdit;
 import com.company.clinic.web.screens.servicio.ServicioBrowse;
 import com.haulmont.cuba.core.entity.BaseUuidEntity;
 import com.haulmont.cuba.core.global.DataLoadContext;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.clinic.entity.Cita;
 import com.haulmont.cuba.gui.screen.LookupComponent;
+import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
 import java.sql.Time;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @UiController("clinic_Cita.browse")
 @UiDescriptor("cita-browse.xml")
@@ -70,8 +75,18 @@ public class CitaBrowse extends StandardLookup<Cita> {
 
     @Inject
     private PickerField<Servicio> servicio;
+
     @Inject
     private Metadata metadata;
+
+    @Inject
+    private GroupTable<Cita> citasTable;
+    @Inject
+    private DataManager dataManager;
+    @Inject
+    private UserSession userSession;
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -92,6 +107,28 @@ public class CitaBrowse extends StandardLookup<Cita> {
                 }
             }
         });
+
+        citasTable.setItemClickAction(new BaseAction("itemClick")
+                .withHandler(actionPerformedEvent -> {
+                    Cita selected = citasTable.getSingleSelected();
+                    if (selected != null) {
+                        Map<String, Object> params = new HashMap<>();
+                        params.put("modo", "ver");
+
+                        Cita fullCita = dataManager.load(Cita.class)
+                                .id(selected.getId())
+                                .view("cita-view")
+                                .one();
+
+                        Screen editor = screenBuilders.editor(Cita.class, this)
+                                .withScreenId("clinic_Cita.edit")
+                                .editEntity(fullCita)
+                                .withOptions(new MapScreenOptions(params))
+                                .build();
+
+                        editor.show();
+                    }
+                }));
 
 
         Map<String, Boolean> opcionesPagado = new LinkedHashMap<>();
@@ -199,5 +236,110 @@ public class CitaBrowse extends StandardLookup<Cita> {
             citasDl.load();
         });
         editor.show();
+    }
+
+    @Subscribe("editBtn")
+    public void onEditBtnClick(Button.ClickEvent event) {
+        Set<Cita> selectedCitas = citasTable.getSelected();
+
+        if (selectedCitas.size() != 1) {
+            notifications.create()
+                    .withCaption("Debe seleccionar exactamente una cita")
+                    .withType(Notifications.NotificationType.WARNING)
+                    .show();
+            return;
+        }
+
+        Cita selected = selectedCitas.iterator().next();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("modo", "editar");
+
+        Cita fullCita = dataManager.load(Cita.class)
+                .id(selected.getId())
+                .view("cita-view") // Asegúrate de que esta vista esté bien definida
+                .one();
+
+        Screen editor = screenBuilders.editor(Cita.class, this)
+                .withScreenId("clinic_Cita.edit")
+                .editEntity(fullCita)
+                .withOptions(new MapScreenOptions(params))
+                .build();
+
+        editor.addAfterCloseListener(afterCloseEvent -> {
+            citasDl.load();
+        });
+
+        editor.show();
+    }
+
+    @Subscribe("viewBtn")
+    public void onViewBtnClick(Button.ClickEvent event) {
+        Set<Cita> selectedCitas = citasTable.getSelected();
+
+        if (selectedCitas.size() != 1) {
+            notifications.create()
+                    .withCaption("Debe seleccionar exactamente una cita")
+                    .withType(Notifications.NotificationType.WARNING)
+                    .show();
+            return;
+        }
+
+        Cita selected = selectedCitas.iterator().next();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("modo", "ver");
+
+        Cita fullCita = dataManager.load(Cita.class)
+                .id(selected.getId())
+                .view("cita-view") // Asegúrate de que esta vista esté bien definida
+                .one();
+
+        Screen editor = screenBuilders.editor(Cita.class, this)
+                .withScreenId("clinic_Cita.edit")
+                .editEntity(fullCita)
+                .withOptions(new MapScreenOptions(params))
+                .build();
+        editor.show();
+    }
+
+    @Subscribe("removeBtn")
+    public void onRemoveBtnClick(Button.ClickEvent event) {
+        Set<Cita> citas = citasTable.getSelected();
+
+        if (citas.isEmpty()) {
+            notifications.create()
+                    .withCaption("Seleccione al menos una cita")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        List<UUID> citasIds = citas.stream()
+                .map(Cita::getId)
+                .collect(Collectors.toList());
+        System.out.println(citasIds);
+
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("ids", citasIds);
+        datos.put("deletedBy", userSession.getUser().getLogin());
+
+        dialogs.createOptionDialog()
+                .withCaption("¿Desea elminiar las citas seleccionados?")
+                .withMessage("Esta acción no se puede deshacer.")
+                .withWidth("550px")
+                .withActions(
+                        new DialogAction(DialogAction.Type.OK).withHandler(e -> {
+                            // Lógica para eliminar los pacientes
+                            citaService.softDeleteCitas(datos);
+                            citasDl.load();
+                            notifications.create()
+                                    .withCaption("Citas eliminados correctamente")
+                                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                                    .show();
+                        }),
+                        new DialogAction(DialogAction.Type.CANCEL)
+                )
+                .show();
     }
 }

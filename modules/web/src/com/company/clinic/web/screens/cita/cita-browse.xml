@@ -62,7 +62,7 @@
         </groupBox>
         <groupTable id="citasTable"
                     width="100%"
-                    dataContainer="citasDc">
+                    dataContainer="citasDc" multiselect="true">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -80,9 +80,10 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+                <button id="viewBtn" caption="Ver" icon="font-icon:EYE"/>
                 <button id="createBtn" caption="Crear" primary="true"/>
-                <button id="editBtn" action="citasTable.edit"/>
-                <button id="removeBtn" action="citasTable.remove"/>
+                <button id="editBtn" caption="Editar" icon="font-icon:PENCIL"/>
+                <button id="removeBtn" caption="Borrar" icon="font-icon:TRASH" stylename="danger"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -81,6 +81,10 @@ public class CitaEdit extends StandardEditor<Cita> {
     private CitaService citaService;
     @Inject
     private UserSession userSession;
+    @Inject
+    private Button insertBtn;
+    @Inject
+    private Button closeBtn;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -89,6 +93,19 @@ public class CitaEdit extends StandardEditor<Cita> {
         if (screenOptions instanceof MapScreenOptions) {
             Map<String, Object> params = ((MapScreenOptions) screenOptions).getParams();
             modoPantalla = (String) params.get("modo");
+        }
+
+        if ("ver".equals(modoPantalla)) {
+            servicio.setEditable(false);
+            paciente.setEditable(false);
+            especialista.setEditable(false);
+            dia.setEditable(false);
+            horaInicio.setEditable(false);
+            horaFinal.setEditable(false);
+            pagado.setEditable(false);
+            insertBtn.setVisible(false);
+            closeBtn.setCaption("Volver");
+            /*closeBtn.setIcon("font-icon:BACK");*/
         }
     }
 
@@ -206,7 +223,7 @@ public class CitaEdit extends StandardEditor<Cita> {
             try {
                 citaService.createCita(cita);
                 notifications.create()
-                        .withCaption("¡Paciente guardado correctamente!")
+                        .withCaption("¡Cita guardada correctamente!")
                         .withPosition(Notifications.Position.BOTTOM_RIGHT)
                         .withType(Notifications.NotificationType.TRAY)
                         .show();
@@ -214,9 +231,37 @@ public class CitaEdit extends StandardEditor<Cita> {
                 closeWithDiscard();
 
             } catch (Exception e) {
-                System.out.println("Error insertando paciente");
+                System.out.println("Error insertando cita");
             }
 
+        } else if ("editar".equals(modoPantalla)) {
+            Cita cita = getEditedEntity();
+
+            cita.setDia(dia.getValue());
+            cita.setHoraInicio(horaInicio.getValue());
+            cita.setHoraFinal(horaFinal.getValue());
+            cita.setEspecialista(especialista.getValue());
+            cita.setServicio(servicio.getValue());
+            cita.setPaciente(paciente.getValue());
+            cita.setCreateTs(cita.getCreateTs());
+            cita.setCreatedBy(cita.getCreatedBy());
+            cita.setUpdateTs(fechaHoraEspana);
+            cita.setUpdatedBy(userSession.getUser().getLogin());
+            cita.setPagado(pagado.getValue());
+
+            try {
+                citaService.updateCita(cita);
+                notifications.create()
+                        .withCaption("¡Cita editada correctamente!")
+                        .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                        .withType(Notifications.NotificationType.TRAY)
+                        .show();
+
+                closeWithDiscard();
+
+            } catch (Exception e) {
+                System.out.println("Error editando cita");
+            }
         }
     }
 

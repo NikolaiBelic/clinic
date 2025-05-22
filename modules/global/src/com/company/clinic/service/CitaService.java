@@ -23,4 +23,8 @@ public interface CitaService {
     public Long getTotalFiltros(Map<String, Object> params);
 
     public String createCita(Cita cita);
+
+    public String updateCita(Cita cita);
+
+    public void softDeleteCitas(Map<String, Object> citas);
 }

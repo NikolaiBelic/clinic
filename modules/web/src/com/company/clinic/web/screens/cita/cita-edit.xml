@@ -6,7 +6,7 @@
     <data>
         <instance id="citaDc"
                   class="com.company.clinic.entity.Cita">
-            <view extends="_local">
+            <view extends="cita-view">
                 <property name="paciente" view="_minimal"/>
                 <property name="especialista" view="especialista-view"/>
                 <property name="servicio" view="_minimal"/>

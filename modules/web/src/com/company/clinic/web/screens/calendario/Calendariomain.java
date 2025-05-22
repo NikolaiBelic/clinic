@@ -40,6 +40,8 @@ public class Calendariomain extends Screen {
     @Inject
     private Notifications notifications;
 
+    private Map<UUID, Cita> eventCitaMap = new HashMap<>();
+
     @Subscribe
     public void onInit(InitEvent event) {
         VBoxLayout vBox = uiComponents.create(VBoxLayout.class);
@@ -109,36 +111,37 @@ public class Calendariomain extends Screen {
 
 
         List<Cita> citas = citaService.getAllCitasMS();
+        System.out.println(citas.size());
         for (Cita cita : citas) {
+            cita.toString();
+            System.out.println(cita);
             generateEvents(cita, calendario);
+            System.out.println("Nombre: " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellidos());
+            System.out.println("Fecha: " + cita.getDia());
+            System.out.println("Hora inicio: " + cita.getHoraInicio());
+            System.out.println("Hora final: " + cita.getHoraFinal());
+            System.out.println("Especialista: " + cita.getEspecialista().getNombre() + " " + cita.getEspecialista().getApellidos());
         }
 
         calendario.addEventClickListener(e -> {
-            Cita cita = citaService.getCita(UUID.fromString(e.getCalendarEvent().getDescription()));
+            /*Cita cita = citaService.getCita(UUID.fromString(e.getCalendarEvent().getDescription()));*/
+            UUID citaId = UUID.fromString(e.getCalendarEvent().getDescription());
+            Cita cita = eventCitaMap.get(citaId);
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("modo", "editar");
+
             Screen citaEditScreen = screenBuilders.editor(Cita.class, this)
                     .editEntity(cita)
                     .withLaunchMode(OpenMode.DIALOG)
+                    .withOptions(new MapScreenOptions(params))
                     .build()
                     .show();
 
             citaEditScreen.addAfterCloseListener(afterCloseEvent -> {
-               if (afterCloseEvent.closedWith(StandardOutcome.COMMIT)) {
-                   notifications.create()
-                           .withCaption("Saved!")
-                           .withDescription("Se ha guardado la cita")
-                           .withType(Notifications.NotificationType.TRAY)
-                           .show();
-
                    List<Cita> citasUpdated = citaService.getAllCitasMS();
                    updateCalendar(citasUpdated, calendario);
 
-               } else {
-                   notifications.create()
-                           .withCaption("AVISO")
-                           .withDescription("Se ha cancelado la edición")
-                           .withType(Notifications.NotificationType.WARNING)
-                           .show();
-               }
             });
 
 
@@ -176,8 +179,8 @@ public class Calendariomain extends Screen {
         calendarEvent.setEnd(fechaHoraFinal);
         calendarEvent.setCaption("P: " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellidos());
         calendarEvent.setDescription(cita.getId().toString());
-        /*calendarEvent.setDescription("E: " + cita.getEspecialista().getNombre() + " "
-                + cita.getEspecialista().getApellidos());*/
+
+        eventCitaMap.put(cita.getId(), cita);
 
         String idEspecialista = cita.getEspecialista().getId().toString();
 

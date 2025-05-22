@@ -5,6 +5,10 @@
 <!--        <property name="paciente" view="_minimal"/>-->
 <!--        <property name="especialista" view="_minimal"/>-->
 <!--        <property name="servicio" view="_minimal"/>-->
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
         <property name="id"/>
         <property name="dia"/>
         <property name="horaInicio"/>
@@ -16,6 +20,7 @@
         <property name="especialista">
             <property name="id"/>
             <property name="nombre"/>
+            <property name="apellidos"/>
             <property name="especialidad"/>
         </property>
         <property name="servicio">

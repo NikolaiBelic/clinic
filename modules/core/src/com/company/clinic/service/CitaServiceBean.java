@@ -16,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -155,6 +156,89 @@ public class CitaServiceBean implements CitaService {
         return responseEntity.getBody();
     }
 
+    public String updateCita(Cita cita) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String urlCitasCreate = "/update";
+        String fullUrl = urlCitas + urlCitasCreate;
+
+        log.info("Enviando cita a: {}", fullUrl);
+
+        // 1. Crear estructura manual con el formato exacto requerido
+        Map<String, Object> citaJson = new LinkedHashMap<>(); // LinkedHashMap mantiene el orden
+        citaJson.put("id", cita.getId().toString());
+        citaJson.put("dia", new SimpleDateFormat("yyyy-MM-dd").format(cita.getDia()));
+        citaJson.put("horaInicio", formatTime(cita.getHoraInicio()));
+        citaJson.put("horaFinal", formatTime(cita.getHoraFinal()));
+        citaJson.put("pagado", cita.getPagado());
+
+        // Campos de auditoría
+        citaJson.put("createTs", cita.getCreateTs());
+        citaJson.put("createdBy", cita.getCreatedBy());
+        citaJson.put("updateTs", formatDateTime(cita.getUpdateTs()));
+        citaJson.put("updatedBy", cita.getCreatedBy());
+        citaJson.put("version", cita.getVersion());
+
+        // Relaciones con estructura {id: 'valor'}
+        citaJson.put("paciente", Collections.singletonMap(
+                "id", cita.getPaciente() != null ? cita.getPaciente().getId().toString() : null));
+        citaJson.put(
+                "especialista", Collections.singletonMap("id", cita.getEspecialista() != null ? cita.getEspecialista().getId().toString() : null));
+        citaJson.put(
+                "servicio", Collections.singletonMap("id", cita.getServicio() != null ? cita.getServicio().getId().toString() : null));
+
+        // 2. Configurar Gson
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .setPrettyPrinting()
+                .create();
+
+        String jsonCita = gson.toJson(citaJson);
+        System.out.println(jsonCita);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Traking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<String> entity = new HttpEntity<>(jsonCita, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.PUT,
+                entity,
+                String.class);
+
+        return responseEntity.getBody();
+    }
+
+    public void softDeleteCitas(Map<String, Object> citas) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String urlCitasSoftDelete = "/soft-delete";
+        String fullUrl = urlCitas + urlCitasSoftDelete;
+
+        log.info(fullUrl);
+
+        // Serializar el Map a JSON para el log
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonCitas = gson.toJson(citas);
+        log.info("JSON enviado: {}", jsonCitas);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Traking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(citas, headers);
+
+        RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.PATCH,
+                entity,
+                Void.class);
+    }
+
     private String formatTime(Time time) {
         return time != null ? new SimpleDateFormat("HH:mm:ss").format(time) : null;
     }
@@ -183,7 +267,31 @@ public class CitaServiceBean implements CitaService {
 
     @Override
     public List<Cita> getAllCitasMS() {
+
         String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+
+        log.info(urlCitas);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Traking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<Cita>> responseEntity = restTemplate.exchange(
+                urlCitas,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<Cita>>() {});
+
+        System.out.println(
+                responseEntity.getBody()
+        );
+        return responseEntity.getBody();
+
+        /*String urlCitas = configStorageService.getDbProperty("URL-CITAS");
 
         log.info(urlCitas);
 
@@ -288,7 +396,7 @@ public class CitaServiceBean implements CitaService {
             citas.add(cita);
         }
 
-        return citas;
+        return citas;*/
     }
 
     @Override
