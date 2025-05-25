@@ -26,8 +26,8 @@
             <loader id="pacientesDl"/>
         </collection>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="900"
+                width="1368"/>
     <layout expand="pacientesTable"
             spacing="true">
         <!--<filter id="filter"

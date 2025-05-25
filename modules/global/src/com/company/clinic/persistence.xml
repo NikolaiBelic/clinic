@@ -11,5 +11,6 @@
         <class>com.company.clinic.entity.Empresa</class>
         <class>com.company.clinic.entity.pacientes.DatosContacto</class>
         <class>com.company.clinic.entity.pacientes.DatosFacturacion</class>
+        <class>com.company.clinic.entity.Factura</class>
     </persistence-unit>
 </persistence>

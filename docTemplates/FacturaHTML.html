@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Factura </title>
+        <style type="text/css">
+ * { font-family: Times New Roman; }
+ body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        /* Contenedor principal */
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        /* Encabezado */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .invoice-info {
+            text-align: right;
+        }
+        
+        /* Secciones */
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        /* Tabla de productos */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .items-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        .items-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        /* Totales */
+        .totals {
+            float: right;
+            width: 300px;
+        }
+        
+        .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .totals-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .totals-table tr:last-child td {
+            font-weight: bold;
+            border-top: 2px solid #4CAF50;
+        }
+        
+        /* Pie de página */
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9em;
+            color: #777;
+            text-align: center;
+        }
+        
+        /* Estilos específicos para datos */
+        .invoice-number {
+            font-size: 1.5em;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .client-info {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="invoice-container">
+        <!-- Encabezado -->
+        <div class="header">
+            <div>
+                <% def factura = Root.bands.Factura %>
+                <h1 style="color: #4CAF50;">${factura.fields.nombreEmpresa.first()}</h1>
+                <p>${factura.fields.direccion.first()}</p>
+                <p>Tel: ${factura.fields.telefonoEmpresa.first()}</p>
+                <p>${factura.fields.emailEmpresa.first()}</p>
+            </div>
+            <div class="invoice-info">
+                <span class="invoice-number">FACTURA ${factura.fields.numeroFactura.first()}</span>
+                <p>Fecha: ${factura.fields.fechaEmision.first()}</p>
+            </div>
+        </div>
+        
+        <!-- Datos del Paciente -->
+        <div class="section">
+            <div class="section-title">DATOS DEL PACIENTE</div>
+            <div class="client-info">
+                <p><strong>Nombre:</strong> ${factura.fields.nombre_completo.first()}</p>
+        
+                    <p><strong>Teléfono:</strong> ${factura.fields.telefonoPaciente.first()}</p>
+
+           
+                    <p><strong>Email:</strong> ${factura.fields.emailContacto.first()}</p>
+
+            </div>
+        </div>
+        
+        <!-- Servicios -->
+        <div class="section">
+            <div class="section-title">SERVICIOS</div>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                        <tr>
+                            <td>${factura.fields.descripcion.first()}</td>
+                            <td>${factura.fields.precio.first()}</td>
+                        </tr>
+        
+                        <tr>
+                            <td>Consulta médica</td>
+                            <td>150.00</td>
+                        </tr>
+                        <tr>
+                            <td>Análisis clínicos</td>
+                            <td>200.00</td>
+                        </tr>
+                
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Totales -->
+        <div class="totals">
+            <table class="totals-table">
+                <tr>
+                    <td>Subtotal:</td>
+                    <td>350.00</td>
+                </tr>
+                <tr>
+                    <td>IVA (0%):</td>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <td>Total:</td>
+                    <td>350.00</td>
+                </tr>
+            </table>
+        </div>
+        <div style="clear: both;"></div>
+        
+        <!-- Observaciones -->
+        <div class="section">
+            <div class="section-title">OBSERVACIONES</div>
+            <p>${factura.fields.exencionIva.first()}</p>
+            <p>Forma de pago: Efectivo</p>
+        </div>
+        
+        <!-- Pie de página -->
+        <div class="footer">
+            <p>¡Gracias por su preferencia!</p>
+            <p>Este documento es una factura electrónica y no requiere sello ni firma.</p>
+            <p>Sistema de Facturación - </p>
+        </div>
+    </div>
+
+</body>
+</html>

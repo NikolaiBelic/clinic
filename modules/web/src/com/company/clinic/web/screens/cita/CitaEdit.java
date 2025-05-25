@@ -3,6 +3,7 @@ package com.company.clinic.web.screens.cita;
 import com.company.clinic.entity.*;
 import com.company.clinic.entity.pacientes.*;
 import com.company.clinic.service.CitaService;
+import com.company.clinic.service.FacturaService;
 import com.company.clinic.web.screens.servicio.ServicioBrowse;
 import com.haulmont.cuba.core.app.FileStorageService;
 import com.haulmont.cuba.core.entity.FileDescriptor;
@@ -85,6 +86,8 @@ public class CitaEdit extends StandardEditor<Cita> {
     private Button insertBtn;
     @Inject
     private Button closeBtn;
+    @Inject
+    private FacturaService facturaService;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -113,6 +116,19 @@ public class CitaEdit extends StandardEditor<Cita> {
     public void onEspecialistaFieldValueChange(PickerField.FieldValueChangeEvent<Especialista> event) {
         servicio.setValue(null);
     }
+
+    @Subscribe("paciente.lookup")
+    public void onPacienteLookup(Action.ActionPerformedEvent event) {
+        screenBuilders.lookup(Paciente.class, this)
+                .withLaunchMode(OpenMode.DIALOG) // Configura el modo diálogo
+                .withSelectHandler(pacientes -> {
+                    Paciente pacienteSeleccionado = pacientes.iterator().next();
+                    getEditedEntity().setPaciente(pacienteSeleccionado);
+                })
+                .build()
+                .show();
+    }
+
 
     @Subscribe("servicio.lookup")
     public void onServicioLookup(Action.ActionPerformedEvent event) {
@@ -147,44 +163,49 @@ public class CitaEdit extends StandardEditor<Cita> {
     @Subscribe("btnFactura")
     public void onBtnFacturaClick(Button.ClickEvent event) {
         Cita cita = getEditedEntity();
-        UUID pacienteId = cita.getPaciente().getId();
 
-        // Obtener el reporte
-        Report report = dataManager.load(Report.class)
-                .query("SELECT r FROM report$Report r WHERE r.code = :reportCode")
-                .parameter("reportCode", "FacturaPDF1")
-                .one();
-
-        // Crear parámetros del reporte
-        Map<String, Object> reportParams = new HashMap<>();
-        reportParams.put("pacienteId", pacienteId);
-
-        // Ejecutar el reporte
         try {
+            // 1. Primero creamos la factura (sin el PDF aún)
+            String numeroFactura = facturaService.generarNumeroFacturaSecuencial();
+            String exencionIva = "Servicios médicos exentos de IVA según normativa vigente";
+
+            Factura factura = facturaService.crearFacturaParaCita(cita, null, numeroFactura, exencionIva);
+
+            // 2. Generamos el reporte con el ID de la factura
+            Report report = dataManager.load(Report.class)
+                    .query("SELECT r FROM report$Report r WHERE r.code = :reportCode")
+                    .parameter("reportCode", "FacturaPDF1")
+                    .one();
+
+            Map<String, Object> reportParams = new HashMap<>();
+            reportParams.put("facturaId", factura.getId());
+
             ReportOutputDocument reportResult = reportService.createReport(report, reportParams);
 
-            // Crear un FileDescriptor
+            // 3. Creamos y guardamos el archivo PDF
             FileDescriptor fileDescriptor = metadata.create(FileDescriptor.class);
-            fileDescriptor.setName("FacturaPaciente.pdf");
+            fileDescriptor.setName("Factura_" + factura.getNumeroFactura() + ".pdf");
             fileDescriptor.setExtension("pdf");
             fileDescriptor.setSize((long) reportResult.getContent().length);
             fileDescriptor.setCreateDate(new Date());
-
-            // Guardar el archivo en el almacenamiento de archivos
             fileStorageService.saveFile(fileDescriptor, reportResult.getContent());
-            dataManager.commit(fileDescriptor);
+            fileDescriptor = dataManager.commit(fileDescriptor);
 
-            // Descargar el archivo
+            // 4. Actualizamos la factura con el PDF
+            facturaService.actualizarArchivoFactura(factura, fileDescriptor);
+
+            // 5. Mostramos resultados
             exportDisplay.show(fileDescriptor);
-        } catch (ReportingException e) {
             notifications.create()
-                    .withCaption("Error al generar el reporte")
-                    .withDescription(e.getMessage())
+                    .withCaption("Factura generada exitosamente")
+                    .withDescription("Número: " + factura.getNumeroFactura())
                     .show();
-        } catch (FileStorageException e) {
+
+        } catch (Exception e) {
             notifications.create()
-                    .withCaption("Error al guardar el archivo")
+                    .withCaption("Error al generar factura")
                     .withDescription(e.getMessage())
+                    .withType(Notifications.NotificationType.ERROR)
                     .show();
         }
     }
