@@ -256,15 +256,31 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
                 // Datos facturacion
                 DatosFacturacion datosFacturacion = dataManager.create(DatosFacturacion.class);
-                datosFacturacion.setNif(nifField.getValue());
-                datosFacturacion.setNombre(nombreFacturacionField.getValue());
-                datosFacturacion.setApellidos(apellidosFacturacionField.getValue());
-                datosFacturacion.setCalle(calleFacturacionField.getValue());
-                datosFacturacion.setNumero(numeroFacturacionField.getValue());
-                datosFacturacion.setCiudad(ciudadFacturacionField.getValue());
-                Provincia provinciaFacturacion = provinciaFacturacionField.getValue() != null ?
-                        Provincia.fromId(provinciaFacturacionField.getValue().getId()) : null;
-                datosFacturacion.setProvincia(provinciaFacturacion);
+
+                if (mismosDatosContactoFacturacion.getValue() != null &&
+                        mismosDatosContactoFacturacion.getValue().equals(true)) {
+                    // Si los datos de contacto y facturación son los mismos, copiamos los datos de contacto
+                    datosFacturacion.setNif(numeroDocumentoField.getValue());
+                    datosFacturacion.setNombre(nombreField.getValue());
+                    datosFacturacion.setApellidos(apellidosField.getValue());
+                    datosFacturacion.setCalle(calleField.getValue());
+                    datosFacturacion.setNumero(numeroField.getValue());
+                    datosFacturacion.setCiudad(ciudadField.getValue());
+                    Provincia provinciaFacturacion = provinciaContactoField.getValue() != null ?
+                            Provincia.fromId(provinciaContactoField.getValue().getId()) : null;
+                    datosFacturacion.setProvincia(provinciaFacturacion);
+                } else {
+                    datosFacturacion.setNif(nifField.getValue());
+                    datosFacturacion.setNombre(nombreFacturacionField.getValue());
+                    datosFacturacion.setApellidos(apellidosFacturacionField.getValue());
+                    datosFacturacion.setCalle(calleFacturacionField.getValue());
+                    datosFacturacion.setNumero(numeroFacturacionField.getValue());
+                    datosFacturacion.setCiudad(ciudadFacturacionField.getValue());
+                    Provincia provinciaFacturacion = provinciaFacturacionField.getValue() != null ?
+                            Provincia.fromId(provinciaFacturacionField.getValue().getId()) : null;
+                    datosFacturacion.setProvincia(provinciaFacturacion);
+                }
+
                 datosFacturacion.setCreateTs(fechaHoraEspana);
                 datosFacturacion.setCreatedBy(userSession.getUser().getLogin());
                 datosFacturacion.setUpdateTs(fechaHoraEspana);
@@ -277,6 +293,7 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
                 try {
                     pacienteService.createPaciente(paciente);
+
                     notifications.create()
                             .withCaption("¡Paciente guardado correctamente!")
                             .withPosition(Notifications.Position.BOTTOM_RIGHT)
