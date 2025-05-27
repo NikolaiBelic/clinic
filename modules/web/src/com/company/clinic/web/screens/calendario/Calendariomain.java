@@ -11,10 +11,12 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.Calendar;
 import com.haulmont.cuba.gui.components.calendar.SimpleCalendarEvent;
 import com.haulmont.cuba.gui.screen.*;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
 
@@ -81,6 +83,11 @@ public class Calendariomain extends Screen {
 
         calendario = uiComponents.create(Calendar.class);
 
+        System.out.println("Primer día: " + calendario.getStartDate());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
+        System.out.println("Final: " + sdf.format(calendario.getEndDate()));
+
         calendario.setWidth("100%");
         calendario.setHeightFull();
         calendario.setNavigationButtonsVisible(true);
@@ -113,14 +120,14 @@ public class Calendariomain extends Screen {
         List<Cita> citas = citaService.getAllCitasMS();
         System.out.println(citas.size());
         for (Cita cita : citas) {
-            cita.toString();
-            System.out.println(cita);
+            /*cita.toString();
+            System.out.println(cita);*/
             generateEvents(cita, calendario);
-            System.out.println("Nombre: " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellidos());
+            /*System.out.println("Nombre: " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellidos());
             System.out.println("Fecha: " + cita.getDia());
             System.out.println("Hora inicio: " + cita.getHoraInicio());
             System.out.println("Hora final: " + cita.getHoraFinal());
-            System.out.println("Especialista: " + cita.getEspecialista().getNombre() + " " + cita.getEspecialista().getApellidos());
+            System.out.println("Especialista: " + cita.getEspecialista().getNombre() + " " + cita.getEspecialista().getApellidos());*/
         }
 
         calendario.addEventClickListener(e -> {
@@ -145,6 +152,27 @@ public class Calendariomain extends Screen {
             });
 
 
+        });
+
+        calendario.addForwardClickListener(dateCalendarForwardClickEvent -> {
+            System.out.println("He avanzado una semana");
+
+            calendario.setStartDate(DateUtils.addWeeks(calendario.getStartDate(), 1));
+             calendario.setEndDate(DateUtils.addWeeks(calendario.getEndDate(), 1));
+
+            System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
+            System.out.println("Final: " + sdf.format(calendario.getEndDate()));
+
+        });
+
+        calendario.addBackwardClickListener(dateCalendarBackwardClickEvent -> {
+            System.out.println("He retrocedido una semana");
+
+            calendario.setStartDate(DateUtils.addWeeks(calendario.getStartDate(), -1));
+            calendario.setEndDate(DateUtils.addWeeks(calendario.getEndDate(), -1));
+
+            System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
+            System.out.println("Final: " + sdf.format(calendario.getEndDate()));
         });
     }
 

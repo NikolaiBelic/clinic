@@ -25,6 +25,7 @@ import com.haulmont.yarg.reporting.ReportOutputDocument;
 import javax.inject.Inject;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -113,9 +114,13 @@ public class CitaEdit extends StandardEditor<Cita> {
     }
 
     @Subscribe("especialista")
-    public void onEspecialistaFieldValueChange(PickerField.FieldValueChangeEvent<Especialista> event) {
+    public void onEspecialistaValueChange(HasValue.ValueChangeEvent<Especialista> event) {
         servicio.setValue(null);
     }
+
+
+
+
 
     @Subscribe("paciente.lookup")
     public void onPacienteLookup(Action.ActionPerformedEvent event) {
@@ -159,6 +164,22 @@ public class CitaEdit extends StandardEditor<Cita> {
         servicioBrowse.setEspecialidad(especialidad);
         servicioBrowse.show();
     }
+
+    @Subscribe("horaInicio")
+    public void onHoraInicioValueChange(HasValue.ValueChangeEvent<Time> event) {
+        Time horaInicioTime = event.getValue();
+        System.out.println(horaInicioTime);
+
+        LocalTime localTimeInicio = horaInicioTime.toLocalTime();
+
+        LocalTime localTimeFinal = localTimeInicio.plusHours(1);
+
+        Time horaFinalTime = Time.valueOf(localTimeFinal);
+        System.out.println(horaFinalTime);
+        horaFinal.setValue(horaFinalTime);
+
+    }
+
 
     @Subscribe("btnFactura")
     public void onBtnFacturaClick(Button.ClickEvent event) {
