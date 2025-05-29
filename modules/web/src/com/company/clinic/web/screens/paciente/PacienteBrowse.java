@@ -123,7 +123,9 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
     @Subscribe
     public void onInit(InitEvent event) {
         maxRegistros.setOptionsList(Arrays.asList(20l, 50l, 100l, 200l, 500l));
-        maxRegistros.addValueChangeListener(e -> { pacientesDl.setMaxResults(maxRegistros.getValue().intValue()); });
+        maxRegistros.addValueChangeListener(e -> {
+            pacientesDl.setMaxResults(Objects.requireNonNull(maxRegistros.getValue()).intValue());
+        });
         maxRegistros.setNullOptionVisible(false);
         maxRegistros.setValue(20l);
 

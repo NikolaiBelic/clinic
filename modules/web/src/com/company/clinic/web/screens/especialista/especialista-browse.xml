@@ -4,26 +4,35 @@
         caption="msg://especialistaBrowse.caption"
         focusComponent="especialistasTable"
         messagesPack="com.company.clinic.web.screens.especialista">
-    <data readOnly="true">
+    <data>
         <collection id="especialistasDc"
                     class="com.company.clinic.entity.Especialista">
             <view extends="_local"/>
-            <loader id="especialistasDl">
-                <query>
-                    <![CDATA[select e from clinic_Especialista e]]>
-                </query>
-            </loader>
+            <loader id="especialistasDl"/>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="especialistasTable"
             spacing="true">
-        <filter id="filter"
+        <!--<filter id="filter"
                 applyTo="especialistasTable"
                 dataLoader="especialistasDl">
             <properties include=".*"/>
-        </filter>
+        </filter>-->
+        <groupBox id="filter" spacing="true">
+            <vbox spacing="true">
+                <hbox spacing="true">
+                    <textField id="nombre" caption="Nombre" width="150px"/>
+                    <textField id="apellidos" caption="Apellidos" width="200px"/>
+                    <textField id="dni" caption="DNI" width="110px"/>
+                    <lookupField id="especialidad" caption="Especialidad" width="150px"
+                            optionsEnum="com.company.clinic.entity.Especialidad"/>
+                    <button id="aplicar" caption="Aplicar" primary="true" shortcut="ENTER" align="BOTTOM_CENTER"/>
+                    <button id="limpiar" caption="Limpiar" align="BOTTOM_CENTER"/>
+                </hbox>
+            </vbox>
+        </groupBox>
         <groupTable id="especialistasTable"
                     width="100%"
                     dataContainer="especialistasDc">
@@ -41,9 +50,10 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="especialistasTable.create"/>
-                <button id="editBtn" action="especialistasTable.edit"/>
-                <button id="removeBtn" action="especialistasTable.remove"/>
+                <button id="viewBtn" caption="Ver" icon="font-icon:EYE"/>
+                <button id="createBtn" caption="Crear" icon="font-icon:BOOK" primary="true"/>
+                <button id="editBtn" caption="Editar" icon="font-icon:PENCIL"/>
+                <button id="removeBtn" caption="Borrar" icon="font-icon:TRASH" stylename="danger"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
