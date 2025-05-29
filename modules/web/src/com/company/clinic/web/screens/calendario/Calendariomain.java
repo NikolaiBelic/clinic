@@ -42,10 +42,16 @@ public class Calendariomain extends Screen {
     @Inject
     private Notifications notifications;
 
-    private Map<UUID, Cita> eventCitaMap = new HashMap<>();
+    private final Map<UUID, Cita> eventCitaMap = new HashMap<>();
+
+    private final Map<String, Object> paramsFiltro = new HashMap<>();
+
+    private List<Cita> citas = new ArrayList<Cita>();
 
     @Subscribe
     public void onInit(InitEvent event) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         VBoxLayout vBox = uiComponents.create(VBoxLayout.class);
         HBoxLayout hBox = uiComponents.create(HBoxLayout.class);
         hBox.setSpacing(true);
@@ -59,6 +65,7 @@ public class Calendariomain extends Screen {
 
         // Filter
         LookupField filter = uiComponents.create(LookupField.class);
+        filter.setNullSelectionCaption("Todos los especialistas");
         List<Especialista> especialistas = especialistaService.getEspecialistas();
         filter.setOptionsList(especialistas);
 
@@ -66,11 +73,16 @@ public class Calendariomain extends Screen {
             Especialista selectedEspecialista = (Especialista) filter.getValue();
 
             if (selectedEspecialista != null) {
-                List<Cita> citas = citaService.getCitasPorEspecialista(selectedEspecialista.getId());
+                paramsFiltro.put("especialista", selectedEspecialista.getId());
+                citas = citaService.getCitasCalendario(paramsFiltro);
 
                 updateCalendar(citas, calendario);
             } else {
-                List<Cita> citas = citaService.getAllCitasMS();
+                paramsFiltro.remove("especialista");
+                paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+                paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+
+                citas = citaService.getCitasCalendario(paramsFiltro);
 
                 updateCalendar(citas, calendario);
             }
@@ -83,10 +95,10 @@ public class Calendariomain extends Screen {
 
         calendario = uiComponents.create(Calendar.class);
 
-        System.out.println("Primer día: " + calendario.getStartDate());
+        /*System.out.println("Primer día: " + calendario.getStartDate());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
-        System.out.println("Final: " + sdf.format(calendario.getEndDate()));
+        System.out.println("Final: " + sdf.format(calendario.getEndDate()));*/
 
         calendario.setWidth("100%");
         calendario.setHeightFull();
@@ -117,7 +129,14 @@ public class Calendariomain extends Screen {
         getWindow().expand(vBox);
 
 
-        List<Cita> citas = citaService.getAllCitasMS();
+        System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
+        System.out.println("Final: " + sdf.format(calendario.getEndDate()));
+
+
+        paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+        paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+
+        citas = citaService.getCitasCalendario(paramsFiltro);
         System.out.println(citas.size());
         for (Cita cita : citas) {
             /*cita.toString();
@@ -135,30 +154,42 @@ public class Calendariomain extends Screen {
             UUID citaId = UUID.fromString(e.getCalendarEvent().getDescription());
             Cita cita = eventCitaMap.get(citaId);
 
-            Map<String, Object> params = new HashMap<>();
-            params.put("modo", "editar");
+            Map<String, Object> paramsScreen = new HashMap<>();
+            paramsScreen.put("modo", "editar");
 
             Screen citaEditScreen = screenBuilders.editor(Cita.class, this)
                     .editEntity(cita)
                     .withLaunchMode(OpenMode.DIALOG)
-                    .withOptions(new MapScreenOptions(params))
+                    .withOptions(new MapScreenOptions(paramsScreen))
                     .build()
                     .show();
 
             citaEditScreen.addAfterCloseListener(afterCloseEvent -> {
-                   List<Cita> citasUpdated = citaService.getAllCitasMS();
-                   updateCalendar(citasUpdated, calendario);
+                paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+                paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
 
+                citas = citaService.getCitasCalendario(paramsFiltro);
+                updateCalendar(citas, calendario);
             });
-
-
         });
 
         calendario.addForwardClickListener(dateCalendarForwardClickEvent -> {
             System.out.println("He avanzado una semana");
 
             calendario.setStartDate(DateUtils.addWeeks(calendario.getStartDate(), 1));
-             calendario.setEndDate(DateUtils.addWeeks(calendario.getEndDate(), 1));
+            calendario.setEndDate(DateUtils.addWeeks(calendario.getEndDate(), 1));
+
+            paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+            paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+
+            citas = citaService.getCitasCalendario(paramsFiltro);
+
+            calendario.getEventProvider().removeAllEvents();
+
+            for (Cita cita : citas) {
+                generateEvents(cita, calendario);
+            }
+
 
             System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
             System.out.println("Final: " + sdf.format(calendario.getEndDate()));
@@ -170,6 +201,17 @@ public class Calendariomain extends Screen {
 
             calendario.setStartDate(DateUtils.addWeeks(calendario.getStartDate(), -1));
             calendario.setEndDate(DateUtils.addWeeks(calendario.getEndDate(), -1));
+
+            paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+            paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+
+            citas = citaService.getCitasCalendario(paramsFiltro);
+
+            calendario.getEventProvider().removeAllEvents();
+
+            for (Cita cita : citas) {
+                generateEvents(cita, calendario);
+            }
 
             System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
             System.out.println("Final: " + sdf.format(calendario.getEndDate()));

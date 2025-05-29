@@ -49,6 +49,33 @@ public class CitaServiceBean implements CitaService {
         return dataManager.loadList(loadContext);
     }
 
+    @Override
+    public List<Cita> getCitasCalendario(Map<String, Object> params) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String urlCitasCalendario = "/calendario";
+        String fullUrl = urlCitas + urlCitasCalendario;
+
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(fullUrl);
+
+        log.info(uriComponentsBuilder.toUriString());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Tracking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(params, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<Cita>> responseEntity = restTemplate.exchange(
+                uriComponentsBuilder.toUriString(),
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<List<Cita>>() {});
+
+        return responseEntity.getBody();
+    }
+
     public List<Cita> findCitasByFiltro(Map<String, Object> params) {
         String urlCitas = configStorageService.getDbProperty("URL-CITAS");
         String urlCitasFilter = "/filtro";
