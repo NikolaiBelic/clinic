@@ -97,6 +97,7 @@
         <property name="ciudad"/>
         <property name="provincia"/>
         <property name="codigoPostal"/>
+        <property name="copiaContactoFacturacion"/>
         <property name="createTs"/>
         <property name="createdBy"/>
         <property name="updateTs"/>

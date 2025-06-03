@@ -55,8 +55,8 @@
 
                     <lookupField id="pagado" caption="Estado del pago" nullOptionVisible="true" nullName="Todos"/>
                     <lookupField id="maxRegistros" caption="Max Registros" width="80px"/>
-                    <button id="aplicar" caption="Aplicar"/>
-                    <button id="clear" caption="Limpiar"/>
+                    <button id="aplicar" caption="Aplicar" align="BOTTOM_CENTER"/>
+                    <button id="clear" caption="Limpiar" align="BOTTOM_CENTER"/>
                 </hbox>
             </vbox>
         </groupBox>

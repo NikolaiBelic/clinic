@@ -35,6 +35,9 @@ public class DatosContacto extends StandardEntity {
     @Column(name = "PROVINCIA")
     private String provincia;
 
+    @Column(name = "COPIA_CONTACTO_FACTURACION")
+    private Boolean copiaContactoFacturacion;
+
     // Modificar getter/setter:
     public Provincia getProvincia() {
         return provincia == null ? null : Provincia.fromId(provincia);
@@ -98,5 +101,13 @@ public class DatosContacto extends StandardEntity {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Boolean getCopiaContactoFacturacion() {
+        return copiaContactoFacturacion;
+    }
+
+    public void setCopiaContactoFacturacion(Boolean copiaContactoFacturacion) {
+        this.copiaContactoFacturacion = copiaContactoFacturacion;
     }
 }

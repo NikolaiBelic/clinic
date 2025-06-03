@@ -86,8 +86,10 @@
                                    width="125px"/>
                     </column>
                 </form>
-                <checkBox id="mismosDatosContactoFacturacion"
-                          caption="Utilizar datos de contacto como datos de facturación"/>
+                <form id="formDcCopia" dataContainer="pacienteDc">
+                    <checkBox id="mismosDatosContactoFacturacion" property="datosContacto.copiaContactoFacturacion"
+                              caption="Utilizar datos de contacto como datos de facturación"/>
+                </form>
             </groupBox>
 
             <groupBox caption="Datos de facturación" spacing="true">
