@@ -55,6 +55,7 @@
             <buttonsPanel spacing="true">
                 <button id="insertBtn" caption="Guardar" icon="font-icon:CHECK" primary="true"/>
                 <button id="closeBtn" caption="Cancelar" stylename="danger" icon="font-icon:BAN"/>
+                <button id="removeBtn" caption="Borrar" icon="font-icon:TRASH"/>
                 <button id="btnFactura" caption="Factura" icon="font-icon:PAPERCLIP"/>
             </buttonsPanel>
         </groupBox>

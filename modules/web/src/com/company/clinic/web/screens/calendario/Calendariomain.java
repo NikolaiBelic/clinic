@@ -11,8 +11,10 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.Calendar;
 import com.haulmont.cuba.gui.components.calendar.SimpleCalendarEvent;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.security.global.UserSession;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.sql.Time;
@@ -24,7 +26,7 @@ import java.util.*;
 @UiDescriptor("CalendarioMain.xml")
 public class Calendariomain extends Screen {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Calendariomain.class);
+    private static final Logger log = LoggerFactory.getLogger(Calendariomain.class);
     @Inject
     private UiComponents uiComponents;
 
@@ -47,6 +49,8 @@ public class Calendariomain extends Screen {
     private final Map<String, Object> paramsFiltro = new HashMap<>();
 
     private List<Cita> citas = new ArrayList<Cita>();
+    @Inject
+    private UserSession userSession;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -68,6 +72,17 @@ public class Calendariomain extends Screen {
         filter.setNullSelectionCaption("Todos los especialistas");
         List<Especialista> especialistas = especialistaService.getEspecialistas();
         filter.setOptionsList(especialistas);
+
+        for (Especialista esp : especialistas) {
+            if (userSession.getUser().getLogin().equalsIgnoreCase(esp.getNombre())) {
+                filter.setValue(esp);
+                break;
+            }
+            if (userSession.getUser().getLogin().equalsIgnoreCase(esp.getNombre())) {
+                filter.setValue(esp);
+                break;
+            }
+        }
 
         filter.addValueChangeListener(e -> {
             Especialista selectedEspecialista = (Especialista) filter.getValue();
@@ -135,6 +150,10 @@ public class Calendariomain extends Screen {
 
         paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
         paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+        if (filter.getValue() != null) {
+            Especialista selectedEspecialista = (Especialista) filter.getValue();
+            paramsFiltro.put("especialista", selectedEspecialista.getId());
+        }
 
         citas = citaService.getCitasCalendario(paramsFiltro);
         System.out.println(citas.size());

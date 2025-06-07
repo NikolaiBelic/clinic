@@ -448,4 +448,28 @@ public class CitaServiceBean implements CitaService {
                 entity,
                 String.class);
     }
+
+    @Override
+    public Boolean checkSolapamiento(Map <String, Object> params) {
+        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+        String endPoint = "/check-solapamiento";
+
+        String fullUrl = urlCitas + endPoint;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Tracking-Id" , UUID.randomUUID().toString());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(params, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                fullUrl,
+                HttpMethod.POST,
+                entity,
+                Boolean.class);
+
+        return responseEntity.getBody();
+    }
 }

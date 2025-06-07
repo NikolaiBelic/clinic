@@ -21,6 +21,7 @@ import com.haulmont.reports.app.service.ReportService;
 import com.haulmont.reports.entity.Report;
 import com.haulmont.reports.exception.ReportingException;
 import com.haulmont.yarg.reporting.ReportOutputDocument;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import java.sql.Time;
@@ -28,10 +29,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @UiController("clinic_Cita.edit")
 @UiDescriptor("cita-edit.xml")
@@ -39,6 +38,7 @@ import java.util.UUID;
 @LoadDataBeforeShow
 public class CitaEdit extends StandardEditor<Cita> {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CitaEdit.class);
     @Inject
     private DataManager dataManager;
 
@@ -59,36 +59,53 @@ public class CitaEdit extends StandardEditor<Cita> {
 
     @Inject
     private PickerField<Servicio> servicio;
+
     @Inject
     private Notifications notification;
+
     @Inject
     private ScreenBuilders screenBuilders;
+
     @Inject
     private Dialogs dialog;
 
     private String modoPantalla;
+
     @Inject
     private TimeField<Time> horaFinal;
+
     @Inject
     private TimeField<Time> horaInicio;
+
     @Inject
     private PickerField<Especialista> especialista;
+
     @Inject
     private DateField<Date> dia;
+
     @Inject
     private PickerField<Paciente> paciente;
+
     @Inject
     private CheckBox pagado;
+
     @Inject
     private CitaService citaService;
+
     @Inject
     private UserSession userSession;
+
     @Inject
     private Button insertBtn;
+
     @Inject
     private Button closeBtn;
+
     @Inject
     private FacturaService facturaService;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -111,6 +128,16 @@ public class CitaEdit extends StandardEditor<Cita> {
             closeBtn.setCaption("Volver");
             /*closeBtn.setIcon("font-icon:BACK");*/
         }
+
+        Map<String, Object> paramsPrueba = new HashMap<>();
+        paramsPrueba.put("dia", "2025-06-04");
+        paramsPrueba.put("horaInicio", "10:00:00");
+        paramsPrueba.put("horaFinal", "11:00:00");
+        paramsPrueba.put("especialistaId", "82495D52-71B5-560D-71F1-F686E54D8922");
+        paramsPrueba.put("citaId", "C02EE140-1630-4B55-A2A7-435A4A9D0000");
+
+        Boolean check = citaService.checkSolapamiento(paramsPrueba);
+        System.out.println(check);
     }
 
     @Subscribe("especialista")
@@ -311,5 +338,38 @@ public class CitaEdit extends StandardEditor<Cita> {
     public void onCloseBtnClick(Button.ClickEvent event) {
         closeWithDefaultAction();
     }
+
+    @Subscribe("removeBtn")
+    public void onRemoveBtnClick(Button.ClickEvent event) {
+        UUID citaId = getEditedEntity().getId();
+
+        List<UUID> citasIds = new ArrayList<>(List.of());
+        citasIds.add(citaId);
+        log.info(citasIds.toString());
+
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("ids", citasIds);
+        datos.put("deletedBy", userSession.getUser().getLogin());
+
+        dialogs.createOptionDialog()
+                .withCaption("¿Está seguro que desea eliminar la cita?")
+                .withMessage("Esta acción no se puede deshacer.")
+                .withWidth("550px")
+                .withActions(
+                        new DialogAction(DialogAction.Type.OK).withHandler(e -> {
+                            // Lógica para eliminar los pacientes
+                            citaService.softDeleteCitas(datos);
+                            notifications.create()
+                                    .withCaption("Cita eliminada correctamente")
+                                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                                    .show();
+                            closeWithDiscard();
+                        }),
+                        new DialogAction(DialogAction.Type.CANCEL)
+                )
+                .show();
+    }
+
+
 
 }
