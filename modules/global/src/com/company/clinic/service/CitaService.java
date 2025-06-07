@@ -32,5 +32,5 @@ public interface CitaService {
 
     public void softDeleteCitas(Map<String, Object> citas);
 
-    public Boolean checkSolapamiento(Map<String, Object> params);
+    public Boolean checkSolapamiento(Cita cita);
 }

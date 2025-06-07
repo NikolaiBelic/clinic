@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://expedienteBrowse.caption"
+        focusComponent="expedientesTable"
+        messagesPack="com.company.clinic.web.screens.expediente">
+    <data readOnly="true">
+        <collection id="expedientesDc"
+                    class="com.company.clinic.entity.Expediente">
+            <view extends="_local">
+                <property name="especialista" view="_minimal"/>
+                <property name="paciente" view="_minimal"/>
+            </view>
+            <loader id="expedientesDl">
+                <query>
+                    <![CDATA[select e from clinic_Expediente e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="expedientesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="expedientesTable"
+                dataLoader="expedientesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="expedientesTable"
+                    width="100%"
+                    dataContainer="expedientesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="titulo"/>
+                <column id="descripcion"/>
+                <column id="especialista"/>
+                <column id="paciente"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="expedientesTable.create"/>
+                <button id="editBtn" action="expedientesTable.edit"/>
+                <button id="removeBtn" action="expedientesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

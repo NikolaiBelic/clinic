@@ -8,7 +8,6 @@ import com.company.clinic.web.screens.servicio.ServicioBrowse;
 import com.haulmont.cuba.core.app.FileStorageService;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
@@ -19,18 +18,16 @@ import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.reports.app.service.ReportService;
 import com.haulmont.reports.entity.Report;
-import com.haulmont.reports.exception.ReportingException;
 import com.haulmont.yarg.reporting.ReportOutputDocument;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @UiController("clinic_Cita.edit")
 @UiDescriptor("cita-edit.xml")
@@ -38,7 +35,7 @@ import java.util.stream.Collectors;
 @LoadDataBeforeShow
 public class CitaEdit extends StandardEditor<Cita> {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CitaEdit.class);
+    private static final Logger log = LoggerFactory.getLogger(CitaEdit.class);
     @Inject
     private DataManager dataManager;
 
@@ -106,6 +103,10 @@ public class CitaEdit extends StandardEditor<Cita> {
 
     @Inject
     private Dialogs dialogs;
+    @Inject
+    private Button removeBtn;
+    @Inject
+    private Button btnFactura;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -126,18 +127,14 @@ public class CitaEdit extends StandardEditor<Cita> {
             pagado.setEditable(false);
             insertBtn.setVisible(false);
             closeBtn.setCaption("Volver");
+            removeBtn.setVisible(false);
             /*closeBtn.setIcon("font-icon:BACK");*/
         }
 
-        Map<String, Object> paramsPrueba = new HashMap<>();
-        paramsPrueba.put("dia", "2025-06-04");
-        paramsPrueba.put("horaInicio", "10:00:00");
-        paramsPrueba.put("horaFinal", "11:00:00");
-        paramsPrueba.put("especialistaId", "82495D52-71B5-560D-71F1-F686E54D8922");
-        paramsPrueba.put("citaId", "C02EE140-1630-4B55-A2A7-435A4A9D0000");
-
-        Boolean check = citaService.checkSolapamiento(paramsPrueba);
-        System.out.println(check);
+        if ("crear".equals(modoPantalla)) {
+            removeBtn.setVisible(false);
+            btnFactura.setVisible(false);
+        }
     }
 
     @Subscribe("especialista")
@@ -197,6 +194,7 @@ public class CitaEdit extends StandardEditor<Cita> {
         Time horaInicioTime = event.getValue();
         System.out.println(horaInicioTime);
 
+        assert horaInicioTime != null;
         LocalTime localTimeInicio = horaInicioTime.toLocalTime();
 
         LocalTime localTimeFinal = localTimeInicio.plusHours(1);
@@ -263,31 +261,93 @@ public class CitaEdit extends StandardEditor<Cita> {
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Madrid"));
         Date fechaHoraEspana = Date.from(zonedDateTime.toInstant());
 
-        if ("crear".equals(modoPantalla)) {
-            if (dia.getValue() == null || horaInicio.getValue() == null ||
-                    horaFinal.getValue() == null) {
+        // 1. Validar campos obligatorios
+        if (dia.getValue() == null || horaInicio.getValue() == null ||
+                horaFinal.getValue() == null || especialista.getValue() == null) {
 
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("Por favor, completa todos los campos obligatorios.")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        // 2. Validar que hora inicio < hora final
+        if (horaInicio.getValue().after(horaFinal.getValue())) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("La hora de inicio no puede ser posterior a la hora final.")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        // 3. Validar horario laboral (10:00 - 20:00)
+        Time horaApertura = Time.valueOf("10:00:00");
+        Time horaCierre = Time.valueOf("20:00:00");
+
+        if (horaInicio.getValue().before(horaApertura)) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("La clínica abre a las 10:00. No se pueden agendar citas antes de esa hora.")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        if (horaFinal.getValue().after(horaCierre)) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("La clínica cierra a las 20:00. No se pueden agendar citas después de esa hora.")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        // 4. Validar duración mínima (opcional)
+        long duracionMinutos = (horaFinal.getValue().getTime() - horaInicio.getValue().getTime()) / (60 * 1000);
+        if (duracionMinutos < 15) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("La cita debe tener al menos 15 minutos de duración.")
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+            return;
+        }
+
+        // 5. Crear objeto cita para validación
+        Cita cita = metadata.create(Cita.class);
+        cita.setDia(dia.getValue());
+        cita.setHoraInicio(horaInicio.getValue());
+        cita.setHoraFinal(horaFinal.getValue());
+        cita.setEspecialista(especialista.getValue());
+
+        // 6. Validar solapamiento con el servicio
+        if ("editar".equals(modoPantalla)) {
+            cita.setId(getEditedEntity().getId());
+        }
+
+        // Validar solapamiento (el backend decide qué método usar)
+        try {
+            if (citaService.checkSolapamiento(cita)) {
                 notifications.create(Notifications.NotificationType.WARNING)
-                        .withCaption("Por favor, completa todos los campos obligatorios.")
+                        .withCaption("El especialista ya tiene una cita en ese horario.")
                         .withPosition(Notifications.Position.BOTTOM_RIGHT)
                         .show();
-
                 return;
             }
+        } catch (Exception e) {
+            notifications.create(Notifications.NotificationType.ERROR)
+                    .withCaption("Error al verificar disponibilidad")
+                    .withDescription(e.getMessage())
+                    .show();
+            return;
+        }
 
-            Cita cita = metadata.create(Cita.class);
-
-            cita.setDia(dia.getValue());
-            cita.setHoraInicio(horaInicio.getValue());
-            System.out.println("Hora inicio: " + horaInicio.getValue());
-            cita.setHoraFinal(horaFinal.getValue());
-            cita.setEspecialista(especialista.getValue());
+        // 7. Continuar con creación/edición
+        if ("crear".equals(modoPantalla)) {
             cita.setServicio(servicio.getValue());
             cita.setPaciente(paciente.getValue());
             cita.setCreateTs(fechaHoraEspana);
             cita.setCreatedBy(userSession.getUser().getLogin());
             cita.setUpdateTs(fechaHoraEspana);
-
+            cita.setPagado(pagado.getValue());
 
             try {
                 citaService.createCita(cita);
@@ -296,40 +356,38 @@ public class CitaEdit extends StandardEditor<Cita> {
                         .withPosition(Notifications.Position.BOTTOM_RIGHT)
                         .withType(Notifications.NotificationType.TRAY)
                         .show();
-
                 closeWithDiscard();
-
             } catch (Exception e) {
-                System.out.println("Error insertando cita");
+                notifications.create(Notifications.NotificationType.ERROR)
+                        .withCaption("Error al crear cita")
+                        .withDescription(e.getMessage())
+                        .show();
             }
-
         } else if ("editar".equals(modoPantalla)) {
-            Cita cita = getEditedEntity();
-
-            cita.setDia(dia.getValue());
-            cita.setHoraInicio(horaInicio.getValue());
-            cita.setHoraFinal(horaFinal.getValue());
-            cita.setEspecialista(especialista.getValue());
-            cita.setServicio(servicio.getValue());
-            cita.setPaciente(paciente.getValue());
-            cita.setCreateTs(cita.getCreateTs());
-            cita.setCreatedBy(cita.getCreatedBy());
-            cita.setUpdateTs(fechaHoraEspana);
-            cita.setUpdatedBy(userSession.getUser().getLogin());
-            cita.setPagado(pagado.getValue());
+            Cita citaEditada = getEditedEntity();
+            citaEditada.setDia(dia.getValue());
+            citaEditada.setHoraInicio(horaInicio.getValue());
+            citaEditada.setHoraFinal(horaFinal.getValue());
+            citaEditada.setEspecialista(especialista.getValue());
+            citaEditada.setServicio(servicio.getValue());
+            citaEditada.setPaciente(paciente.getValue());
+            citaEditada.setUpdateTs(fechaHoraEspana);
+            citaEditada.setUpdatedBy(userSession.getUser().getLogin());
+            citaEditada.setPagado(pagado.getValue());
 
             try {
-                citaService.updateCita(cita);
+                citaService.updateCita(citaEditada);
                 notifications.create()
                         .withCaption("¡Cita editada correctamente!")
                         .withPosition(Notifications.Position.BOTTOM_RIGHT)
                         .withType(Notifications.NotificationType.TRAY)
                         .show();
-
                 closeWithDiscard();
-
             } catch (Exception e) {
-                System.out.println("Error editando cita");
+                notifications.create(Notifications.NotificationType.ERROR)
+                        .withCaption("Error al editar cita")
+                        .withDescription(e.getMessage())
+                        .show();
             }
         }
     }

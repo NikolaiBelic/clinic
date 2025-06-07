@@ -41,14 +41,13 @@ public class Calendariomain extends Screen {
     @Inject
     private ScreenBuilders screenBuilders;
 
-    @Inject
-    private Notifications notifications;
+    private final Map <SimpleCalendarEvent, Cita> eventCalendar = new HashMap<>();
 
     private final Map<UUID, Cita> eventCitaMap = new HashMap<>();
 
     private final Map<String, Object> paramsFiltro = new HashMap<>();
 
-    private List<Cita> citas = new ArrayList<Cita>();
+    private List<Cita> citas = new ArrayList<>();
     @Inject
     private UserSession userSession;
 
@@ -171,6 +170,7 @@ public class Calendariomain extends Screen {
         calendario.addEventClickListener(e -> {
             /*Cita cita = citaService.getCita(UUID.fromString(e.getCalendarEvent().getDescription()));*/
             UUID citaId = UUID.fromString(e.getCalendarEvent().getDescription());
+            System.out.println("Cita ID: " + citaId);
             Cita cita = eventCitaMap.get(citaId);
 
             Map<String, Object> paramsScreen = new HashMap<>();
@@ -270,6 +270,7 @@ public class Calendariomain extends Screen {
         calendarEvent.setDescription(cita.getId().toString());
 
         eventCitaMap.put(cita.getId(), cita);
+
 
         String idEspecialista = cita.getEspecialista().getId().toString();
 

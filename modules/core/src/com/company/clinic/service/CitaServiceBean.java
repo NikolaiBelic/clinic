@@ -450,26 +450,48 @@ public class CitaServiceBean implements CitaService {
     }
 
     @Override
-    public Boolean checkSolapamiento(Map <String, Object> params) {
-        String urlCitas = configStorageService.getDbProperty("URL-CITAS");
-        String endPoint = "/check-solapamiento";
+    public Boolean checkSolapamiento(Cita cita) {
+            String urlCitas = configStorageService.getDbProperty("URL-CITAS");
+            String urlCitasCreate = "/check-solapamiento";
+            String fullUrl = urlCitas + urlCitasCreate;
 
-        String fullUrl = urlCitas + endPoint;
+            log.info("Enviando cita a: {}", fullUrl);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("Tracking-Id" , UUID.randomUUID().toString());
+            // 1. Crear estructura manual con el formato exacto requerido
+            Map<String, Object> citaJson = new LinkedHashMap<>(); // LinkedHashMap mantiene el orden
+            citaJson.put("dia", new SimpleDateFormat("yyyy-MM-dd").format(cita.getDia()));
+            citaJson.put("horaInicio", formatTime(cita.getHoraInicio()));
+            citaJson.put("horaFinal", formatTime(cita.getHoraFinal()));
+            citaJson.put(
+                "especialista", Collections.singletonMap("id", cita.getEspecialista() != null
+                            ? cita.getEspecialista().getId().toString() : null));
+            citaJson.put(
+                    "id", cita.getId() != null ? cita.getId().toString() : null
+            );
 
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(params, headers);
+            // 2. Configurar Gson
+            Gson gson = new GsonBuilder()
+                    .serializeNulls()
+                    .setPrettyPrinting()
+                    .create();
 
-        RestTemplate restTemplate = new RestTemplate();
+            String jsonCita = gson.toJson(citaJson);
+            System.out.println(jsonCita);
 
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
-                fullUrl,
-                HttpMethod.POST,
-                entity,
-                Boolean.class);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            headers.set("Tracking-Id" , UUID.randomUUID().toString());
 
-        return responseEntity.getBody();
+            HttpEntity<String> entity = new HttpEntity<>(jsonCita, headers);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                    fullUrl,
+                    HttpMethod.POST,
+                    entity,
+                    Boolean.class);
+
+            return responseEntity.getBody();
     }
 }
