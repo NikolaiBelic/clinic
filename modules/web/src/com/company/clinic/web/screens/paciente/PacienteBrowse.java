@@ -27,6 +27,8 @@ import com.haulmont.yarg.reporting.ReportOutputDocument;
 
 
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -361,9 +363,11 @@ public class PacienteBrowse extends StandardLookup<Paciente> {
         // Ejecutar el reporte
         ReportOutputDocument reportResult = reportService.createReport(report, reportParams);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         // Crear un FileDescriptor
         FileDescriptor fileDescriptor = metadata.create(FileDescriptor.class);
-        fileDescriptor.setName("ReportePacientes.xlsx");
+        fileDescriptor.setName("ReportePacientes" + sdf.format(new Date()) + ".xlsx");
         fileDescriptor.setExtension("xlsx");
         fileDescriptor.setSize((long) reportResult.getContent().length);
         fileDescriptor.setCreateDate(new Date()); // Establecer la fecha de creación

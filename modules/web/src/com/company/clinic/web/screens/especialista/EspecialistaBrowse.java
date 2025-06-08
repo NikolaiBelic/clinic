@@ -29,9 +29,6 @@ public class EspecialistaBrowse extends StandardLookup<Especialista> {
     private GroupBoxLayout filter;
 
     @Inject
-    private GroupTable<Especialista> especialistasTable;
-
-    @Inject
     private CollectionLoader<Especialista> especialistasDl;
 
     @Inject
@@ -39,12 +36,6 @@ public class EspecialistaBrowse extends StandardLookup<Especialista> {
 
     @Inject
     private Button limpiar;
-
-    @Inject
-    private ScreenBuilders screenBuilders;
-
-    @Inject
-    private DataManager dataManager;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -61,28 +52,6 @@ public class EspecialistaBrowse extends StandardLookup<Especialista> {
                 }
             }
         });
-
-        especialistasTable.setItemClickAction(new BaseAction("itemClick")
-                .withHandler(actionPerformedEvent -> {
-                    Especialista selected = especialistasTable.getSingleSelected();
-                    if (selected != null) {
-                        Map<String, Object> params = new HashMap<>();
-                        params.put("modo", "ver");
-
-                        Especialista fullEspecialista = dataManager.load(Especialista.class)
-                                .id(selected.getId())
-                                .view("especialista-view")
-                                .one();
-
-                        Screen editor = screenBuilders.editor(Especialista.class, this)
-                                .withScreenId("clinic_Paciente.edit")
-                                .editEntity(fullEspecialista)
-                                .withOptions(new MapScreenOptions(params))
-                                .build();
-
-                        editor.show();
-                    }
-                }));
     }
 
     public List<Especialista> loadData (LoadContext<Especialista> loadContext) {

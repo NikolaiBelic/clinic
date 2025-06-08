@@ -88,6 +88,8 @@ public class Calendariomain extends Screen {
 
             if (selectedEspecialista != null) {
                 paramsFiltro.put("especialista", selectedEspecialista.getId());
+                paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+                paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
                 citas = citaService.getCitasCalendario(paramsFiltro);
 
                 updateCalendar(citas, calendario);
@@ -151,6 +153,7 @@ public class Calendariomain extends Screen {
         paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
         if (filter.getValue() != null) {
             Especialista selectedEspecialista = (Especialista) filter.getValue();
+            System.out.println("Selected Especialista: " + selectedEspecialista.getNombre());
             paramsFiltro.put("especialista", selectedEspecialista.getId());
         }
 

@@ -36,7 +36,7 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="titulo"/>
+                <column id="fecha" caption="Fecha"/>
                 <column id="descripcion"/>
                 <column id="especialista"/>
                 <column id="paciente"/>

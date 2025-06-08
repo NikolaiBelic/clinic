@@ -86,11 +86,11 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="viewBtn" caption="Ver"/>
-                <button id="createBtn" caption="Crear"/>
-                <button id="editBtn" caption="Editar"/>
-                <button id="removeBtn" caption="Borrar"/>
-                <button id="excelBtn" caption="Excel" icon="font-icon:FILE_EXCEL_O"/>
+                <button id="viewBtn" caption="Ver" icon="font-icon:EYE"/>
+                <button id="createBtn" caption="Crear" primary="true" icon="font-icon:FILE"/>
+                <button id="editBtn" caption="Editar" icon="font-icon:PENCIL"/>
+                <button id="removeBtn" caption="Borrar" stylename="danger" icon="font-icon:TRASH"/>
+                <button id="excelBtn" caption="Excel" icon="font-icon:FILE_EXCEL_O" stylename="button-excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

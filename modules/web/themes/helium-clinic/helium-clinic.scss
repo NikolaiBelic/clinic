@@ -20,6 +20,15 @@
 
   /* --button-error-color: #feff92; */
 
+  .v-button.button-excel {
+      background-color: #06ba27 !important;
+      color: white !important;
+
+      &:hover {
+          background-color: #069e22 !important;
+      }
+  }
+
   /* Paciente edit */
     .formPaciente {
         display: grid;

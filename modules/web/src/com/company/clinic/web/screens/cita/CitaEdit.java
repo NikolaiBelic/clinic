@@ -263,7 +263,8 @@ public class CitaEdit extends StandardEditor<Cita> {
 
         // 1. Validar campos obligatorios
         if (dia.getValue() == null || horaInicio.getValue() == null ||
-                horaFinal.getValue() == null || especialista.getValue() == null) {
+                horaFinal.getValue() == null || especialista.getValue() == null ||
+            servicio.getValue() == null || paciente.getValue() == null) {
 
             notifications.create(Notifications.NotificationType.WARNING)
                     .withCaption("Por favor, completa todos los campos obligatorios.")

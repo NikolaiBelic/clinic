@@ -4,19 +4,27 @@ import com.company.clinic.entity.pacientes.Paciente;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Table(name = "CLINIC_EXPEDIENTE")
 @Entity(name = "clinic_Expediente")
 public class Expediente extends StandardEntity {
     private static final long serialVersionUID = 2728351244518361217L;
-    @Column(name = "TITULO", length = 75)
-    private String titulo;
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    @Column(name = "FECHA")
+    private Date fecha;
+
     @Lob
     @Column(name = "DESCRIPCION")
     private String descripcion;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ESPECIALISTA_ID")
     private Especialista especialista;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PACIENTE_ID")
     private Paciente paciente;
@@ -45,11 +53,11 @@ public class Expediente extends StandardEntity {
         this.descripcion = descripcion;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

@@ -37,6 +37,7 @@
                     width="100%"
                     dataContainer="especialistasDc">
             <actions>
+                <action id="view" type="view"/>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
@@ -50,10 +51,12 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="viewBtn" caption="Ver" icon="font-icon:EYE"/>
-                <button id="createBtn" caption="Crear" icon="font-icon:BOOK" primary="true"/>
-                <button id="editBtn" caption="Editar" icon="font-icon:PENCIL"/>
-                <button id="removeBtn" caption="Borrar" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="viewBtn" caption="Ver" icon="font-icon:EYE" action="especialistasTable.view"/>
+                <button id="createBtn" caption="Crear" icon="font-icon:BOOK" primary="true"
+                        action="especialistasTable.create"/>
+                <button id="editBtn" caption="Editar" icon="font-icon:PENCIL" action="especialistasTable.edit"/>
+                <button id="removeBtn" caption="Borrar" icon="font-icon:TRASH" stylename="danger"
+                        action="especialistasTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -138,6 +138,8 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
     @Inject
     private CheckBox mismosDatosContactoFacturacion;
+    @Inject
+    private Button closeBtn;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -149,14 +151,12 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
             if ("crear".equals(modoPantalla)) {
                 // lógica para modo creación
-                insertBtn.setCaption("Crear");
 
                 empresa.setValueSource(null);
                 empresa.setValue("Klinicalia | Servicios médicos");
 
             } else if ("editar".equals(modoPantalla)) {
                 // lógica para modo edición
-                insertBtn.setCaption("Editar");
             } else if ("ver".equals(modoPantalla)) {
                 insertBtn.setVisible(false);
 
@@ -196,8 +196,10 @@ public class PacienteEdit extends StandardEditor<Paciente> {
         Date fechaHoraEspana = Date.from(zonedDateTime.toInstant());
 
         if ("crear".equals(modoPantalla)) {
-                if (nombreField.getValue() == null || apellidosField.getValue() == null ||
-                    fechaNacimientoField.getValue() == null || generoField.getValue() == null) {
+            if (nombreField.getValue() == null || apellidosField.getValue() == null ||
+                    fechaNacimientoField.getValue() == null || generoField.getValue() == null ||
+                    tipoDocumentoField.getValue() == null || numeroDocumentoField.getValue() == null ||
+                    telefonoField.getValue() == null || emailField.getValue() == null) {
 
                     notifications.create(Notifications.NotificationType.WARNING)
                             .withCaption("Por favor, completa todos los campos obligatorios.")
