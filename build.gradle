@@ -77,6 +77,11 @@ configure([globalModule, coreModule, webModule]) {
 
 
 configure(globalModule) {
+    sourceSets {
+        main.java.srcDirs = ['src']
+        main.resources.srcDirs = ['src']
+    }
+
     dependencies {
         if (!JavaVersion.current().isJava8()) {
             runtime('javax.xml.bind:jaxb-api:2.3.1')
@@ -104,10 +109,13 @@ configure(coreModule) {
     }
 
     dependencies {
-        compile(globalModule)
+        implementation(globalModule)
         compileOnly(servletApi)
         jdbc(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
         testRuntime(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
+
+        implementation "com.haulmont.cuba:cuba-core:$cubaVersion"
+        implementation "com.haulmont.reports:reports-core:$cubaVersion"
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {
@@ -199,12 +207,14 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 }
 
 task buildUberJar(type: CubaUberJarBuilding) {
-    singleJar = true // Genera un único JAR con todos los módulos
+    singleJar = true
     appProperties = [
-            'cuba.automaticDatabaseUpdate': true, // Actualización automática de la base de datos
-            'cuba.webPort': 8080 // Puerto para el servidor embebido
+            'cuba.automaticDatabaseUpdate': true
     ]
-    appName = 'clinic' // Nombre de la aplicación
+
+    // Configuración mínima requerida
+    coreModule = project(':app-core')
+    webModule = project(':app-web')
 }
 
 restart.finalizedBy start
