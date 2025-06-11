@@ -9,7 +9,7 @@ buildscript {
                 password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
             }
         }
-
+        mavenCentral()
         maven {
             url 'https://repo.cuba-platform.com/content/groups/premium'
             credentials {
