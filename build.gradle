@@ -124,6 +124,14 @@ configure(coreModule) {
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
     }
+
+    jar {
+        manifest {
+            attributes(
+                    'Main-Class': 'com.company.clinic.MainClass' // Reemplaza con tu clase principal
+            )
+        }
+    }
 }
 
 configure(webModule) {
