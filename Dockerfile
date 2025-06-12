@@ -15,7 +15,7 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime && \
 WORKDIR /app
 
 # Copia el JAR y configuración
-COPY build/distributions/uberJar/clinic.jar app.jar
+COPY build/distributions/uberJar/app.jar app.jar
 COPY modules/core/src/com/company/clinic/app-prod.properties /app/config/
 
 # Variables de entorno
