@@ -1,19 +1,25 @@
 version: '3.8'
 services:
-  app-core:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  clinic-app:
+    build: .
     ports:
       - "8080:8080"
     environment:
       - CUBA_CONF_DIR=/app/config
-      - JAVA_OPTS=-Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75
     volumes:
       - ./modules/core/src/com/company/clinic/app-prod.properties:/app/config/app-prod.properties:ro
+      - clinic-data:/app/storage
+      - clinic-logs:/app/logs
+      - clinic-temp:/app/temp
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/app"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+volumes:
+  clinic-data:
+  clinic-logs:
+  clinic-temp:

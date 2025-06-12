@@ -222,29 +222,24 @@ task buildUberJar(type: CubaUberJarBuilding) {
     coreModule = project(':app-core')
     webModule = project(':app-web')
 
-    // Añade estas propiedades CRUCIALES para la conexión entre módulos
     appProperties = [
-            'cuba.automaticDatabaseUpdate': false,
+            'cuba.automaticDatabaseUpdate': true,
             'cuba.logDir': '/app/logs',
             'cuba.tempDir': '/app/temp',
             'cuba.confDir': '/app/config',
             'cuba.fileStorageDir': '/app/filestorage',
             'cuba.web.pushEnabled': false,
-            'cuba.webContextName': 'clinic',  // Nombre del contexto web
-            'cuba.connectionUrlList': 'http://localhost:8080/clinic'  // URL para conexión interna
+            'cuba.webContextName': 'app',  // Cambiado a 'app' para coincidir con properties
+            'cuba.connectionUrlList': 'http://localhost:8080/app',
+            'vaadin.productionMode': 'false'  // Desactivar modo producción temporalmente
     ]
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
     webPort = 8080
 
-    // Configuración de archivos adicionales
     doFirst {
         copy {
             from 'modules/core/src/com/company/clinic/persistence.xml'
-            into 'build/resources/main/com/company/clinic'
-        }
-        copy {
-            from 'modules/core/src/com/company/clinic/app-prod.properties'
             into 'build/resources/main/com/company/clinic'
         }
     }
