@@ -219,8 +219,8 @@ task buildUberJar(type: CubaUberJarBuilding) {
             'cuba.web.pushEnabled'         : false
     ]
 
-    /*coreModule = project(':app-core')
-    webModule = project(':app-web')*/
+    coreModule = project(':app-core')
+    webModule = project(':app-web')
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
     webPort = 8080
