@@ -223,15 +223,23 @@ task buildUberJar(type: CubaUberJarBuilding) {
     webModule = project(':app-web')
 
     appProperties = [
+            'cuba.dbmsType': 'mssql',
+            'cuba.dbmsVersion': '2012',
+            'cuba.dataSourceProvider': 'application',
+            'cuba.dataSource.jdbcUrl': 'jdbc:sqlserver://localhost:1433;databaseName=clinic',
+            'cuba.dataSource.username': 'anicolcl',
+            'cuba.dataSource.password': 'Elalmendro.33',
+            'cuba.dataSource.driverClassName': 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
+            'cuba.dataSource.connectionTestQuery': 'SELECT 1',
             'cuba.automaticDatabaseUpdate': true,
             'cuba.logDir': '/app/logs',
             'cuba.tempDir': '/app/temp',
             'cuba.confDir': '/app/config',
             'cuba.fileStorageDir': '/app/filestorage',
-            'cuba.web.pushEnabled': false,
-            'cuba.webContextName': 'app',  // Cambiado a 'app' para coincidir con properties
+            'cuba.webContextName': 'app',
             'cuba.connectionUrlList': 'http://localhost:8080/app',
-            'vaadin.productionMode': 'false'  // Desactivar modo producción temporalmente
+            'cuba.availableLocales': 'English|en',
+            'cuba.localeSelectVisible': 'false'
     ]
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
