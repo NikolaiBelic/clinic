@@ -77,9 +77,10 @@ configure([globalModule, coreModule, webModule]) {
 
 
 configure(globalModule) {
-    sourceSets {
-        main.java.srcDirs = ['src']
-        main.resources.srcDirs = ['src']
+    entitiesEnhancing {
+        main {
+            enabled = true
+        }
     }
 
     dependencies {
