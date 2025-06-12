@@ -239,7 +239,8 @@ task buildUberJar(type: CubaUberJarBuilding) {
             'cuba.webContextName': 'app',
             'cuba.connectionUrlList': 'http://localhost:8080/app',
             'cuba.availableLocales': 'English|en',
-            'cuba.localeSelectVisible': 'false'
+            'cuba.localeSelectVisible': 'false',
+            'vaadin.productionMode': 'true'
     ]
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
