@@ -8,12 +8,12 @@ services:
       - "8080:8080"
     environment:
       - CUBA_CONF_DIR=/app/config
-      - JAVA_OPTS=-Xmx512m
+      - JAVA_OPTS=-Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -XX:+TieredCompilation -XX:TieredStopAtLevel=1
     volumes:
       - ./modules/core/src/com/company/clinic/app-prod.properties:/app/config/app-prod.properties:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/app"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -208,14 +208,23 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 
 task buildUberJar(type: CubaUberJarBuilding) {
     singleJar = true
+
     appProperties = [
-            'cuba.automaticDatabaseUpdate': true
+            'cuba.automaticDatabaseUpdate' : true,
+            'cuba.logDir'                  : '/app/logs',
+            'cuba.tempDir'                 : '/app/temp',
+            'cuba.confDir'                 : '/app/config',
+            'cuba.fileStorageDir'          : '/app/filestorage',
+            'cuba.web.pushEnabled'         : false
     ]
 
-    // Configuración mínima requerida
-    coreModule = project(':app-core')
-    webModule = project(':app-web')
+    /*coreModule = project(':app-core')
+    webModule = project(':app-web')*/
+
+    logbackConfigurationFile = 'etc/uber-jar-logback.xml'
+    webPort = 8080
 }
+
 
 restart.finalizedBy start
 
