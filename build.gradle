@@ -224,7 +224,7 @@ task buildUberJar(type: CubaUberJarBuilding) {
 
     // Añade estas propiedades CRUCIALES para la conexión entre módulos
     appProperties = [
-            'cuba.automaticDatabaseUpdate': true,
+            'cuba.automaticDatabaseUpdate': false,
             'cuba.logDir': '/app/logs',
             'cuba.tempDir': '/app/temp',
             'cuba.confDir': '/app/config',
