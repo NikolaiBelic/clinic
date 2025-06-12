@@ -66,6 +66,33 @@ public class Calendariomain extends Screen {
         titulo.setStyleName("h2 label-with-icon");
         hBox.add(titulo);
 
+        Button crearCitaButton = uiComponents.create(Button.class);
+        crearCitaButton.setCaption("Crear cita");
+        crearCitaButton.setIcon("font-icon:PLUS_CIRCLE");
+        crearCitaButton.setStyleName("primary");
+        crearCitaButton.addClickListener(clickEvent -> {
+            Map<String, Object> paramsScreen = new HashMap<>();
+            paramsScreen.put("modo", "crear");
+
+            Screen citaCreateScreen = screenBuilders.editor(Cita.class, this)
+                    .newEntity()
+                    .withLaunchMode(OpenMode.DIALOG)
+                    .withOptions(new MapScreenOptions(paramsScreen))
+                    .build()
+                    .show();
+
+            citaCreateScreen.addAfterCloseListener(afterCloseEvent -> {
+                paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
+                paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+
+                citas = citaService.getCitasCalendario(paramsFiltro);
+                updateCalendar(citas, calendario);
+            });
+        });
+
+
+
+
         // Filter
         LookupField filter = uiComponents.create(LookupField.class);
         filter.setNullSelectionCaption("Todos los especialistas");
@@ -106,6 +133,7 @@ public class Calendariomain extends Screen {
 
 
         hBox.add(filter);
+        hBox.add(crearCitaButton);
 
         vBox.add(hBox);
 

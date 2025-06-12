@@ -442,6 +442,10 @@ public class PacienteEdit extends StandardEditor<Paciente> {
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
-        /*Paciente paciente = pacienteDc.getItem();*/
+        /*Paciente paciente = getEditedEntity();
+
+        if (paciente != null) {
+            mismosDatosContactoFacturacion.setValue(paciente.getDatosContacto().getCopiaContactoFacturacion());
+        }*/
     }
 }

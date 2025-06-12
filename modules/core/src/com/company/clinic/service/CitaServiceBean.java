@@ -429,7 +429,7 @@ public class CitaServiceBean implements CitaService {
     @Override
     public void deleteLogicalDeletedCitas() {
         String urlCitas = configStorageService.getDbProperty("URL-CITAS");
-        String endPoint = "/citas/delete-logical";
+        String endPoint = "/delete-logical";
         String url = urlCitas + endPoint;
 
         log.info(url);

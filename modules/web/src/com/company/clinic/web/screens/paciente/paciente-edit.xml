@@ -19,7 +19,7 @@
                     <column>
                         <textField id="nombreField" caption="Nombre" property="nombre" width="150px"/>
                         <dateField id="fechaNacimientoField" caption="Fecha de Nacimiento" width="150px"
-                                   resolution="DAY" property="fechaNacimiento"/>
+                                   resolution="DAY" property="fechaNacimiento" rangeEnd="2009-12-31"/>
                     </column>
                     <column>
                         <textField id="apellidosField" caption="Apellidos" property="apellidos" width="200px"/>

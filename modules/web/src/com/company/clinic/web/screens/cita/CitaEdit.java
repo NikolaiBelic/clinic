@@ -191,18 +191,15 @@ public class CitaEdit extends StandardEditor<Cita> {
 
     @Subscribe("horaInicio")
     public void onHoraInicioValueChange(HasValue.ValueChangeEvent<Time> event) {
-        Time horaInicioTime = event.getValue();
-        System.out.println(horaInicioTime);
-
-        assert horaInicioTime != null;
-        LocalTime localTimeInicio = horaInicioTime.toLocalTime();
-
-        LocalTime localTimeFinal = localTimeInicio.plusHours(1);
-
-        Time horaFinalTime = Time.valueOf(localTimeFinal);
-        System.out.println(horaFinalTime);
-        horaFinal.setValue(horaFinalTime);
-
+        if (event.isUserOriginated()) { // Solo ejecuta si el cambio es iniciado por el usuario
+            Time horaInicioTime = event.getValue();
+            if (horaInicioTime != null) {
+                LocalTime localTimeInicio = horaInicioTime.toLocalTime();
+                LocalTime localTimeFinal = localTimeInicio.plusHours(1);
+                Time horaFinalTime = Time.valueOf(localTimeFinal);
+                horaFinal.setValue(horaFinalTime);
+            }
+        }
     }
 
 
