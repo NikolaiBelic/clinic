@@ -1,25 +1,50 @@
 version: '3.8'
+
 services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Elalmendro.33  # Usa tu contraseña real aquí
+      - MSSQL_PID=Express
+      - MSSQL_COLLATION=Modern_Spanish_CI_AS
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+      - ./sql-scripts:/docker-entrypoint-initdb.d  # Para scripts SQL iniciales
+    restart: unless-stopped
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -Q "SELECT 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   clinic-app:
     build: .
     ports:
       - "8080:8080"
     environment:
       - CUBA_CONF_DIR=/app/config
-      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=true -XX:+UseContainerSupport -XX:MaxRAMPercentage=75
     volumes:
-      - ./modules/core/src/com/company/clinic/app-prod.properties:/app/config/app-prod.properties:ro
+      - ./docker-config/app-prod.properties:/app/config/app-prod.properties:ro
+      - ./docker-config/logback.xml:/app/config/logback.xml:ro
       - clinic-data:/app/storage
       - clinic-logs:/app/logs
       - clinic-temp:/app/temp
+    depends_on:
+      sql-server:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/app"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/app/api/health"]
       interval: 30s
       timeout: 10s
-      retries: 3
+      retries: 5
 
 volumes:
+  sql-data:
   clinic-data:
   clinic-logs:
   clinic-temp:

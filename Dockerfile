@@ -8,21 +8,25 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copia el JAR y configuración
+# Copia solo el JAR primero
 COPY build/distributions/uberJar/clinic.jar /app/app.jar
-COPY modules/core/src/app-prod.properties /app/config/app.properties
-COPY modules/core/src/logback.xml /app/config/
 
 # Crea estructura de directorios
 RUN mkdir -p /app/config \
     && mkdir -p /app/logs \
     && mkdir -p /app/temp \
-    && mkdir -p /app/filestorage
+    && mkdir -p /app/filestorage \
+    && mkdir -p /app/VAADIN/widgetsets
+
+# Copia archivos de configuración (asegúrate de que existan)
+COPY modules/core/src/com/company/clinic/app-prod.properties /app/config/
+COPY etc/logback.xml /app/config/
 
 # Variables de entorno
 ENV CUBA_CONF_DIR=/app/config \
     JAVA_OPTS="-Dserver.port=8080 \
     -Dcuba.webContextName=app \
+    -Dvaadin.productionMode=true \
     -XX:+UseContainerSupport \
     -XX:MaxRAMPercentage=75.0"
 
