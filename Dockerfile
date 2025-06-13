@@ -22,4 +22,4 @@ USER 1000
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar", "--port=8080", "--contextName=app"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--port=8080", "--contextName=app", "--jettyEnvPath=/app/jetty-env.xml"]
