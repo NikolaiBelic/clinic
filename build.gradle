@@ -205,7 +205,7 @@ task buildUberJar(type: CubaUberJarBuilding) {
     webModule = project(':app-web')
 
     // Configuración crítica para Jetty
-    /*coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'*/
+    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
 
     appProperties = [
             'cuba.logDir': '/app/logs',

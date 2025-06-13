@@ -22,4 +22,4 @@ USER 1000
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar", "--nocluster", "--init", "core_spring.xml,web_spring.xml"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
