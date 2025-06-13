@@ -215,7 +215,6 @@ task buildUberJar(type: CubaUberJarBuilding) {
     webPort = 8080
 
     logbackConfigurationFile = 'etc/logback.xml'
-    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
 }
 
 restart.finalizedBy start

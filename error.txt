@@ -3,929 +3,41 @@ Starting Jetty server on port: 8080 and contextPath: /app
 LogbackConfigurator INFO Setting up CUBA default logging configuration
 LogbackConfigurator INFO Could NOT find resource [/app/logback.xml]
 LogbackConfigurator INFO Found resource [jar:file:/app/app.jar!/app-logback.xml]
-15:32:56,322 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
-15:32:56,323 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
-15:32:56,324 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
-15:32:56,380 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@cb51256 - URL [jar:file:/app/app.jar!/app-logback.xml] is not of type file
-15:32:56,634 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
-15:32:56,634 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
-15:32:56,644 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [CONSOLE]
-15:32:56,654 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-15:32:56,833 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
-15:32:56,838 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [FILE]
-15:32:56,842 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-15:32:56,843 |-INFO in ch.qos.logback.core.FileAppender[FILE] - File property is set to [/app/logs/clinic.log]
-15:32:56,844 |-ERROR in ch.qos.logback.core.FileAppender[FILE] - openFile(/app/logs/clinic.log,true) call failed. java.io.FileNotFoundException: /app/logs/clinic.log (Permission denied)
-        at java.io.FileNotFoundException: /app/logs/clinic.log (Permission denied)
-        at      at java.base/java.io.FileOutputStream.open0(Native Method)
-        at      at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
-        at      at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
-        at      at ch.qos.logback.core.recovery.ResilientFileOutputStream.<init>(ResilientFileOutputStream.java:26)
-        at      at ch.qos.logback.core.FileAppender.openFile(FileAppender.java:204)
-        at      at ch.qos.logback.core.FileAppender.start(FileAppender.java:127)
-        at      at ch.qos.logback.core.joran.action.AppenderAction.end(AppenderAction.java:90)
-        at      at ch.qos.logback.core.joran.spi.Interpreter.callEndAction(Interpreter.java:309)
-        at      at ch.qos.logback.core.joran.spi.Interpreter.endElement(Interpreter.java:193)
-        at      at ch.qos.logback.core.joran.spi.Interpreter.endElement(Interpreter.java:179)
-        at      at ch.qos.logback.core.joran.spi.EventPlayer.play(EventPlayer.java:62)
-        at      at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:165)
-        at      at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:152)
-        at      at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:110)
-        at      at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:53)
-        at      at com.haulmont.uberjar.LogbackConfigurator.configureByResource(LogbackConfigurator.java:74)
-        at      at com.haulmont.uberjar.LogbackConfigurator.configure(LogbackConfigurator.java:49)
-        at      at ch.qos.logback.classic.util.ContextInitializer.autoConfig(ContextInitializer.java:156)
-        at      at org.slf4j.impl.StaticLoggerBinder.init(StaticLoggerBinder.java:84)
-        at      at org.slf4j.impl.StaticLoggerBinder.<clinit>(StaticLoggerBinder.java:55)
-        at      at org.slf4j.LoggerFactory.bind(LoggerFactory.java:150)
-        at      at org.slf4j.LoggerFactory.performInitialization(LoggerFactory.java:124)
-        at      at org.slf4j.LoggerFactory.getILoggerFactory(LoggerFactory.java:412)
-        at      at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:357)
-        at      at org.eclipse.jetty.util.log.Slf4jLog.<init>(Slf4jLog.java:36)
-        at      at org.eclipse.jetty.util.log.Slf4jLog.<init>(Slf4jLog.java:30)
-        at      at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-        at      at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-        at      at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-        at      at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
-        at      at org.eclipse.jetty.util.log.Log.initialized(Log.java:158)
-        at      at org.eclipse.jetty.util.log.Log.getLogger(Log.java:278)
-        at      at org.eclipse.jetty.util.log.Log.getLogger(Log.java:267)
-        at      at org.eclipse.jetty.util.component.AbstractLifeCycle.<clinit>(AbstractLifeCycle.java:36)
-        at      at com.haulmont.uberjar.CubaJettyServer.createServer(CubaJettyServer.java:143)
-        at      at com.haulmont.uberjar.CubaJettyServer.start(CubaJettyServer.java:126)
-        at      at com.haulmont.uberjar.ServerRunner.execute(ServerRunner.java:249)
-        at      at com.haulmont.uberjar.ServerRunner.main(ServerRunner.java:39)
-15:32:56,844 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
-15:32:56,846 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[ROOT]
-15:32:56,848 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.eclipse.jetty] to WARN
-15:32:56,849 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework] to WARN
-15:32:56,849 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
-15:32:56,850 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@5bcea91b - Registering current configuration as safe fallback point
-
-2025-06-13 15:32:57 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Initializing 'core' block, servlet context path: /app-core
-2025-06-13 15:32:58 INFO  c.h.cuba.core.sys.AppComponents - Using app components: [com.haulmont.cuba, com.haulmont.addon.helium, com.haulmont.reports, com.haulmont.addon.bproc]
-2025-06-13 15:32:58 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from classpath:com/company/clinic/app.properties
-2025-06-13 15:32:58 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from /WEB-INF/local.app.properties
-2025-06-13 15:32:58 INFO  c.h.c.c.s.AbstractWebAppContextLoader - cuba.webContextName: app
-2025-06-13 15:32:58 INFO  c.h.cuba.core.sys.AppContextLoader - DbmsType of the main database is set to mssql2012
-2025-06-13 15:32:58 INFO  c.h.c.c.s.e.DataStoresCheck - Checking connection to data store Main
-2025-06-13 15:32:59 WARN  c.h.c.c.s.e.EnvironmentChecksRunner -
-=======================================================================================================================================
-Some environment checks failed on core module:
-Directory 'cuba.tempDir' must have read and write permissions. Current permissions: Readable: true, Writable: false, Is directory: true
-=======================================================================================================================================
-2025-06-13 15:33:00 INFO  c.h.c.c.s.p.PersistenceConfigProcessor - Creating file /app/app/work/persistence.xml
-2025-06-13 15:33:05 INFO  com.zaxxer.hikari.HikariDataSource - Connection Pool-Main - Starting...
-2025-06-13 15:33:06 INFO  com.zaxxer.hikari.HikariDataSource - Connection Pool-Main - Start completed.
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.BaseUuidEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.BaseGenericIdEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.ScheduledTask]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.StandardEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.addon.bproc.entity.UserGroupRole]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field role, class com.haulmont.cuba.security.entity.Role]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field userGroup, class com.haulmont.addon.bproc.entity.UserGroup]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.Cita]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field servicio, class com.company.clinic.entity.Servicio]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field especialista, class com.company.clinic.entity.Especialista]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field paciente, class com.company.clinic.entity.pacientes.Paciente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.Servicio]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.EntityStatistics]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.reports.entity.Report]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field defaultTemplate, class com.haulmont.reports.entity.ReportTemplate]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field group, class com.haulmont.reports.entity.ReportGroup]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field templates, class com.haulmont.reports.entity.ReportTemplate]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.CategoryAttribute]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field category, class com.haulmont.cuba.core.entity.Category]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.UserSubstitution]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field substitutedUser, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.addon.bproc.entity.UserGroup]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field userGroupRoles, class com.haulmont.addon.bproc.entity.UserGroupRole]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_many_reference_class [field users, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.UserRole]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field role, class com.haulmont.cuba.security.entity.Role]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.SessionAttribute]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field group, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.RememberMeToken]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.reports.entity.ReportGroup]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.Server]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.SendingMessage]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field attachments, class com.haulmont.cuba.core.entity.SendingAttachment]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field contentTextFile, class com.haulmont.cuba.core.entity.FileDescriptor]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.ScheduledExecution]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field task, class com.haulmont.cuba.core.entity.ScheduledTask]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.EntityLogItem]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.Presentation]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.FileDescriptor]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.LoggedAttribute]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field entity, class com.haulmont.cuba.security.entity.LoggedEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.JmxInstance]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field parent, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field hierarchyList, class com.haulmont.cuba.security.entity.GroupHierarchy]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field sessionAttributes, class com.haulmont.cuba.security.entity.SessionAttribute]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field constraints, class com.haulmont.cuba.security.entity.Constraint]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.Folder]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field parent, class com.haulmont.cuba.core.entity.Folder]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.GroupHierarchy]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field parent, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field group, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.Role]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field permissions, class com.haulmont.cuba.security.entity.Permission]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.addon.bproc.entity.ContentStorage]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field author, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.reports.entity.ReportExecution]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field report, class com.haulmont.reports.entity.Report]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field outputDocument, class com.haulmont.cuba.core.entity.FileDescriptor]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.SendingAttachment]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field contentFile, class com.haulmont.cuba.core.entity.FileDescriptor]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field message, class com.haulmont.cuba.core.entity.SendingMessage]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.LocalizedConstraintMessage]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.pacientes.Paciente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field datosContacto, class com.company.clinic.entity.pacientes.DatosContacto]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field datosAdministrativos, class com.company.clinic.entity.pacientes.DatosAdministrativos]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field datosFacturacion, class com.company.clinic.entity.pacientes.DatosFacturacion]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.AbstractSearchFolder]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.AppFolder]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.Expediente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field especialista, class com.company.clinic.entity.Especialista]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field paciente, class com.company.clinic.entity.pacientes.Paciente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.LockDescriptor]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.EntitySnapshot]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field author, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.BaseIdentityIdEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.BaseDbGeneratedIdEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.QueryResult]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.pacientes.DatosAdministrativos]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field paciente, class com.company.clinic.entity.pacientes.Paciente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field responsableTratamientoDatos, class com.company.clinic.entity.Empresa]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.Factura]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field file, class com.haulmont.cuba.core.entity.FileDescriptor]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field cita, class com.company.clinic.entity.Cita]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.SessionLogEntry]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field substitutedUser, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.CategoryAttributeValue]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field parent, class com.haulmont.cuba.core.entity.CategoryAttributeValue]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field childValues, class com.haulmont.cuba.core.entity.CategoryAttributeValue]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field categoryAttribute, class com.haulmont.cuba.core.entity.CategoryAttribute]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.FilterEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.ScreenHistoryEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field substitutedUser, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.FtsQueue]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.Especialista]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.Category]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.Empresa]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.UserSetting]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field userRoles, class com.haulmont.cuba.security.entity.UserRole]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field substitutions, class com.haulmont.cuba.security.entity.UserSubstitution]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field group, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.SearchFolder]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field presentation, class com.haulmont.cuba.security.entity.Presentation]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field user, class com.haulmont.cuba.security.entity.User]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.pacientes.DatosFacturacion]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field paciente, class com.company.clinic.entity.pacientes.Paciente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.Permission]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field role, class com.haulmont.cuba.security.entity.Role]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.company.clinic.entity.pacientes.DatosContacto]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_one_reference_class [field paciente, class com.company.clinic.entity.pacientes.Paciente]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.LoggedEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_one_to_many_reference_class [field attributes, class com.haulmont.cuba.security.entity.LoggedAttribute]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.Config]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.security.entity.Constraint]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field group, class com.haulmont.cuba.security.entity.Group]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.reports.entity.ReportTemplate]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_many_to_one_reference_class [field report, class com.haulmont.reports.entity.Report]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.EmbeddableEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_access_type [FIELD, class com.haulmont.cuba.core.entity.ReferenceToEntity]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field role, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field userGroup, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field servicio, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field especialista, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field paciente, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field defaultTemplate, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field group, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field category, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field substitutedUser, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_source_pk_column [field users, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_target_pk_column [field users, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field role, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field group, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field contentTextFile, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field task, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field entity, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field parent, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field parent, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field parent, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field group, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field author, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field report, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field outputDocument, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field message, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field contentFile, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field especialista, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field paciente, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field author, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field paciente, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field responsableTratamientoDatos, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field file, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field cita, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field substitutedUser, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field parent, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field categoryAttribute, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field substitutedUser, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field group, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field presentation, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field user, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field paciente, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field role, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field paciente, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field group, ID]
-2025-06-13 15:33:07 INFO  eclipselink.metadata - metadata_default_pk_column [field report, ID]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828787984] time[21] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788006] time[2] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788011] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788015] time[2] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788018] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788019] time[4] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788024] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788025] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788027] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788027] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788029] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788032] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788033] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788034] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788035] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788036] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788040] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788042] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788042] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788043] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788044] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788045] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788045] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788046] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788047] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788048] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788051] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788052] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788052] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788053] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788053] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788054] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788054] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788055] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788056] time[2] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788058] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788059] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788059] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788060] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788060] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788066] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788067] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788068] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788069] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788070] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788070] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788071] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788071] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788072] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788073] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788074] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788074] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788075] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788075] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788077] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788078] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788078] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788079] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788079] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788080] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788080] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788081] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788081] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788082] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788083] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788086] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788086] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788087] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788087] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788088] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788089] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788089] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788090] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788091] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788092] time[2] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  rg.perf4j.TimingLogger - start[1749828788094] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788095] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788095] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788096] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788096] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788098] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788098] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788099] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788099] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788100] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788100] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788102] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788102] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788105] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788105] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788106] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788106] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788107] time[3] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788111] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788112] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788112] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788113] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788115] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788115] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788115] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788116] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788117] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788119] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788119] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788120] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788120] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788121] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788121] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788122] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788123] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788123] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788124] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788131] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788131] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788132] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788132] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788133] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788133] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788133] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788134] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788134] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788135] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788135] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788136] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788136] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788137] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788137] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788137] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788138] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788139] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788140] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788140] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788140] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788141] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788141] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788142] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788143] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788144] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788144] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788144] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788145] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788147] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788148] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788148] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788149] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788151] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788152] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788152] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788153] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788153] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788154] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788154] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788155] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788155] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788155] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788156] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788159] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788160] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788160] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788160] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788163] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788163] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788164] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788164] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788165] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788165] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788166] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788166] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788167] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788167] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788167] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788168] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788168] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788169] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788169] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788169] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788171] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788173] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788173] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788174] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788174] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788175] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788175] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788176] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788176] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788183] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788183] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788184] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788184] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788185] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788185] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:08 INFO  org.perf4j.TimingLogger - start[1749828788186] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:08 INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator null
-2025-06-13 15:33:15 INFO  c.h.cuba.core.sys.jmx.MBeanExporter - Registering beans for JMX exposure: [app.cuba:type=PersistenceManager, app.cuba:type=ConfigStorage, app.cuba:type=UserSessions, app.cuba:type=UniqueNumbers, app.cuba:type=Emailer, app.cuba:type=EntityLog, app.cuba:type=FileStorage, app.cuba:type=LockManager, app.cuba:type=CachingFacade, app.cuba:type=ClusterManager, app.cuba:type=ScriptingManager, app.cuba:type=ServerInfo, app.cuba:type=Scheduling, app.cuba:type=PasswordEncryptionSupport, app.cuba:type=JmxNodeIdentifier, app.cuba:type=JmxLogControl, app.cuba:type=ClassLoaderManager, app.cuba:type=StatisticsCounter, app.cuba:type=BruteForceProtection, app.cuba:type=QueryCacheSupport]
-2025-06-13 15:33:16 INFO  c.h.cuba.core.sys.jmx.MBeanExporter - Registering beans for JMX exposure: [app.reports:type=CubaOfficeIntegration, app.reports:type=ReportImportExport, app.reports:type=ReportingMigrator]
-2025-06-13 15:33:16 INFO  c.h.cuba.core.sys.MetadataImpl - Initializing metadata
-2025-06-13 15:33:16 INFO  org.perf4j.TimingLogger - start[1749828796666] time[4] tag[Metadata.replaceExtendedMetaClasses]
-2025-06-13 15:33:16 INFO  c.h.cuba.core.sys.MetadataImpl - Metadata initialized in 531 ms
-2025-06-13 15:33:18 WARN  c.h.c.c.sys.dbupdate.DbUpdaterEngine -
-===============================================================================
-WARNING: The application contains unapplied update scripts for data store:
-
-60-clinic/update/mssql/25/05/250516-2-updateDatosAdministrativos.sql
-60-clinic/update/mssql/25/05/250516-2-updateDatosAdministrativos_DropScript.sql
-
-Set 'cuba.automaticDatabaseUpdate' application property to 'true'
-to initialize and update data store on startup.
-===============================================================================
-2025-06-13 15:33:18 INFO  eclipselink.connection - connecting [DatabaseLogin(
-        platform=>CubaSQLServerPlatform
-        user name=> ""
-        connector=>JNDIConnector datasource name=>null
-)]
-2025-06-13 15:33:18 INFO  eclipselink.connection - connected_user_database_driver [jdbc:sqlserver://51.178.137.184:1433;useBulkCopyForBatchInsert=false;cancelQueryTimeout=-1;sslProtocol=TLS;jaasConfigurationName=SQLJDBCDriver;statementPoolingCacheSize=0;serverPreparedStatementDiscardThreshold=10;enablePrepareOnFirstPreparedStatementCall=false;fips=false;socketTimeout=0;authentication=NotSpecified;authenticationScheme=nativeAuthentication;xopenStates=false;sendTimeAsDatetime=true;trustStoreType=JKS;trustServerCertificate=true;TransparentNetworkIPResolution=true;serverNameAsACE=false;sendStringParametersAsUnicode=true;selectMethod=direct;responseBuffering=adaptive;queryTimeout=-1;packetSize=8000;multiSubnetFailover=false;loginTimeout=30;lockTimeout=-1;lastUpdateCount=true;encrypt=true;disableStatementPooling=true;databaseName=clinic;columnEncryptionSetting=Disabled;applicationName=Microsoft JDBC Driver for SQL Server;applicationIntent=readwrite;, sa, Microsoft SQL Server, 16.00.4195, Microsoft JDBC Driver 7.2 for SQL Server, 7.2.2.0,
-        ]
-2025-06-13 15:33:18 INFO  eclipselink.connection - connecting [DatabaseLogin(
-        platform=>CubaSQLServerPlatform
-        user name=> ""
-        connector=>JNDIConnector datasource name=>null
-)]
-2025-06-13 15:33:18 INFO  eclipselink.connection - connected_user_database_driver [jdbc:sqlserver://51.178.137.184:1433;useBulkCopyForBatchInsert=false;cancelQueryTimeout=-1;sslProtocol=TLS;jaasConfigurationName=SQLJDBCDriver;statementPoolingCacheSize=0;serverPreparedStatementDiscardThreshold=10;enablePrepareOnFirstPreparedStatementCall=false;fips=false;socketTimeout=0;authentication=NotSpecified;authenticationScheme=nativeAuthentication;xopenStates=false;sendTimeAsDatetime=true;trustStoreType=JKS;trustServerCertificate=true;TransparentNetworkIPResolution=true;serverNameAsACE=false;sendStringParametersAsUnicode=true;selectMethod=direct;responseBuffering=adaptive;queryTimeout=-1;packetSize=8000;multiSubnetFailover=false;loginTimeout=30;lockTimeout=-1;lastUpdateCount=true;encrypt=true;disableStatementPooling=true;databaseName=clinic;columnEncryptionSetting=Disabled;applicationName=Microsoft JDBC Driver for SQL Server;applicationIntent=readwrite;, sa, Microsoft SQL Server, 16.00.4195, Microsoft JDBC Driver 7.2 for SQL Server, 7.2.2.0,
-        ]
-2025-06-13 15:33:19 INFO  eclipselink.connection - login_successful [/file:/app/app.jar_clinic]
-2025-06-13 15:33:19 INFO  c.h.cuba.core.app.ConfigStorage - Loading DB-stored app properties cache
-2025-06-13 15:33:20 INFO  c.h.c.s.a.AuthenticationManagerBean - Logged in: 06983bd5-9500-0ba9-dccf-fcdcccf06a60 [anonymous]
-2025-06-13 15:33:21 INFO  o.f.dmn.engine.impl.DmnEngineImpl - DmnEngine default created
-2025-06-13 15:33:21 INFO  o.f.s.SpringProcessEngineConfiguration - Found 1 Engine Configurators in total:
-2025-06-13 15:33:21 INFO  o.f.s.SpringProcessEngineConfiguration - class org.flowable.dmn.engine.configurator.DmnEngineConfigurator (priority:200000)
-2025-06-13 15:33:21 INFO  o.f.s.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.dmn.engine.configurator.DmnEngineConfigurator (priority:200000)
-2025-06-13 15:33:23 INFO  o.f.s.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.dmn.engine.configurator.DmnEngineConfigurator (priority:200000)
-2025-06-13 15:33:23 INFO  o.f.dmn.engine.impl.DmnEngineImpl - DmnEngine default created
-2025-06-13 15:33:23 INFO  c.h.c.s.a.r.PredefinedRoleDefinitionRepository - Initializing predefined role definitions
-2025-06-13 15:33:23 INFO  c.h.c.s.a.AuthenticationManagerBean - Logged in: 5de0b7b7-eff4-a285-1e58-a6f43a7e9bec [admin]
-2025-06-13 15:33:24 INFO  o.f.engine.impl.ProcessEngineImpl - ProcessEngine default created
-2025-06-13 15:33:24 INFO  o.f.e.impl.cmd.ValidateV5EntitiesCmd - Total of v5 deployments found: 0
-2025-06-13 15:33:24 INFO  o.f.j.s.i.a.AbstractAsyncExecutor - Starting up the async job executor [org.flowable.job.service.impl.asyncexecutor.DefaultAsyncJobExecutor].
-2025-06-13 15:33:24 INFO  o.f.j.s.i.a.DefaultAsyncJobExecutor - Creating thread pool queue of size 100
-2025-06-13 15:33:24 INFO  o.f.j.s.i.a.DefaultAsyncJobExecutor - Creating executor service with corePoolSize 8, maxPoolSize 8 and keepAliveTime 5000
-2025-06-13 15:33:24 INFO  c.h.c.c.s.AbstractWebAppContextLoader - AppContext started
-2025-06-13 15:33:24 INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
-2025-06-13 15:33:24 INFO  o.f.j.s.i.a.AcquireTimerJobsRunnable - starting to acquire async jobs due
-2025-06-13 15:33:24 INFO  o.f.j.s.i.a.ResetExpiredJobsRunnable - starting to reset expired jobs for engine bpmn
-2025-06-13 15:33:24 INFO  c.h.c.c.sys.remoting.RemotingServlet - Initializing Servlet 'remoting'
-2025-06-13 15:33:24 WARN  c.h.cuba.core.jmx.StatisticsCounter - Сonnection pool not found for statistics counting
-2025-06-13 15:33:24 INFO  c.h.c.c.s.r.RemoteServicesBeanCreator - Configuring remote services
-2025-06-13 15:33:25 INFO  c.h.c.c.sys.remoting.RemotingServlet - Completed initialization in 781 ms
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereHandler com.vaadin.server.communication.PushAtmosphereHandler mapped to context-path: /*
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed the following AtmosphereInterceptor mapped to AtmosphereHandler com.vaadin.server.communication.PushAtmosphereHandler
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using org.atmosphere.util.VoidAnnotationProcessor for processing annotation
-2025-06-13 15:33:25 INFO  org.atmosphere.util.ForkJoinPool - Using ForkJoinPool  java.util.concurrent.ForkJoinPool. Set the org.atmosphere.cpr.broadcaster.maxAsyncWriteThreads to -1 to fully use its power.
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed WebSocketProtocol org.atmosphere.websocket.protocol.SimpleHttpProtocol
-2025-06-13 15:33:25 INFO  o.a.container.JSR356AsyncSupport - JSR 356 Mapping path
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installing Default AtmosphereInterceptors
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.CorsInterceptor : CORS Interceptor Support
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.CacheHeadersInterceptor : Default Response's Headers Interceptor
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.PaddingAtmosphereInterceptor : Browser Padding Interceptor Support
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.AndroidAtmosphereInterceptor : Android Interceptor Support
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.HeartbeatInterceptor : Heartbeat Interceptor Support
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.SSEAtmosphereInterceptor : SSE Interceptor Support
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.JSONPAtmosphereInterceptor : JSONP Interceptor Support
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.JavaScriptProtocol : Atmosphere JavaScript Protocol
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor : org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.OnDisconnectInterceptor : Browser disconnection detection
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.IdleResourceInterceptor : org.atmosphere.interceptor.IdleResourceInterceptor
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Set org.atmosphere.cpr.AtmosphereInterceptor.disableDefaults to disable them.
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor CORS Interceptor Support with priority FIRST_BEFORE_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Default Response's Headers Interceptor with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Browser Padding Interceptor Support with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Android Interceptor Support with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.a.interceptor.HeartbeatInterceptor - HeartbeatInterceptor configured with padding value 'X', client frequency 60 seconds and server frequency 0 seconds
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Heartbeat Interceptor Support with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor SSE Interceptor Support with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor JSONP Interceptor Support with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Atmosphere JavaScript Protocol with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Browser disconnection detection with priority AFTER_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor org.atmosphere.interceptor.IdleResourceInterceptor with priority BEFORE_DEFAULT
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Using EndpointMapper class org.atmosphere.util.DefaultEndpointMapper
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Using BroadcasterCache: org.atmosphere.cache.UUIDBroadcasterCache
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Default Broadcaster Class: org.atmosphere.cpr.DefaultBroadcaster
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Broadcaster Shared List Resources: false
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Broadcaster Polling Wait Time 100
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Shared ExecutorService supported: true
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Messaging ExecutorService Pool Size unavailable - Not instance of ThreadPoolExecutor
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Async I/O Thread Pool Size: 200
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Using BroadcasterFactory: org.atmosphere.cpr.DefaultBroadcasterFactory
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Using AtmosphereResurceFactory: org.atmosphere.cpr.DefaultAtmosphereResourceFactory
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Using WebSocketProcessor: org.atmosphere.websocket.DefaultWebSocketProcessor
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Invoke AtmosphereInterceptor on WebSocket message true
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - HttpSession supported: true
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using org.atmosphere.inject.InjectableObjectFactory for dependency injection and object creation
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using async support: org.atmosphere.container.JSR356AsyncSupport running under container: jetty/9.4.49.v20220914 using javax.servlet/3.0 and jsr356/WebSocket API
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere Framework 2.4.30-1-cuba started.
-2025-06-13 15:33:25 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor  Track Message Size Interceptor using | with priority BEFORE_DEFAULT
-2025-06-13 15:33:25 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Initializing 'web' block, servlet context path: /app
-2025-06-13 15:33:25 INFO  c.h.cuba.core.sys.AppComponents - Using app components: [com.haulmont.cuba, com.haulmont.addon.helium, com.haulmont.reports, com.haulmont.addon.bproc]
-2025-06-13 15:33:25 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from classpath:com/company/clinic/web-app.properties
-2025-06-13 15:33:25 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from /WEB-INF/local.app.properties
-2025-06-13 15:33:25 INFO  c.h.c.c.s.AbstractWebAppContextLoader - cuba.webContextName: app
-2025-06-13 15:33:25 INFO  c.h.c.c.s.e.EnvironmentChecksRunner - Environment checks on web module completed successfully
-2025-06-13 15:33:28 INFO  c.h.c.c.s.r.d.StaticServerSelector - Server URLs: [http://localhost:8080/app-core/remoting]
-2025-06-13 15:33:28 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [cuba_AuthenticationService, cuba_TrustedClientService, cuba_ServerInfoService, cuba_UserSettingService, cuba_UserManagementService, cuba_DataService, cuba_ConfigStorageService, cuba_PersistenceManagerService, cuba_LockService, cuba_UserSessionService, cuba_FoldersService, cuba_EmailService, cuba_FileStorageService, cuba_EntitySnapshotService, cuba_UniqueNumbersService, cuba_LocalizedMessageService, cuba_ResourceService, cuba_ScheduledTasksService, cuba_EntityLogService, cuba_TestingService, cuba_DomainDescriptionService, cuba_RelatedEntitiesService, cuba_EntitySqlGenerationService, cuba_NumberIdService, cuba_QueryResultsService, cuba_DynamicAttributesCacheService, cuba_EntityRestoreService, cuba_LocalFileExchangeService, cuba_EntityImportExportService, cuba_ConstraintLocalizationService, cuba_AttributeAccessService, cuba_ExceptionReportService, cuba_BulkEditorDataService, cuba_PersistenceSecurityService, cuba_AccessGroupsService, cuba_AttributeOptionsLoaderService, cuba_RolesService, cuba_SecurityScopesService, cuba_ScreenProfilerService]
-2025-06-13 15:33:28 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [report_ReportService, report_ReportWizardService]
-2025-06-13 15:33:28 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [bproc_BprocRepositoryService, bproc_BprocFormService, bproc_BprocRuntimeService, bproc_BprocTaskService, bproc_ModelerBeansMetadataService, bproc_ClassPathScannerService, bproc_QueryExecutorService, bproc_UserGroupService, bproc_ProcessInstanceMigrationService, bproc_BprocHistoricService, bproc_BprocManagementService, bproc_BprocDmnRepositoryService, bproc_BprocDmnHistoricService, bproc_BprocModelService, bproc_ProcessInstanceEditVariableService]
-2025-06-13 15:33:28 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [clinic_CitaService, clinic_EspecialistaService, clinic_PacienteService, clinic_RedisService, clinic_PruebaService, clinic_FacturaService]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808480] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808481] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808483] time[3] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808487] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808488] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808489] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808492] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808492] time[2] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808496] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808496] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808499] time[2] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808502] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808503] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808503] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808504] time[2] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808502] time[9] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808511] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808512] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808513] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808514] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808515] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808516] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808517] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808520] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808525] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808525] time[2] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808528] time[5] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808519] time[15] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808535] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808536] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808538] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808540] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808541] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808541] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808543] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808543] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808544] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808544] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808545] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808547] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808547] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808548] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808548] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808547] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808549] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808549] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808550] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808550] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808551] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808551] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808551] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808552] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808552] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808553] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808554] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808552] time[2] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808556] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808556] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808558] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808558] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808558] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808559] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808559] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808560] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808560] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808560] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808561] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808561] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808562] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808562] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808563] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808561] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808566] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808566] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808567] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808567] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808568] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808568] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808569] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808569] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808570] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808570] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808571] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808569] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808573] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808573] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808574] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808574] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808574] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808575] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808575] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808576] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808576] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808576] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808577] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808577] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808577] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808578] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808578] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808577] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808579] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808579] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808579] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808580] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808580] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808580] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808586] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808587] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808587] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808588] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808588] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808587] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808589] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808589] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808589] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808590] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808591] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808591] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808592] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808592] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808592] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808593] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808595] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808596] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808596] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808596] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808597] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808595] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808597] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808598] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808598] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808599] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808599] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808599] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808600] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808600] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808601] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808601] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808602] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808600] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808603] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808603] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808603] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808604] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808604] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808605] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808605] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808605] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808606] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808606] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808607] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808607] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808608] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808608] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808611] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808607] time[8] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808616] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808616] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808616] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808617] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808617] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808617] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808618] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808618] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808619] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808619] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808619] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808618] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808620] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808620] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808621] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808621] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808621] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808622] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808622] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808622] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808623] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808623] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808624] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808624] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808625] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808625] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808625] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808624] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808626] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808626] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808627] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808627] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808628] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808631] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808631] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808631] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808632] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808632] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808632] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808631] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808633] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808633] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808634] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808634] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808635] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808635] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808635] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808636] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808636] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808639] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808640] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808640] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808640] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808641] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808641] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808640] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808642] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808642] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808643] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808643] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808643] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808644] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808644] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808644] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808645] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808645] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808646] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808644] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808648] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808649] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808649] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808650] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808650] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808650] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808651] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808651] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808651] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808652] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808652] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808652] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808653] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808653] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808653] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808652] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808654] time[1] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808656] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808657] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808657] time[3] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808661] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808661] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808661] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808662] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808662] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808662] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808663] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808662] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808664] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808664] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808664] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808665] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808665] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808665] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808666] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808666] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808667] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808667] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808667] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808668] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808669] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808669] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808670] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808668] time[2] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808670] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808670] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808671] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808671] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808672] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808672] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808673] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808673] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808673] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808674] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808674] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808673] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808675] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808675] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808677] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808677] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808677] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808678] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808678] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808681] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808682] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808682] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808686] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808686] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808687] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808687] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808688] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808686] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808688] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808689] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808689] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808689] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808690] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808690] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808690] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808691] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808691] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808691] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808691] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808690] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808692] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808693] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808693] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808693] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808694] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808694] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808694] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808695] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808695] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808696] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808696] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808696] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808697] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808697] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808698] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808696] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808699] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808702] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808702] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808703] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808703] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808703] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808704] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808704] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808704] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808705] time[0] tag[Messages.searchFiles]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808705] time[0] tag[Messages.searchClasspath]
-2025-06-13 15:33:28 INFO  org.perf4j.TimingLogger - start[1749828808704] time[1] tag[Messages.searchClasspath]
-2025-06-13 15:33:30 INFO  c.h.cuba.core.sys.jmx.MBeanExporter - Registering beans for JMX exposure: [app.cuba:type=ConfigStorage, app.cuba:type=CachingFacade, app.cuba:type=FileUploading, app.cuba:type=JmxNodeIdentifier, app.cuba:type=JmxLogControl, app.cuba:type=ClassLoaderManager, app.cuba:type=StatisticsCounter]
-2025-06-13 15:33:30 ERROR c.h.c.c.s.AbstractWebAppContextLoader - Error initializing application
-org.springframework.jmx.export.UnableToRegisterMBeanException: Unable to register MBean [com.haulmont.cuba.web.jmx.ConfigStorage@4117a87f] with key 'app.cuba:type=ConfigStorage'; nested exception is javax.management.InstanceAlreadyExistsException: app.cuba:type=ConfigStorage
-        at org.springframework.jmx.export.MBeanExporter.registerBeanNameOrInstance(MBeanExporter.java:626)
-        at org.springframework.jmx.export.MBeanExporter.lambda$registerBeans$2(MBeanExporter.java:552)
-        at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
-        at org.springframework.jmx.export.MBeanExporter.registerBeans(MBeanExporter.java:552)
-        at org.springframework.jmx.export.MBeanExporter.afterSingletonsInstantiated(MBeanExporter.java:435)
-        at com.haulmont.cuba.core.sys.jmx.MBeanExporter.afterSingletonsInstantiated(MBeanExporter.java:77)
-        at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:974)
-        at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
-        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:591)
-        at org.springframework.context.support.AbstractRefreshableConfigApplicationContext.afterPropertiesSet(AbstractRefreshableConfigApplicationContext.java:154)
-        at com.haulmont.cuba.core.sys.CubaClassPathXmlApplicationContext.<init>(CubaClassPathXmlApplicationContext.java:42)
-        at com.haulmont.cuba.core.sys.AbstractAppContextLoader.createApplicationContext(AbstractAppContextLoader.java:97)
-        at com.haulmont.cuba.core.sys.AbstractAppContextLoader.initAppContext(AbstractAppContextLoader.java:65)
-        at com.haulmont.cuba.core.sys.AbstractWebAppContextLoader.contextInitialized(AbstractWebAppContextLoader.java:86)
-        at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:1073)
-        at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:572)
-        at org.eclipse.jetty.server.handler.ContextHandler.contextInitialized(ContextHandler.java:1002)
-        at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:765)
-        at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:379)
-        at org.eclipse.jetty.webapp.WebAppContext.startWebapp(WebAppContext.java:1449)
-        at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1414)
+2025-06-13 15:45:51 WARN  o.eclipse.jetty.xml.XmlConfiguration - Config error at <Call name="setSessionTrackingModes">
+            <Arg>
+                <Array type="java.lang.String">
+                    <Item>COOKIE</Item>
+                </Array>
+            </Arg>
+        </Call>
+2025-06-13 15:45:51 WARN  o.eclipse.jetty.xml.XmlConfiguration - Config error at <Call name="getSessionHandler">
+        <Call name="setSessionTrackingModes">
+            <Arg>
+                <Array type="java.lang.String">
+                    <Item>COOKIE</Item>
+                </Array>
+            </Arg>
+        </Call>
+    </Call>
+2025-06-13 15:45:51 WARN  o.eclipse.jetty.webapp.WebAppContext - Failed startup of context o.e.j.w.WebAppContext@50dfbc58{/app,jar:file:/app/app.jar!/LIB-INF/app-core,UNAVAILABLE}
+java.lang.IllegalStateException: No Method: <Call name="setSessionTrackingModes">
+            <Arg>
+                <Array type="java.lang.String">
+                    <Item>COOKIE</Item>
+                </Array>
+            </Arg>
+        </Call> on class org.eclipse.jetty.server.session.SessionHandler
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.call(XmlConfiguration.java:950)
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.configure(XmlConfiguration.java:515)
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.call(XmlConfiguration.java:945)
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.configure(XmlConfiguration.java:515)
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.configure(XmlConfiguration.java:431)
+        at org.eclipse.jetty.xml.XmlConfiguration.configure(XmlConfiguration.java:364)
+        at org.eclipse.jetty.plus.webapp.EnvConfiguration.lambda$configure$0(EnvConfiguration.java:120)
+        at org.eclipse.jetty.webapp.WebAppClassLoader.runWithServerClassAccess(WebAppClassLoader.java:138)
+        at org.eclipse.jetty.plus.webapp.EnvConfiguration.configure(EnvConfiguration.java:118)
+        at org.eclipse.jetty.webapp.WebAppContext.configure(WebAppContext.java:498)
+        at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1409)
         at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:916)
         at org.eclipse.jetty.servlet.ServletContextHandler.doStart(ServletContextHandler.java:288)
         at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:524)
@@ -943,65 +55,429 @@ org.springframework.jmx.export.UnableToRegisterMBeanException: Unable to registe
         at com.haulmont.uberjar.CubaJettyServer.start(CubaJettyServer.java:127)
         at com.haulmont.uberjar.ServerRunner.execute(ServerRunner.java:249)
         at com.haulmont.uberjar.ServerRunner.main(ServerRunner.java:39)
-Caused by: javax.management.InstanceAlreadyExistsException: app.cuba:type=ConfigStorage
-        at java.management/com.sun.jmx.mbeanserver.Repository.addMBean(Repository.java:436)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerWithRepository(DefaultMBeanServerInterceptor.java:1855)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerDynamicMBean(DefaultMBeanServerInterceptor.java:955)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerObject(DefaultMBeanServerInterceptor.java:890)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerMBean(DefaultMBeanServerInterceptor.java:320)
-        at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.registerMBean(JmxMBeanServer.java:522)
-        at org.springframework.jmx.support.MBeanRegistrationSupport.doRegister(MBeanRegistrationSupport.java:138)
-        at org.springframework.jmx.export.MBeanExporter.registerBeanInstance(MBeanExporter.java:680)
-        at org.springframework.jmx.export.MBeanExporter.registerBeanNameOrInstance(MBeanExporter.java:616)
-        ... 37 common frames omitted
-2025-06-13 15:33:30 WARN  o.eclipse.jetty.webapp.WebAppContext - Failed startup of context o.e.j.w.WebAppContext@5a3ae48{/app,jar:file:/app/app.jar!/LIB-INF/app,UNAVAILABLE}
-org.springframework.jmx.export.UnableToRegisterMBeanException: Unable to register MBean [com.haulmont.cuba.web.jmx.ConfigStorage@4117a87f] with key 'app.cuba:type=ConfigStorage'; nested exception is javax.management.InstanceAlreadyExistsException: app.cuba:type=ConfigStorage
-        at org.springframework.jmx.export.MBeanExporter.registerBeanNameOrInstance(MBeanExporter.java:626)
-        at org.springframework.jmx.export.MBeanExporter.lambda$registerBeans$2(MBeanExporter.java:552)
-        at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
-        at org.springframework.jmx.export.MBeanExporter.registerBeans(MBeanExporter.java:552)
-        at org.springframework.jmx.export.MBeanExporter.afterSingletonsInstantiated(MBeanExporter.java:435)
-        at com.haulmont.cuba.core.sys.jmx.MBeanExporter.afterSingletonsInstantiated(MBeanExporter.java:77)
-        at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:974)
-        at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
-        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:591)
-        at org.springframework.context.support.AbstractRefreshableConfigApplicationContext.afterPropertiesSet(AbstractRefreshableConfigApplicationContext.java:154)
-        at com.haulmont.cuba.core.sys.CubaClassPathXmlApplicationContext.<init>(CubaClassPathXmlApplicationContext.java:42)
-        at com.haulmont.cuba.core.sys.AbstractAppContextLoader.createApplicationContext(AbstractAppContextLoader.java:97)
-        at com.haulmont.cuba.core.sys.AbstractAppContextLoader.initAppContext(AbstractAppContextLoader.java:65)
-        at com.haulmont.cuba.core.sys.AbstractWebAppContextLoader.contextInitialized(AbstractWebAppContextLoader.java:86)
-        at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:1073)
-        at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:572)
-        at org.eclipse.jetty.server.handler.ContextHandler.contextInitialized(ContextHandler.java:1002)
-        at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:765)
-        at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:379)
-        at org.eclipse.jetty.webapp.WebAppContext.startWebapp(WebAppContext.java:1449)
-        at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1414)
-        at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:916)
-        at org.eclipse.jetty.servlet.ServletContextHandler.doStart(ServletContextHandler.java:288)
-        at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:524)
-        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
-        at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:169)
-        at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:117)
-        at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:97)
-        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
-        at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:169)
-        at org.eclipse.jetty.server.Server.start(Server.java:423)
-        at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:110)
-        at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:97)
-        at org.eclipse.jetty.server.Server.doStart(Server.java:387)
-        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
-        at com.haulmont.uberjar.CubaJettyServer.start(CubaJettyServer.java:127)
-        at com.haulmont.uberjar.ServerRunner.execute(ServerRunner.java:249)
-        at com.haulmont.uberjar.ServerRunner.main(ServerRunner.java:39)
-Caused by: javax.management.InstanceAlreadyExistsException: app.cuba:type=ConfigStorage
-        at java.management/com.sun.jmx.mbeanserver.Repository.addMBean(Repository.java:436)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerWithRepository(DefaultMBeanServerInterceptor.java:1855)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerDynamicMBean(DefaultMBeanServerInterceptor.java:955)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerObject(DefaultMBeanServerInterceptor.java:890)
-        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerMBean(DefaultMBeanServerInterceptor.java:320)
-        at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.registerMBean(JmxMBeanServer.java:522)
-        at org.springframework.jmx.support.MBeanRegistrationSupport.doRegister(MBeanRegistrationSupport.java:138)
-        at org.springframework.jmx.export.MBeanExporter.registerBeanInstance(MBeanExporter.java:680)
-        at org.springframework.jmx.export.MBeanExporter.registerBeanNameOrInstance(MBeanExporter.java:616)
-        ... 37 common frames omitted
+Caused by: java.lang.NoSuchMethodException: setSessionTrackingModes
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.call(XmlConfiguration.java:987)
+        at org.eclipse.jetty.xml.XmlConfiguration$JettyXmlConfiguration.call(XmlConfiguration.java:942)
+        ... 27 common frames omitted
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereHandler com.vaadin.server.communication.PushAtmosphereHandler mapped to context-path: /*
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed the following AtmosphereInterceptor mapped to AtmosphereHandler com.vaadin.server.communication.PushAtmosphereHandler
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using org.atmosphere.util.VoidAnnotationProcessor for processing annotation
+2025-06-13 15:45:51 INFO  org.atmosphere.util.ForkJoinPool - Using ForkJoinPool  java.util.concurrent.ForkJoinPool. Set the org.atmosphere.cpr.broadcaster.maxAsyncWriteThreads to -1 to fully use its power.
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed WebSocketProtocol org.atmosphere.websocket.protocol.SimpleHttpProtocol
+2025-06-13 15:45:51 INFO  o.a.container.JSR356AsyncSupport - JSR 356 Mapping path
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installing Default AtmosphereInterceptors
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.CorsInterceptor : CORS Interceptor Support
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.CacheHeadersInterceptor : Default Response's Headers Interceptor
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.PaddingAtmosphereInterceptor : Browser Padding Interceptor Support
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.AndroidAtmosphereInterceptor : Android Interceptor Support
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.HeartbeatInterceptor : Heartbeat Interceptor Support
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.SSEAtmosphereInterceptor : SSE Interceptor Support
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.JSONPAtmosphereInterceptor : JSONP Interceptor Support
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.JavaScriptProtocol : Atmosphere JavaScript Protocol
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor : org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.OnDisconnectInterceptor : Browser disconnection detection
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.IdleResourceInterceptor : org.atmosphere.interceptor.IdleResourceInterceptor
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Set org.atmosphere.cpr.AtmosphereInterceptor.disableDefaults to disable them.
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor CORS Interceptor Support with priority FIRST_BEFORE_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Default Response's Headers Interceptor with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Browser Padding Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Android Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.a.interceptor.HeartbeatInterceptor - HeartbeatInterceptor configured with padding value 'X', client frequency 60 seconds and server frequency 0 seconds
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Heartbeat Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor SSE Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor JSONP Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Atmosphere JavaScript Protocol with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Browser disconnection detection with priority AFTER_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor org.atmosphere.interceptor.IdleResourceInterceptor with priority BEFORE_DEFAULT
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Using EndpointMapper class org.atmosphere.util.DefaultEndpointMapper
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Using BroadcasterCache: org.atmosphere.cache.UUIDBroadcasterCache
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Default Broadcaster Class: org.atmosphere.cpr.DefaultBroadcaster
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Broadcaster Shared List Resources: false
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Broadcaster Polling Wait Time 100
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Shared ExecutorService supported: true
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Messaging ExecutorService Pool Size unavailable - Not instance of ThreadPoolExecutor
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Async I/O Thread Pool Size: 200
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Using BroadcasterFactory: org.atmosphere.cpr.DefaultBroadcasterFactory
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Using AtmosphereResurceFactory: org.atmosphere.cpr.DefaultAtmosphereResourceFactory
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Using WebSocketProcessor: org.atmosphere.websocket.DefaultWebSocketProcessor
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Invoke AtmosphereInterceptor on WebSocket message true
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - HttpSession supported: true
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using org.atmosphere.inject.InjectableObjectFactory for dependency injection and object creation
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using async support: org.atmosphere.container.JSR356AsyncSupport running under container: jetty/9.4.49.v20220914 using javax.servlet/3.0 and jsr356/WebSocket API
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere Framework 2.4.30-1-cuba started.
+2025-06-13 15:45:51 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor  Track Message Size Interceptor using | with priority BEFORE_DEFAULT
+2025-06-13 15:45:51 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Initializing 'web' block, servlet context path: /app
+2025-06-13 15:45:52 INFO  c.h.cuba.core.sys.AppComponents - Using app components: [com.haulmont.cuba, com.haulmont.addon.helium, com.haulmont.reports, com.haulmont.addon.bproc]
+2025-06-13 15:45:52 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from classpath:com/company/clinic/web-app.properties
+2025-06-13 15:45:52 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from /WEB-INF/local.app.properties
+2025-06-13 15:45:52 INFO  c.h.c.c.s.AbstractWebAppContextLoader - cuba.webContextName: app
+2025-06-13 15:45:52 INFO  c.h.c.c.s.e.EnvironmentChecksRunner - Environment checks on web module completed successfully
+2025-06-13 15:45:56 INFO  c.h.c.c.s.r.d.StaticServerSelector - Server URLs: [http://localhost:8080/app-core/remoting]
+2025-06-13 15:45:56 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [cuba_AuthenticationService, cuba_TrustedClientService, cuba_ServerInfoService, cuba_UserSettingService, cuba_UserManagementService, cuba_DataService, cuba_ConfigStorageService, cuba_PersistenceManagerService, cuba_LockService, cuba_UserSessionService, cuba_FoldersService, cuba_EmailService, cuba_FileStorageService, cuba_EntitySnapshotService, cuba_UniqueNumbersService, cuba_LocalizedMessageService, cuba_ResourceService, cuba_ScheduledTasksService, cuba_EntityLogService, cuba_TestingService, cuba_DomainDescriptionService, cuba_RelatedEntitiesService, cuba_EntitySqlGenerationService, cuba_NumberIdService, cuba_QueryResultsService, cuba_DynamicAttributesCacheService, cuba_EntityRestoreService, cuba_LocalFileExchangeService, cuba_EntityImportExportService, cuba_ConstraintLocalizationService, cuba_AttributeAccessService, cuba_ExceptionReportService, cuba_BulkEditorDataService, cuba_PersistenceSecurityService, cuba_AccessGroupsService, cuba_AttributeOptionsLoaderService, cuba_RolesService, cuba_SecurityScopesService, cuba_ScreenProfilerService]
+2025-06-13 15:45:56 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [report_ReportService, report_ReportWizardService]
+2025-06-13 15:45:56 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [bproc_BprocRepositoryService, bproc_BprocFormService, bproc_BprocRuntimeService, bproc_BprocTaskService, bproc_ModelerBeansMetadataService, bproc_ClassPathScannerService, bproc_QueryExecutorService, bproc_UserGroupService, bproc_ProcessInstanceMigrationService, bproc_BprocHistoricService, bproc_BprocManagementService, bproc_BprocDmnRepositoryService, bproc_BprocDmnHistoricService, bproc_BprocModelService, bproc_ProcessInstanceEditVariableService]
+2025-06-13 15:45:56 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [clinic_CitaService, clinic_EspecialistaService, clinic_PacienteService, clinic_RedisService, clinic_PruebaService, clinic_FacturaService]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557883] time[21] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557905] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557909] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557910] time[15] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557926] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557927] time[2] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557929] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557930] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557933] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557934] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557938] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557939] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557940] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557940] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557942] time[8] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557939] time[16] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557955] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557956] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557962] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557962] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557966] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557966] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557967] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557969] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557975] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557976] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557978] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557968] time[16] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557985] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557986] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557987] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557991] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557991] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557992] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557992] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557993] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557994] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557996] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557996] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557997] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557997] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557998] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557999] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:57 INFO  org.perf4j.TimingLogger - start[1749829557996] time[2] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558000] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558000] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558001] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558003] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558007] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558008] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558008] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558009] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558011] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558013] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558014] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558009] time[5] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558016] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558018] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558019] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558020] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558024] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558024] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558025] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558026] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558027] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558028] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558029] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558030] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558031] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558032] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558033] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558030] time[4] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558035] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558036] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558036] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558037] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558040] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558040] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558041] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558041] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558042] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558042] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558043] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558041] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558045] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558047] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558048] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558050] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558051] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558051] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558051] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558052] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558052] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558053] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558053] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558054] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558055] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558055] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558056] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558053] time[5] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558059] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558061] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558061] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558062] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558062] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558062] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558063] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558063] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558065] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558065] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558066] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558063] time[2] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558067] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558068] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558071] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558071] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558072] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558072] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558073] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558073] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558074] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558074] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558078] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558078] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558079] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558079] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558079] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558078] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558082] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558082] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558083] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558083] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558083] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558084] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558084] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558085] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558085] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558086] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558087] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558085] time[2] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558088] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558089] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558091] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558091] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558092] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558092] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558092] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558093] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558093] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558094] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558098] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558098] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558099] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558099] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558099] time[2] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558098] time[4] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558102] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558103] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558103] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558104] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558104] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558105] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558105] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558106] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558106] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558107] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558110] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558106] time[4] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558111] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558111] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558112] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558114] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558114] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558115] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558115] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558116] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558116] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558116] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558117] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558117] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558118] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558118] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558118] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558117] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558119] time[2] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558122] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558123] time[3] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558127] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558127] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558128] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558128] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558129] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558129] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558129] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558130] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558129] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558131] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558131] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558132] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558132] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558132] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558133] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558135] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558135] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558136] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558136] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558136] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558137] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558137] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558138] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558138] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558137] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558139] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558139] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558143] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558146] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558147] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558147] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558148] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558148] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558149] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558149] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558150] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558148] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558150] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558151] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558151] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558152] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558152] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558152] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558153] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558153] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558154] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558154] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558154] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558155] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558155] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558156] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558157] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558155] time[4] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558160] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558163] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558163] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558164] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558164] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558164] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558165] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558165] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558166] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558166] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558166] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558165] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558167] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558168] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558168] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558168] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558169] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558169] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558170] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558171] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558172] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558175] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558175] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558176] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558176] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558177] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558179] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558176] time[3] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558180] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558180] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558181] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558181] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558182] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558182] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558182] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558183] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558183] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558184] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558184] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558183] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558185] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558185] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558186] time[2] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558189] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558189] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558190] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558190] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558191] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558191] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558191] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558192] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558193] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558193] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558193] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558193] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558192] time[2] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558196] time[1] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558197] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558197] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558198] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558198] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558199] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558199] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558200] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558201] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558201] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558202] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558199] time[5] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558206] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558206] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558207] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558208] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558208] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558209] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558209] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558210] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558210] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558211] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558211] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558214] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558214] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558214] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558215] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558213] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558216] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558216] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558217] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558217] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558217] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558218] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558218] time[3] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558222] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558223] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558223] time[0] tag[Messages.searchFiles]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558223] time[0] tag[Messages.searchClasspath]
+2025-06-13 15:45:58 INFO  org.perf4j.TimingLogger - start[1749829558222] time[1] tag[Messages.searchClasspath]
+2025-06-13 15:46:00 INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator null
+2025-06-13 15:46:01 INFO  c.h.cuba.core.sys.jmx.MBeanExporter - Registering beans for JMX exposure: [app.cuba:type=ConfigStorage, app.cuba:type=CachingFacade, app.cuba:type=FileUploading, app.cuba:type=JmxNodeIdentifier, app.cuba:type=JmxLogControl, app.cuba:type=ClassLoaderManager, app.cuba:type=StatisticsCounter]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561868] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561871] time[1] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561879] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561881] time[1] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561891] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561893] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561896] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561898] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561899] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561904] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561907] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561908] time[3] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561912] time[2] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561915] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561917] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561920] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561925] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  org.perf4j.TimingLogger - start[1749829561927] time[0] tag[LoadClass]
+2025-06-13 15:46:01 INFO  c.h.cuba.core.sys.MetadataImpl - Initializing metadata
+2025-06-13 15:46:02 INFO  org.perf4j.TimingLogger - start[1749829562730] time[5] tag[Metadata.replaceExtendedMetaClasses]
+2025-06-13 15:46:02 INFO  c.h.cuba.core.sys.MetadataImpl - Metadata initialized in 798 ms
+2025-06-13 15:46:02 INFO  org.perf4j.TimingLogger - start[1749829562771] time[136] tag[WebJARs]
+2025-06-13 15:46:02 INFO  c.h.c.c.s.AbstractWebAppContextLoader - AppContext started
+2025-06-13 15:46:02 INFO  c.h.c.web.sys.CubaDispatcherServlet - Initializing Servlet 'dispatcher'
+2025-06-13 15:46:04 INFO  c.h.c.web.sys.CubaDispatcherServlet - Completed initialization in 1997 ms
