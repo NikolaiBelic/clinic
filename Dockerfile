@@ -19,7 +19,7 @@ RUN mkdir -p /app/config \
     && mkdir -p /app/VAADIN/widgetsets
 
 # Copia archivos de configuración (asegúrate de que existan)
-COPY modules/core/src/com/company/clinic/app-prod.properties /app/config/
+COPY modules/core/src/com/company/clinic/app.properties /app/config/
 COPY etc/logback.xml /app/config/
 
 # Variables de entorno

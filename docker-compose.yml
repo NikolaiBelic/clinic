@@ -7,7 +7,7 @@ services:
       - "8080:8080"
     environment:
       - CUBA_CONF_DIR=/app/config
-      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=true -XX:+UseContainerSupport -XX:MaxRAMPercentage=75
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75
     volumes:
       - clinic-data:/app/storage
       - clinic-logs:/app/logs
