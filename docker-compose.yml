@@ -14,6 +14,9 @@ services:
         -Dcuba.dataSource.jdbcUrl=jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true
         -Dcuba.dataSource.username=SA
         -Dcuba.dataSource.password=Elalmendro.33
+      - CUBA_JMX_ENABLED=false  # Desactiva JMX
+      - CUBA_WEB_FORCE_CLEAN_START=true  # Limpia caché al iniciar
+      - CUBA_AUTOMATIC_DATABASE_UPDATE=false  # Asegura que NO actualice BD
     volumes:
       - clinic-data:/app/storage
       - clinic-logs:/app/logs
