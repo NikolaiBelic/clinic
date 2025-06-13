@@ -197,4 +197,37 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
         }
     }
 }
+
+task buildUberJar(type: CubaUberJarBuilding) {
+    singleJar = true
+    appName = 'clinic'
+    coreModule = project(':app-core')
+    webModule = project(':app-web')
+
+    // Añade estas propiedades CRUCIALES para la conexión entre módulos
+    appProperties = [
+            'cuba.automaticDatabaseUpdate': true,
+            'cuba.logDir': '/app/logs',
+            'cuba.tempDir': '/app/temp',
+            'cuba.confDir': '/app/config',
+            'cuba.fileStorageDir': '/app/filestorage',
+            'cuba.web.pushEnabled': false,
+            'cuba.webContextName': 'app',
+            'cuba.connectionUrlList': 'http://localhost:8080/clinic'
+    ]
+
+    logbackConfigurationFile = 'etc/uber-jar-logback.xml'
+    webPort = 8080
+
+    // Solución definitiva para incluir archivos
+    // Configuración de archivos adicionales
+    doFirst {
+        // Copiar manualmente el persistence.xml al directorio de recursos
+        copy {
+            from 'modules/core/src/com/company/clinic/persistence.xml'
+            into 'build/resources/main/com/company/clinic'
+        }
+    }
+}
+
 restart.finalizedBy start
