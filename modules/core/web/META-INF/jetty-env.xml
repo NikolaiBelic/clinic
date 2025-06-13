@@ -2,12 +2,14 @@
     <Set name="contextPath">/app</Set>
     <Set name="tempDirectory">/app/temp</Set>
 
-    <!-- Configuración simplificada de sesiones compatible con Jetty 9 -->
-    <Get name="sessionHandler">
-        <Set name="sessionTrackingModes">
-            <Array type="jakarta.servlet.SessionTrackingMode">
-                <Item>COOKIE</Item>
-            </Array>
-        </Set>
-    </Get>
+    <!-- Configuración simplificada compatible con Jetty 9 -->
+    <Call name="getSessionHandler">
+        <Call name="setSessionTrackingModes">
+            <Arg>
+                <Array type="java.lang.String">
+                    <Item>COOKIE</Item>
+                </Array>
+            </Arg>
+        </Call>
+    </Call>
 </Configure>
