@@ -7,17 +7,14 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copia el JAR y los archivos de configuración
-COPY build/distributions/uberJar/clinic.jar /app/app.jar
-COPY modules/core/web/META-INF/jetty-env.xml /app/jetty-env.xml
+COPY build/distributions/uberJar/clinic.jar /app/
+COPY modules/core/web/META-INF/jetty-env.xml /app/
 COPY modules/core/src/com/company/clinic/app.properties /app/config/
 
-# Crea directorios necesarios
 RUN mkdir -p /app/{config,logs,temp,filestorage,storage} \
     && chown -R 1000:1000 /app
 
 USER 1000
 
-# Configura el entrypoint para permitir comandos alternativos
-ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["java -jar app.jar --port=8080 --contextName=app --jettyEnvPath=/app/jetty-env.xml"]
+# Usa CMD en lugar de ENTRYPOINT para permitir sobrescritura
+CMD ["java", "-jar", "clinic.jar", "--port=8080", "--contextName=app", "--jettyEnvPath=/app/jetty-env.xml"]
