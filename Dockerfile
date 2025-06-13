@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 COPY build/distributions/uberJar/clinic.jar /app/
-COPY modules/core/web/META-INF/jetty-env.xml /app/
 COPY modules/core/src/com/company/clinic/app.properties /app/config/
 
 RUN mkdir -p /app/{config,logs,temp,filestorage,storage} \
@@ -17,4 +16,4 @@ RUN mkdir -p /app/{config,logs,temp,filestorage,storage} \
 USER 1000
 
 # Usa CMD en lugar de ENTRYPOINT para permitir sobrescritura
-CMD ["java", "-jar", "clinic.jar", "--port=8080", "--contextName=app", "--jettyEnvPath=/app/jetty-env.xml"]
+CMD ["java", "-jar", "clinic.jar", "--port=8080", "--contextName=app"]
