@@ -1,6 +1,5 @@
 FROM eclipse-temurin:11.0.26_4-jdk-focal
 
-# Instala dependencias necesarias
 RUN apt-get update && apt-get install -y \
     fontconfig \
     libfreetype6 \
@@ -8,21 +7,17 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copia solo el JAR primero
 COPY build/distributions/uberJar/clinic.jar /app/app.jar
 
-# Crea estructura de directorios
 RUN mkdir -p /app/config \
     && mkdir -p /app/logs \
     && mkdir -p /app/temp \
-    && mkdir -p /app/filestorage \
-    && mkdir -p /app/VAADIN/widgetsets
+    && mkdir -p /app/filestorage
 
-# Copia archivos de configuración (asegúrate de que existan)
+# Asegúrate que el archivo properties tenga permisos adecuados
 COPY modules/core/src/com/company/clinic/app.properties /app/config/
-COPY etc/logback.xml /app/config/
+RUN chmod 644 /app/config/app.properties
 
-# Variables de entorno
 ENV CUBA_CONF_DIR=/app/config \
     JAVA_OPTS="-Dserver.port=8080 \
     -Dcuba.webContextName=app \
@@ -31,8 +26,5 @@ ENV CUBA_CONF_DIR=/app/config \
     -XX:MaxRAMPercentage=75.0"
 
 EXPOSE 8080
-
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD curl -f http://localhost:8080/app/ || exit 1
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
