@@ -9,7 +9,7 @@ buildscript {
                 password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
             }
         }
-        mavenCentral()
+
         maven {
             url 'https://repo.cuba-platform.com/content/groups/premium'
             credentials {
@@ -17,7 +17,7 @@ buildscript {
                 password('liLUmknW70Uh')
             }
         }
-        
+
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -57,10 +57,10 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'cuba')
 
     dependencies {
-            testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
-            testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
-            testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')  
-        }
+        testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
+        testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
+        testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')
+    }
 
     task sourceJar(type: Jar) {
         from file('src')
@@ -69,7 +69,7 @@ configure([globalModule, coreModule, webModule]) {
 
     artifacts {
         archives sourceJar
-    } 
+    }
     test {
         useJUnitPlatform()
     }
@@ -77,12 +77,6 @@ configure([globalModule, coreModule, webModule]) {
 
 
 configure(globalModule) {
-    entitiesEnhancing {
-        main {
-            enabled = true
-        }
-    }
-
     dependencies {
         if (!JavaVersion.current().isJava8()) {
             runtime('javax.xml.bind:jaxb-api:2.3.1')
@@ -109,23 +103,11 @@ configure(coreModule) {
         dbscripts
     }
 
-    sourceSets {
-        main {
-            resources {
-                srcDir 'src'
-                include 'com/company/clinic/persistence.xml'
-            }
-        }
-    }
-
     dependencies {
-        implementation(globalModule)
+        compile(globalModule)
         compileOnly(servletApi)
         jdbc(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
         testRuntime(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
-
-        implementation "com.haulmont.cuba:cuba-core:$cubaVersion"
-        implementation "com.haulmont.reports:reports-core:$cubaVersion"
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {
@@ -215,45 +197,4 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
         }
     }
 }
-
-task buildUberJar(type: CubaUberJarBuilding) {
-    singleJar = true
-    appName = 'clinic'
-    coreModule = project(':app-core')
-    webModule = project(':app-web')
-
-    appProperties = [
-            'cuba.dbmsType': 'mssql',
-            'cuba.dbmsVersion': '2012',
-            'cuba.dataSourceProvider': 'application',
-            'cuba.dataSource.jdbcUrl': 'jdbc:sqlserver://localhost:1433;databaseName=clinic',
-            'cuba.dataSource.username': 'anicolcl',
-            'cuba.dataSource.password': 'Elalmendro.33',
-            'cuba.dataSource.driverClassName': 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
-            'cuba.dataSource.connectionTestQuery': 'SELECT 1',
-            'cuba.automaticDatabaseUpdate': true,
-            'cuba.logDir': '/app/logs',
-            'cuba.tempDir': '/app/temp',
-            'cuba.confDir': '/app/config',
-            'cuba.fileStorageDir': '/app/filestorage',
-            'cuba.webContextName': 'app',
-            'cuba.connectionUrlList': 'http://localhost:8080/app',
-            'cuba.availableLocales': 'English|en',
-            'cuba.localeSelectVisible': 'false',
-            'vaadin.productionMode': 'true'
-    ]
-
-    logbackConfigurationFile = 'etc/uber-jar-logback.xml'
-    webPort = 8080
-
-    doFirst {
-        copy {
-            from 'modules/core/src/com/company/clinic/persistence.xml'
-            into 'build/resources/main/com/company/clinic'
-        }
-    }
-}
-
-
 restart.finalizedBy start
-
