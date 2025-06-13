@@ -1,0 +1,13 @@
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+    <New id="cubaDs" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>cubaDs</Arg>
+        <Arg>
+            <New class="com.microsoft.sqlserver.jdbc.SQLServerDataSource">
+                <Set name="URL">jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true</Set>
+                <Set name="User">SA</Set>
+                <Set name="Password">Elalmendro.33</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>
