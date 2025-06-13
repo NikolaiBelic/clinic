@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -Dlogging.level.org.eclipse.jetty=DEBUG -Dspring.config.location=file:/app/config/
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -Dcuba.dataSource.jdbcUrl=jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true -Dcuba.dataSource.username=SA -Dcuba.dataSource.password=Elalmendro.33 -Dlogging.level.org.eclipse.jetty=DEBUG -Dspring.config.location=file:/app/config/
       - CUBA_JMX_ENABLED=false
       - CUBA_WEB_FORCE_CLEAN_START=true
     volumes:
@@ -16,11 +16,6 @@ services:
     networks:
       - cuba-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/app"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
 volumes:
   clinic-data:
