@@ -204,7 +204,7 @@ task buildUberJar(type: CubaUberJarBuilding) {
     coreModule = project(':app-core')
     webModule = project(':app-web')
 
-    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
+    /*coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'*/
 
     appProperties = [
             'cuba.logDir': '/app/logs',
