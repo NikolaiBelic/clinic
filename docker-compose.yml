@@ -5,37 +5,23 @@ services:
     build: .
     ports:
       - "8080:8080"
-    volumes:
-      - clinic-storage:/storage  # Para almacenamiento persistente
-      - ./logs:/tmp/logs  # Logs accesibles desde host
-      # Elimina el mapeo de /tmp ya que es interno del contenedor
-
     environment:
-      - JAVA_OPTS=-Dserver.port=8080
-        -Dcuba.webContextName=app
-        -Dvaadin.productionMode=true  # Cambiar a true en producción
-        -Dcuba.automaticDatabaseUpdate=false
-        -Ddbupdate.enabled=false
-        -Dcuba.tempDir=/tmp
-        -Dcuba.logDir=/tmp/logs
-        -Dcuba.fileStorageDir=/storage
-        -Dspring.jmx.enabled=false  # Deshabilitar JMX completamente
-        -Djava.io.tmpdir=/tmp
-        -XX:+UseContainerSupport
-        -XX:MaxRAMPercentage=75.0
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/app/ || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s  # Tiempo inicial antes de empezar a chequear
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -Dcuba.dataSource.jdbcUrl=jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true -Dcuba.dataSource.username=SA -Dcuba.dataSource.password=Elalmendro.33 -Dlogging.level.org.eclipse.jetty=DEBUG -Dspring.config.location=file:/app/config/
+      - CUBA_JMX_ENABLED=false
+      - CUBA_WEB_FORCE_CLEAN_START=true
+    volumes:
+      - clinic-data:/app/storage
+      - clinic-logs:/app/logs
+      - clinic-temp:/app/temp
+    networks:
+      - cuba-network
     restart: unless-stopped
-    user: "1000"  # Asegurar que corre con el usuario correcto
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
 volumes:
   clinic-data:
+  clinic-logs:
+  clinic-temp:
+
+networks:
+  cuba-network:
+    driver: bridge
