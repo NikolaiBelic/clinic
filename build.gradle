@@ -204,29 +204,23 @@ task buildUberJar(type: CubaUberJarBuilding) {
     coreModule = project(':app-core')
     webModule = project(':app-web')
 
-    // Añade estas propiedades CRUCIALES para la conexión entre módulos
+    // Configuración crítica para Jetty
+    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
+
     appProperties = [
             'cuba.logDir': '/app/logs',
             'cuba.tempDir': '/app/temp',
             'cuba.confDir': '/app/config',
             'cuba.fileStorageDir': '/app/filestorage',
-            'cuba.web.pushEnabled': false,
             'cuba.webContextName': 'app',
-            'cuba.connectionUrlList': 'http://localhost:8080/app'
+            'cuba.connectionUrlList': 'http://localhost:8080/app',
+            'cuba.dataSource.jdbcUrl': 'jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true',
+            'cuba.dataSource.username': 'SA',
+            'cuba.dataSource.password': 'Elalmendro.33'
     ]
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
     webPort = 8080
-
-    // Solución definitiva para incluir archivos
-    // Configuración de archivos adicionales
-    doFirst {
-        // Copiar manualmente el persistence.xml al directorio de recursos
-        copy {
-            from 'modules/core/src/com/company/clinic/persistence.xml'
-            into 'build/resources/main/com/company/clinic'
-        }
-    }
 }
 
 restart.finalizedBy start
