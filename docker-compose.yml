@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -Dcuba.dataSource.jdbcUrl=jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true -Dcuba.dataSource.username=SA -Dcuba.dataSource.password=Elalmendro.33 -Dlogging.level.org.eclipse.jetty=DEBUG -Dspring.config.location=file:/app/config/
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dspring.jmx.enabled=false -Dcuba.jmx.enabled=false
       - CUBA_JMX_ENABLED=false
       - CUBA_WEB_FORCE_CLEAN_START=true
     volumes:
