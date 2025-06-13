@@ -204,16 +204,18 @@ task buildUberJar(type: CubaUberJarBuilding) {
     coreModule = project(':app-core')
     webModule = project(':app-web')
 
-    /*coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'*/
-
     appProperties = [
-            'cuba.logDir': '/app/logs',
-            'cuba.tempDir': '/app/temp',
-            'cuba.webContextName': 'app'
+            'cuba.logDir'       : '/app/logs',
+            'cuba.tempDir'      : '/app/temp',
+            'cuba.webContextName': 'app',
+            'cuba.jmx.enabled'  : 'false',
+            'spring.jmx.enabled': 'false'
     ]
 
-    logbackConfigurationFile = 'etc/logback.xml'
     webPort = 8080
+
+    logbackConfigurationFile = 'etc/logback.xml'
+    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
 }
 
 restart.finalizedBy start
