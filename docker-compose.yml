@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   clinic-app:
     build: .
@@ -7,23 +9,31 @@ services:
       - JAVA_OPTS=-Dserver.port=8080
         -Dcuba.webContextName=app
         -Dvaadin.productionMode=false
+        -Dcuba.automaticDatabaseUpdate=false
+        -Ddbupdate.enabled=false
+        -Dcuba.tempDir=/tmp
+        -Dcuba.logDir=/tmp/logs
+        -Dlogging.level.root=INFO
+        -Dlogging.level.org.eclipse.jetty=WARN
         -XX:+UseContainerSupport
-        -XX:MaxRAMPercentage=75
-        -Dlogging.level.org.eclipse.jetty=DEBUG
-      - CUBA_JMX_ENABLED=false
-      - CUBA_WEB_FORCE_CLEAN_START=true
+        -XX:MaxRAMPercentage=75.0
     volumes:
       - clinic-data:/app/storage
-      - clinic-logs:/app/logs
-      - clinic-temp:/app/temp
+      - ./logs:/tmp/logs  # Mejor montar como volumen local para inspección
+      - ./temp:/tmp  # Directorio temporal accesible
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/app/"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/app/ || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 60s  # Tiempo inicial antes de empezar a chequear
     restart: unless-stopped
+    user: "1000"  # Asegurar que corre con el usuario correcto
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   clinic-data:
-  clinic-logs:
-  clinic-temp:
