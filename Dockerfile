@@ -4,9 +4,9 @@ FROM eclipse-temurin:11.0.26_4-jdk-focal
 RUN apt-get update && apt-get install -y \
     fontconfig \
     libfreetype6 \
-    && mkdir -p /app/{config,logs,temp,filestorage} \
-    && chown -R 1000:1000 /app \
-    && chmod -R 775 /app/{logs,temp,filestorage} \  # Más seguro que 777
+    && mkdir -p /app/config /tmp/logs /storage \
+    && chown -R 1000:1000 /app /tmp/logs /storage \
+    && chmod -R 775 /tmp/logs /storage \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -17,8 +17,17 @@ COPY etc/logback.xml /app/config/
 COPY modules/core/src/com/company/clinic/app.properties /app/config/
 COPY jmx-disable.properties /app/config/
 
+# Asegura archivos de configuración
+RUN chmod 644 /app/config/*
+
 USER 1000
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-Dlogback.configurationFile=/app/config/logback.xml", "-jar", "app.jar"]
+ENTRYPOINT ["java", \
+    "-Dlogback.configurationFile=/app/config/logback.xml", \
+    "-Dcuba.automaticDatabaseUpdate=false", \
+    "-Ddbupdate.enabled=false", \
+    "-Dcuba.tempDir=/tmp", \
+    "-Dcuba.logDir=/tmp/logs", \
+    "-jar", "app.jar"]
