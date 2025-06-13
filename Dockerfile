@@ -7,19 +7,17 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copia todos los archivos necesarios
+# Copia el JAR y los archivos de configuración
 COPY build/distributions/uberJar/clinic.jar /app/app.jar
 COPY modules/core/web/META-INF/jetty-env.xml /app/jetty-env.xml
 COPY modules/core/src/com/company/clinic/app.properties /app/config/
-COPY jmx-disable.properties /app/config/
 
-# Crea directorios con permisos correctos
+# Crea directorios necesarios
 RUN mkdir -p /app/{config,logs,temp,filestorage,storage} \
-    && chown -R 1000:1000 /app \
-    && chmod -R 755 /app
+    && chown -R 1000:1000 /app
 
 USER 1000
 
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar", "--port=8080", "--contextName=app", "--jettyEnvPath=/app/jetty-env.xml"]
+# Configura el entrypoint para permitir comandos alternativos
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["java -jar app.jar --port=8080 --contextName=app --jettyEnvPath=/app/jetty-env.xml"]
