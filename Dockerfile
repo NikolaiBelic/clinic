@@ -9,14 +9,16 @@ WORKDIR /app
 
 COPY build/distributions/uberJar/clinic.jar /app/app.jar
 
-RUN mkdir -p /app/config \
-    && mkdir -p /app/logs \
-    && mkdir -p /app/temp \
-    && mkdir -p /app/filestorage
+# Crea directorios con permisos correctos
+RUN mkdir -p /app/{config,logs,temp,filestorage,storage} \
+    && chown -R 1000:1000 /app \
+    && chmod -R 755 /app
 
 COPY modules/core/src/com/company/clinic/app.properties /app/config/
 COPY jmx-disable.properties /app/config/
-RUN chmod 644 /app/config/app.properties
+RUN chown -R 1000:1000 /app/config
+
+USER 1000
 
 EXPOSE 8080
 
