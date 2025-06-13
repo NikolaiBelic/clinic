@@ -1060,3 +1060,1213 @@ Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: The connection to th
 2025-06-13 10:38:59 INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.w.WebAppContext@6915351c{/app,jar:file:/app/app.jar!/LIB-INF/app,AVAILABLE}
 2025-06-13 10:38:59 INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@491666ad{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
 2025-06-13 10:38:59 INFO  org.eclipse.jetty.server.Server - Started @84052ms
+debian@vps-8f8fe2aa:~$ top
+top - 10:49:13 up 2 min,  1 user,  load average: 0.14, 0.11, 0.04
+Tasks:  88 total,   1 running,  87 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   1931.8 total,     71.2 free,    898.5 used,   1103.2 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.   1033.3 avail Mem
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 slub_flushwq
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns
+      7 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0-cgroup_destroy
+      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-events_highpri
+      9 root      20   0       0      0      0 I   0.0   0.0   0:00.22 kworker/u2:0-flush-8:0
+     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq
+     11 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_kthread
+     12 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_rude_kthread
+     13 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_trace_kthread
+     14 root      20   0       0      0      0 S   0.0   0.0   0:00.07 ksoftirqd/0
+     15 root      20   0       0      0      0 I   0.0   0.0   0:00.16 rcu_preempt
+     16 root      rt   0       0      0      0 S   0.0   0.0   0:00.00 migration/0
+     17 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker/0:1-cgroup_destroy
+     18 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0
+     20 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kdevtmpfs
+     21 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 inet_frag_wq
+     22 root      20   0       0      0      0 S   0.0   0.0   0:00.02 kauditd
+     23 root      20   0       0      0      0 S   0.0   0.0   0:00.00 khungtaskd
+     24 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker/u2:1-flush-8:0
+     25 root      20   0       0      0      0 S   0.0   0.0   0:00.00 oom_reaper
+[1]+  Stopped                 top
+debian@vps-8f8fe2aa:~$ sudo fallocate -l 1G /swapfile
+debian@vps-8f8fe2aa:~$ sudo chmod 600 /swapfile
+debian@vps-8f8fe2aa:~$ sudo mkswap /swapfile
+Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+no label, UUID=83fb17a8-302f-4bbe-aa8e-7feee4923ba3
+debian@vps-8f8fe2aa:~$ sudo swapon /swapfile
+debian@vps-8f8fe2aa:~$ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+/swapfile none swap sw 0 0
+debian@vps-8f8fe2aa:~$ docker ps
+CONTAINER ID   IMAGE                                        COMMAND                  CREATED        STATUS          PORTS                                         NAMES
+e7689b0fe30d   mcr.microsoft.com/mssql/server:2022-latest   "/opt/mssql/bin/laun…"   44 hours ago   Up 21 minutes   0.0.0.0:1433->1433/tcp, [::]:1433->1433/tcp   sqlserver-dev
+debian@vps-8f8fe2aa:~$ docker ps -a
+CONTAINER ID   IMAGE                                        COMMAND                  CREATED          STATUS                        PORTS                                         NAMES
+88afd6968dd2   clinic-app                                   "java -jar app.jar"      31 minutes ago   Exited (255) 21 minutes ago   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   clinic-app
+e7689b0fe30d   mcr.microsoft.com/mssql/server:2022-latest   "/opt/mssql/bin/laun…"   44 hours ago     Up 21 minutes                 0.0.0.0:1433->1433/tcp, [::]:1433->1433/tcp   sqlserver-dev
+debian@vps-8f8fe2aa:~$ docker rm -f clinic-app
+clinic-app
+debian@vps-8f8fe2aa:~$ docker rmi -f clinic-app
+Untagged: clinic-app:latest
+Deleted: sha256:2c58938c541538c2f28c92b6291d1de6c93d31d655061418ddee4a080b3bcc6c
+debian@vps-8f8fe2aa:~$ cd zenttric/
+debian@vps-8f8fe2aa:~/zenttric$ sudo rm -R clinic
+debian@vps-8f8fe2aa:~/zenttric$ git clone https://github.com/NikolaiBelic/clinic.git
+Cloning into 'clinic'...
+remote: Enumerating objects: 1090, done.
+remote: Counting objects: 100% (36/36), done.
+remote: Compressing objects: 100% (19/19), done.
+remote: Total 1090 (delta 11), reused 28 (delta 8), pack-reused 1054 (from 1)
+Receiving objects: 100% (1090/1090), 12.97 MiB | 9.57 MiB/s, done.
+Resolving deltas: 100% (503/503), done.
+debian@vps-8f8fe2aa:~/zenttric$ chmod +x ./gradlew
+chmod: cannot access './gradlew': No such file or directory
+debian@vps-8f8fe2aa:~/zenttric$ cd clinic/
+debian@vps-8f8fe2aa:~/zenttric/clinic$ chmod +x ./gradlew
+debian@vps-8f8fe2aa:~/zenttric/clinic$ ./gradlew buildUberjAR
+Starting a Gradle Daemon, 1 incompatible and 2 stopped Daemons could not be reused, use --status for details
+> Task :app-core:assembleDbScripts
+> Task :app-core:dbScriptsArchive
+> Task :app-core:beansXml
+> Task :app-global:beansXml
+> Task :app-global:processResources
+> Task :app-global:buildInfo
+
+> Task :app-global:compileJava
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :app-global:classes
+> Task :app-global:jar
+
+> Task :app-core:compileJava
+Note: /home/debian/zenttric/clinic/modules/core/src/com/company/clinic/core/RedisConfig.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :app-core:processResources
+> Task :app-core:classes
+> Task :app-core:jar
+> Task :app-core:sourceJar
+> Task :app-core:assemble
+> Task :app-web:buildScssThemes
+> Task :app-web:beansXml
+
+> Task :app-web:compileJava
+Note: /home/debian/zenttric/clinic/modules/web/src/com/company/clinic/web/screens/calendario/Calendariomain.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :app-web:processResources
+> Task :app-web:classes
+> Task :app-web:jar
+> Task :app-web:sourceJar
+> Task :app-web:themesJar
+> Task :app-web:webArchive
+> Task :app-web:assemble
+
+> Task :buildUberJar
+[CubaUberJAR] Copy shared libs for project ':app-core'
+[CubaUberJAR] Copy app libs for project ':app-core'
+[CubaUberJAR] Copy libs from configurations.server for project ':app-core'
+[CubaUberJAR] Copy shared libs for project ':app-web'
+[CubaUberJAR] Copy app libs for project ':app-web'
+[CubaUberJAR] Copy libs from configurations.server for project ':app-web'
+[CubaUberJAR] Pack server libs
+[CubaUberJAR] Pack libs progress: 0%
+[CubaUberJAR] Pack libs progress: 20%
+[CubaUberJAR] Pack libs progress: 40%
+[CubaUberJAR] Pack libs progress: 60%
+[CubaUberJAR] Pack libs progress: 80%
+[CubaUberJAR] Pack libs progress: 100%
+[CubaUberJAR] Pack app libs for project ':app-core'
+[CubaUberJAR] Pack libs progress: 0%
+[CubaUberJAR] Pack libs progress: 20%
+[CubaUberJAR] Pack libs progress: 40%
+[CubaUberJAR] Pack libs progress: 60%
+[CubaUberJAR] Pack libs progress: 80%
+[CubaUberJAR] Pack libs progress: 100%
+[CubaUberJAR] Pack content for project ':app-core'
+[CubaUberJAR] Pack app libs for project ':app-web'
+[CubaUberJAR] Pack libs progress: 0%
+[CubaUberJAR] Pack libs progress: 20%
+[CubaUberJAR] Pack libs progress: 40%
+[CubaUberJAR] Pack libs progress: 60%
+[CubaUberJAR] Pack libs progress: 80%
+[CubaUberJAR] Pack libs progress: 100%
+[CubaUberJAR] Pack shared libs for project ':app-web'
+[CubaUberJAR] Pack libs progress: 0%
+[CubaUberJAR] Pack libs progress: 20%
+[CubaUberJAR] Pack libs progress: 40%
+[CubaUberJAR] Pack libs progress: 60%
+[CubaUberJAR] Pack libs progress: 80%
+[CubaUberJAR] Pack libs progress: 100%
+[CubaUberJAR] Pack content for project ':app-web'
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.6.4/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 2m 23s
+21 actionable tasks: 21 executed
+debian@vps-8f8fe2aa:~/zenttric/clinic$ docker build -t clinic-app .
+[+] Building 7.3s (12/12) FINISHED                                                                       docker:default
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 1.09kB                                                                             0.0s
+ => [internal] load metadata for docker.io/library/eclipse-temurin:11.0.26_4-jdk-focal                             0.8s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 2B                                                                                    0.0s
+ => [1/7] FROM docker.io/library/eclipse-temurin:11.0.26_4-jdk-focal@sha256:252e8eaa924264a46c9842a162d419bf6067b  0.0s
+ => [internal] load build context                                                                                  3.2s
+ => => transferring context: 192.67MB                                                                              3.2s
+ => CACHED [2/7] RUN apt-get update && apt-get install -y     fontconfig     libfreetype6     && rm -rf /var/lib/  0.0s
+ => CACHED [3/7] WORKDIR /app                                                                                      0.0s
+ => [4/7] COPY build/distributions/uberJar/clinic.jar /app/app.jar                                                 1.0s
+ => [5/7] RUN mkdir -p /app/config     && mkdir -p /app/logs     && mkdir -p /app/temp     && mkdir -p /app/files  0.6s
+ => [6/7] COPY modules/core/src/com/company/clinic/app.properties /app/config/                                     0.1s
+ => [7/7] COPY etc/logback.xml /app/config/                                                                        0.0s
+ => exporting to image                                                                                             1.4s
+ => => exporting layers                                                                                            1.4s
+ => => writing image sha256:87828af7c8f0b69d47915d3aa5f7dfe0f21046c4d86bddec2c4c29e246dd6a07                       0.0s
+ => => naming to docker.io/library/clinic-app                                                                      0.0s
+debian@vps-8f8fe2aa:~/zenttric/clinic$ docker run -d --name clinic-app --network cuba-network -p 8080:8080 clinic-app
+cb40b310c2cf4057e1f4e262a71b2d80c1fac19a9a38a480b462c605b2c8bd2f
+debian@vps-8f8fe2aa:~/zenttric/clinic$ docker logs clinic-app
+Starting Jetty server on port: 8080 and contextPath: /app
+LogbackConfigurator INFO Setting up CUBA default logging configuration
+LogbackConfigurator INFO Could NOT find resource [/app/logback.xml]
+LogbackConfigurator INFO Found resource [jar:file:/app/app.jar!/app-logback.xml]
+2025-06-13 11:12:34 INFO  org.eclipse.jetty.util.log - Logging initialized @1342ms to org.eclipse.jetty.util.log.Slf4jLog
+2025-06-13 11:12:34 INFO  org.eclipse.jetty.server.Server - jetty-9.4.49.v20220914; built: 2022-09-14T01:07:36.601Z; git: 4231a3b2e4cb8548a412a789936d640a97b1aa0a; jvm 11.0.26+4
+2025-06-13 11:12:35 INFO  o.e.j.w.StandardDescriptorProcessor - NO JSP Support for /app-core, did not find org.eclipse.jetty.jsp.JettyJspServlet
+2025-06-13 11:12:35 INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+2025-06-13 11:12:35 INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+2025-06-13 11:12:35 INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+2025-06-13 11:12:35 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Initializing 'core' block, servlet context path: /app-core
+2025-06-13 11:12:35 INFO  c.h.cuba.core.sys.AppComponents - Using app components: [com.haulmont.cuba, com.haulmont.addon.helium, com.haulmont.reports, com.haulmont.addon.bproc]
+2025-06-13 11:12:35 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from classpath:com/company/clinic/app.properties
+2025-06-13 11:12:35 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from /WEB-INF/local.app.properties
+2025-06-13 11:12:35 INFO  c.h.c.c.s.AbstractWebAppContextLoader - cuba.webContextName: app
+2025-06-13 11:12:35 INFO  c.h.cuba.core.sys.AppContextLoader - DbmsType of the main database is set to mssql2012
+2025-06-13 11:12:35 INFO  c.h.c.c.s.e.DataStoresCheck - Checking connection to data store Main
+2025-06-13 11:12:50 WARN  c.h.c.c.s.e.EnvironmentChecksRunner -
+=======================================================================================================================================================================================================================================================================================================================================================================================
+Some environment checks failed on core module:
+Exception occurred while connecting to data store _MAIN_
+        com.microsoft.sqlserver.jdbc.SQLServerException: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+=======================================================================================================================================================================================================================================================================================================================================================================================
+2025-06-13 11:12:50 INFO  c.h.c.c.s.p.PersistenceConfigProcessor - Creating file /app/app/work/persistence.xml
+2025-06-13 11:12:54 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_DatatypeRegistry' of type [com.haulmont.cuba.core.sys.DatatypeRegistryImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:54 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_TimeSource' of type [com.haulmont.cuba.core.sys.TimeSourceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:54 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_SpringBeanLoader' of type [com.haulmont.cuba.core.sys.SpringBeanLoader] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:54 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_JavaClassLoader' of type [com.haulmont.cuba.core.sys.javacl.JavaClassLoader] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:54 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_Scripting' of type [com.haulmont.cuba.core.sys.ScriptingImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_Resources' of type [com.haulmont.cuba.core.sys.ResourcesImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ViewLoader' of type [com.haulmont.cuba.core.sys.ViewLoader] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ViewRepository' of type [com.haulmont.cuba.core.sys.ViewRepositoryImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ExtendedEntities' of type [com.haulmont.cuba.core.global.ExtendedEntities] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_BeanLocator' of type [com.haulmont.cuba.core.sys.BeanLocatorImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_PersistentAttributesLoadChecker' of type [com.haulmont.cuba.core.sys.CorePersistentAttributesLoadChecker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_EntityStates' of type [com.haulmont.cuba.core.global.EntityStates] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_PersistenceTools' of type [com.haulmont.cuba.core.PersistenceTools] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_EntityListenerManager' of type [com.haulmont.cuba.core.sys.listener.EntityListenerManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_Events' of type [com.haulmont.cuba.core.sys.EventsImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_EntityFetcher' of type [com.haulmont.cuba.core.sys.EntityFetcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ClusterManager' of type [com.haulmont.cuba.core.app.ClusterManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_QueryCache' of type [com.haulmont.cuba.core.sys.entitycache.StandardQueryCache] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_QueryCacheManager' of type [com.haulmont.cuba.core.sys.entitycache.QueryCacheManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_StoreFactory' of type [com.haulmont.cuba.core.app.StoreFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_DataManager' of type [com.haulmont.cuba.core.app.DataManagerBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_UuidSource' of type [com.haulmont.cuba.core.sys.UuidSourceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ServerInfo' of type [com.haulmont.cuba.core.app.ServerInfo] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_Dom4jTools' of type [com.haulmont.cuba.core.sys.xmlparsing.Dom4jTools] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_DefaultPermissionValuesConfig' of type [com.haulmont.cuba.core.sys.DefaultPermissionValuesConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_AnnotatedPermissionsBuilder' of type [com.haulmont.cuba.security.app.role.AnnotatedPermissionsBuilder] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'filterRoleDefinition' of type [com.haulmont.cuba.security.app.role.FilterRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'foldersPanelRoleDefinition' of type [com.haulmont.cuba.security.app.role.FoldersPanelRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'fullAccessRoleDefinition' of type [com.haulmont.cuba.security.app.role.FullAccessRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'searchFoldersRoleDefinition' of type [com.haulmont.cuba.security.app.role.SearchFoldersRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicAttributesRoleDefinition' of type [com.haulmont.cuba.security.app.role.DynamicAttributesRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'minimalRoleDefinition' of type [com.haulmont.cuba.security.app.role.MinimalRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'fileStorageReadOnlyRoleDefinition' of type [com.haulmont.cuba.security.app.role.FileStorageReadOnlyRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'fileStorageRoleDefinition' of type [com.haulmont.cuba.security.app.role.FileStorageRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'entityLogRoleDefinition' of type [com.haulmont.cuba.security.app.role.EntityLogRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'emailHistoryRoleDefinition' of type [com.haulmont.cuba.security.app.role.EmailHistoryRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicAttributesReadOnlyRoleDefinition' of type [com.haulmont.cuba.security.app.role.DynamicAttributesReadOnlyRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'heliumMinimalRoleDefinition' of type [com.haulmont.addon.helium.security.role.HeliumMinimalRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'reportsFullAccessRoleDefinition' of type [com.haulmont.reports.role.ReportsFullAccessRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'reportsMinimalRoleDefinition' of type [com.haulmont.reports.role.ReportsMinimalRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'processActorRoleDefinition' of type [com.haulmont.addon.bproc.role.ProcessActorRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'processAdminRoleDefinition' of type [com.haulmont.addon.bproc.role.ProcessAdminRoleDefinition] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_PredefinedRoleDefinitionRepository' of type [com.haulmont.cuba.security.app.role.PredefinedRoleDefinitionRepository] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_RolesHelper' of type [com.haulmont.cuba.security.app.role.RolesHelper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_AccessGroupDefinitionsRepository' of type [com.haulmont.cuba.security.app.group.AccessGroupDefinitionsRepositoryImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_AccessGroupDefinitionsComposer' of type [com.haulmont.cuba.security.app.group.AccessGroupDefinitionsComposerImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_UserSessionManager' of type [com.haulmont.cuba.security.sys.UserSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_SystemAuthenticationProvider' of type [com.haulmont.cuba.security.auth.providers.SystemAuthenticationProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_IpMaskUserAccessChecker' of type [com.haulmont.cuba.security.auth.checks.IpMaskUserAccessChecker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ClientTypeUserAccessChecker' of type [com.haulmont.cuba.security.auth.checks.ClientTypeUserAccessChecker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_TrustedLoginHandler' of type [com.haulmont.cuba.security.sys.TrustedLoginHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:55 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_TrustedClientAuthenticationProvider' of type [com.haulmont.cuba.security.auth.providers.TrustedClientAuthenticationProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_BruteForceProtectionAPI' of type [com.haulmont.cuba.security.app.BruteForceProtectionBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_BruteForceUserCredentialsChecker' of type [com.haulmont.cuba.security.auth.checks.BruteForceUserCredentialsChecker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_BCryptEncryptionModule' of type [com.haulmont.cuba.core.sys.encryption.BCryptEncryptionModule] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_Sha1EncryptionModule' of type [com.haulmont.cuba.core.sys.encryption.Sha1EncryptionModule] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_PasswordEncryption' of type [com.haulmont.cuba.core.sys.PasswordEncryptionImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_LoginPasswordAuthenticationProvider' of type [com.haulmont.cuba.security.auth.providers.LoginPasswordAuthenticationProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_AnonymousAuthenticationProvider' of type [com.haulmont.cuba.security.auth.providers.AnonymousAuthenticationProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_RememberMeAuthenticationProvider' of type [com.haulmont.cuba.security.auth.providers.RememberMeAuthenticationProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_AuthenticationManager' of type [com.haulmont.cuba.security.auth.AuthenticationManagerBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_Authentication' of type [com.haulmont.cuba.security.app.Authentication] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_SessionHistory' of type [com.haulmont.cuba.security.app.UserSessionLogBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_UserSessions' of type [com.haulmont.cuba.security.app.UserSessions] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_UserSessionSource' of type [com.haulmont.cuba.core.sys.UserSessionSourceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_AuditInfoProvider' of type [com.haulmont.cuba.core.sys.AuditInfoProviderImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_ReferenceToEntitySupport' of type [com.haulmont.cuba.core.global.ReferenceToEntitySupport] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_EntityLog' of type [com.haulmont.cuba.security.app.EntityLog] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_OrmCacheSupport' of type [com.haulmont.cuba.core.sys.persistence.OrmCacheSupport] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_MiddlewareStatisticsAccumulator' of type [com.haulmont.cuba.core.app.MiddlewareStatisticsAccumulator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_EntityChangedEventManager' of type [com.haulmont.cuba.core.sys.persistence.EntityChangedEventManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_PersistenceImplSupport' of type [com.haulmont.cuba.core.sys.persistence.PersistenceImplSupport] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cuba_DataSourceProvider' of type [com.haulmont.cuba.core.sys.DataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-06-13 11:12:56 INFO  com.zaxxer.hikari.HikariDataSource - Connection Pool-Main - Starting...
+2025-06-13 11:13:26 ERROR com.zaxxer.hikari.pool.HikariPool - Connection Pool-Main - Exception during pool initialization.
+com.microsoft.sqlserver.jdbc.SQLServerException: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:234)
+        at com.microsoft.sqlserver.jdbc.SQLServerException.ConvertConnectExceptionToSQLServerException(SQLServerException.java:285)
+        at com.microsoft.sqlserver.jdbc.SocketFinder.findSocket(IOBuffer.java:2431)
+        at com.microsoft.sqlserver.jdbc.TDSChannel.open(IOBuffer.java:656)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:2440)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:2103)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:1950)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1162)
+        at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:735)
+        at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+        at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358)
+        at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+        at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477)
+        at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560)
+        at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+        at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+        at com.haulmont.cuba.core.sys.DataSourceProvider.getApplicationDataSource(DataSourceProvider.java:121)
+        at com.haulmont.cuba.core.sys.DataSourceProvider.getDataSource(DataSourceProvider.java:79)
+        at com.haulmont.cuba.core.sys.CubaDataSourceFactoryBean.afterPropertiesSet(CubaDataSourceFactoryBean.java:60)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:214)
+        at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:258)
+        at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:773)
+        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:575)
+        at org.springframework.context.support.AbstractRefreshableConfigApplicationContext.afterPropertiesSet(AbstractRefreshableConfigApplicationContext.java:154)
+        at com.haulmont.cuba.core.sys.CubaClassPathXmlApplicationContext.<init>(CubaClassPathXmlApplicationContext.java:42)
+        at com.haulmont.cuba.core.sys.CubaCoreApplicationContext.<init>(CubaCoreApplicationContext.java:32)
+        at com.haulmont.cuba.core.sys.AppContextLoader.createApplicationContext(AppContextLoader.java:125)
+        at com.haulmont.cuba.core.sys.AppContextLoader.createApplicationContext(AppContextLoader.java:43)
+        at com.haulmont.cuba.core.sys.AbstractAppContextLoader.initAppContext(AbstractAppContextLoader.java:65)
+        at com.haulmont.cuba.core.sys.AbstractWebAppContextLoader.contextInitialized(AbstractWebAppContextLoader.java:86)
+        at com.haulmont.cuba.core.sys.AppContextLoader.contextInitialized(AppContextLoader.java:52)
+        at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:1073)
+        at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:572)
+        at org.eclipse.jetty.server.handler.ContextHandler.contextInitialized(ContextHandler.java:1002)
+        at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:765)
+        at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:379)
+        at org.eclipse.jetty.webapp.WebAppContext.startWebapp(WebAppContext.java:1449)
+        at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1414)
+        at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:916)
+        at org.eclipse.jetty.servlet.ServletContextHandler.doStart(ServletContextHandler.java:288)
+        at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:524)
+        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:169)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:117)
+        at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:97)
+        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:169)
+        at org.eclipse.jetty.server.Server.start(Server.java:423)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:110)
+        at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:97)
+        at org.eclipse.jetty.server.Server.doStart(Server.java:387)
+        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+        at com.haulmont.uberjar.CubaJettyServer.start(CubaJettyServer.java:127)
+        at com.haulmont.uberjar.ServerRunner.execute(ServerRunner.java:249)
+        at com.haulmont.uberjar.ServerRunner.main(ServerRunner.java:39)
+2025-06-13 11:13:26 WARN  c.h.c.c.s.CubaCoreApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cuba_BeanValidation' while setting bean property 'beanValidation'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_BeanValidation': Unsatisfied dependency expressed through field 'messages'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Messages': Unsatisfied dependency expressed through field 'messageTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MessageTools': Unsatisfied dependency expressed through field 'metadata'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Metadata': Unsatisfied dependency expressed through field 'tools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+2025-06-13 11:13:26 ERROR c.h.c.c.s.AbstractWebAppContextLoader - Error initializing application
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cuba_BeanValidation' while setting bean property 'beanValidation'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_BeanValidation': Unsatisfied dependency expressed through field 'messages'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Messages': Unsatisfied dependency expressed through field 'messageTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MessageTools': Unsatisfied dependency expressed through field 'metadata'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Metadata': Unsatisfied dependency expressed through field 'tools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:342)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:214)
+        at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:258)
+        at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:773)
+        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:575)
+        at org.springframework.context.support.AbstractRefreshableConfigApplicationContext.afterPropertiesSet(AbstractRefreshableConfigApplicationContext.java:154)
+        at com.haulmont.cuba.core.sys.CubaClassPathXmlApplicationContext.<init>(CubaClassPathXmlApplicationContext.java:42)
+        at com.haulmont.cuba.core.sys.CubaCoreApplicationContext.<init>(CubaCoreApplicationContext.java:32)
+        at com.haulmont.cuba.core.sys.AppContextLoader.createApplicationContext(AppContextLoader.java:125)
+        at com.haulmont.cuba.core.sys.AppContextLoader.createApplicationContext(AppContextLoader.java:43)
+        at com.haulmont.cuba.core.sys.AbstractAppContextLoader.initAppContext(AbstractAppContextLoader.java:65)
+        at com.haulmont.cuba.core.sys.AbstractWebAppContextLoader.contextInitialized(AbstractWebAppContextLoader.java:86)
+        at com.haulmont.cuba.core.sys.AppContextLoader.contextInitialized(AppContextLoader.java:52)
+        at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:1073)
+        at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:572)
+        at org.eclipse.jetty.server.handler.ContextHandler.contextInitialized(ContextHandler.java:1002)
+        at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:765)
+        at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:379)
+        at org.eclipse.jetty.webapp.WebAppContext.startWebapp(WebAppContext.java:1449)
+        at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1414)
+        at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:916)
+        at org.eclipse.jetty.servlet.ServletContextHandler.doStart(ServletContextHandler.java:288)
+        at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:524)
+        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:169)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:117)
+        at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:97)
+        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:169)
+        at org.eclipse.jetty.server.Server.start(Server.java:423)
+        at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:110)
+        at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:97)
+        at org.eclipse.jetty.server.Server.doStart(Server.java:387)
+        at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+        at com.haulmont.uberjar.CubaJettyServer.start(CubaJettyServer.java:127)
+        at com.haulmont.uberjar.ServerRunner.execute(ServerRunner.java:249)
+        at com.haulmont.uberjar.ServerRunner.main(ServerRunner.java:39)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_BeanValidation': Unsatisfied dependency expressed through field 'messages'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Messages': Unsatisfied dependency expressed through field 'messageTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MessageTools': Unsatisfied dependency expressed through field 'metadata'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Metadata': Unsatisfied dependency expressed through field 'tools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        ... 44 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Messages': Unsatisfied dependency expressed through field 'messageTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MessageTools': Unsatisfied dependency expressed through field 'metadata'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Metadata': Unsatisfied dependency expressed through field 'tools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 55 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MessageTools': Unsatisfied dependency expressed through field 'metadata'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Metadata': Unsatisfied dependency expressed through field 'tools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 70 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Metadata': Unsatisfied dependency expressed through field 'tools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 85 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_MetadataTools': Unsatisfied dependency expressed through field 'dynamicAttributesTools'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 100 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesTools': Unsatisfied dependency expressed through field 'dynamicAttributes'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 115 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesService': Unsatisfied dependency expressed through field 'dynamicAttributesManagerAPI'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 130 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_DynamicAttributesManager': Unsatisfied dependency expressed through field 'persistence'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 145 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Persistence': Unsatisfied dependency expressed through field 'transactions'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 160 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cuba_Transactions': Unsatisfied dependency expressed through field 'transactionManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:713)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:693)
+        at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:408)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 175 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManager' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'entityManagerFactory' while setting bean property 'entityManagerFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:342)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+        at com.haulmont.cuba.core.sys.CubaDefaultListableBeanFactory.resolveDependency(CubaDefaultListableBeanFactory.java:59)
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:710)
+        ... 190 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [com/haulmont/cuba/spring.xml]: Cannot resolve reference to bean 'cubaDataSource' while setting bean property 'dataSource'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:342)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        ... 204 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cubaDataSource' defined in class path resource [com/haulmont/cuba/spring.xml]: Invocation of init method failed; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:209)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        ... 214 common frames omitted
+Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:595)
+        at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:581)
+        at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+        at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+        at com.haulmont.cuba.core.sys.DataSourceProvider.getApplicationDataSource(DataSourceProvider.java:121)
+        at com.haulmont.cuba.core.sys.DataSourceProvider.getDataSource(DataSourceProvider.java:79)
+        at com.haulmont.cuba.core.sys.CubaDataSourceFactoryBean.afterPropertiesSet(CubaDataSourceFactoryBean.java:60)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+        ... 221 common frames omitted
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: The TCP/IP connection to the host 51.178.137.184,1433, port 1433 has failed. Error: "51.178.137.184,1433. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+        at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:234)
+        at com.microsoft.sqlserver.jdbc.SQLServerException.ConvertConnectExceptionToSQLServerException(SQLServerException.java:285)
+        at com.microsoft.sqlserver.jdbc.SocketFinder.findSocket(IOBuffer.java:2431)
+        at com.microsoft.sqlserver.jdbc.TDSChannel.open(IOBuffer.java:656)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:2440)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:2103)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:1950)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1162)
+        at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:735)
+        at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+        at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358)
+        at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+        at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477)
+        at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560)
+        ... 228 common frames omitted
+2025-06-13 11:13:26 INFO  o.e.j.s.h.ContextHandler.app_core - Initializing Spring RemotingServlet 'remoting'
+2025-06-13 11:13:26 INFO  c.h.c.c.sys.remoting.RemotingServlet - Initializing Servlet 'remoting'
+2025-06-13 11:13:26 ERROR c.h.c.c.sys.remoting.RemotingServlet - Parent Spring context is null, middleware failed to start? Abort initialization.
+2025-06-13 11:13:26 INFO  c.h.c.c.sys.remoting.RemotingServlet - Completed initialization in 0 ms
+2025-06-13 11:13:26 INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.w.WebAppContext@74751b3{/app-core,jar:file:/app/app.jar!/LIB-INF/app-core,AVAILABLE}
+2025-06-13 11:13:26 INFO  o.e.j.w.StandardDescriptorProcessor - NO JSP Support for /app, did not find org.eclipse.jetty.jsp.JettyJspServlet
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereHandler com.vaadin.server.communication.PushAtmosphereHandler mapped to context-path: /*
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed the following AtmosphereInterceptor mapped to AtmosphereHandler com.vaadin.server.communication.PushAtmosphereHandler
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using org.atmosphere.util.VoidAnnotationProcessor for processing annotation
+2025-06-13 11:13:27 INFO  org.atmosphere.util.ForkJoinPool - Using ForkJoinPool  java.util.concurrent.ForkJoinPool. Set the org.atmosphere.cpr.broadcaster.maxAsyncWriteThreads to -1 to fully use its power.
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed WebSocketProtocol org.atmosphere.websocket.protocol.SimpleHttpProtocol
+2025-06-13 11:13:27 INFO  o.a.container.JSR356AsyncSupport - JSR 356 Mapping path
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installing Default AtmosphereInterceptors
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.CorsInterceptor : CORS Interceptor Support
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.CacheHeadersInterceptor : Default Response's Headers Interceptor
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.PaddingAtmosphereInterceptor : Browser Padding Interceptor Support
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.AndroidAtmosphereInterceptor : Android Interceptor Support
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.HeartbeatInterceptor : Heartbeat Interceptor Support
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.SSEAtmosphereInterceptor : SSE Interceptor Support
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.JSONPAtmosphereInterceptor : JSONP Interceptor Support
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.JavaScriptProtocol : Atmosphere JavaScript Protocol
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor : org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.OnDisconnectInterceptor : Browser disconnection detection
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework -        org.atmosphere.interceptor.IdleResourceInterceptor : org.atmosphere.interceptor.IdleResourceInterceptor
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Set org.atmosphere.cpr.AtmosphereInterceptor.disableDefaults to disable them.
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor CORS Interceptor Support with priority FIRST_BEFORE_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Default Response's Headers Interceptor with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Browser Padding Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Android Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.a.interceptor.HeartbeatInterceptor - HeartbeatInterceptor configured with padding value 'X', client frequency 60 seconds and server frequency 0 seconds
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Heartbeat Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor SSE Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor JSONP Interceptor Support with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Atmosphere JavaScript Protocol with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor org.atmosphere.interceptor.WebSocketMessageSuspendInterceptor with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor Browser disconnection detection with priority AFTER_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor org.atmosphere.interceptor.IdleResourceInterceptor with priority BEFORE_DEFAULT
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Using EndpointMapper class org.atmosphere.util.DefaultEndpointMapper
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Using BroadcasterCache: org.atmosphere.cache.UUIDBroadcasterCache
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Default Broadcaster Class: org.atmosphere.cpr.DefaultBroadcaster
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Broadcaster Shared List Resources: false
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Broadcaster Polling Wait Time 100
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Shared ExecutorService supported: true
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Messaging ExecutorService Pool Size unavailable - Not instance of ThreadPoolExecutor
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Async I/O Thread Pool Size: 200
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Using BroadcasterFactory: org.atmosphere.cpr.DefaultBroadcasterFactory
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Using AtmosphereResurceFactory: org.atmosphere.cpr.DefaultAtmosphereResourceFactory
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Using WebSocketProcessor: org.atmosphere.websocket.DefaultWebSocketProcessor
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Invoke AtmosphereInterceptor on WebSocket message true
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - HttpSession supported: true
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using org.atmosphere.inject.InjectableObjectFactory for dependency injection and object creation
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere is using async support: org.atmosphere.container.JSR356AsyncSupport running under container: jetty/9.4.49.v20220914 using javax.servlet/3.0 and jsr356/WebSocket API
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Atmosphere Framework 2.4.30-1-cuba started.
+2025-06-13 11:13:27 INFO  o.atmosphere.cpr.AtmosphereFramework - Installed AtmosphereInterceptor  Track Message Size Interceptor using | with priority BEFORE_DEFAULT
+2025-06-13 11:13:27 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Initializing 'web' block, servlet context path: /app
+2025-06-13 11:13:27 INFO  c.h.cuba.core.sys.AppComponents - Using app components: [com.haulmont.cuba, com.haulmont.addon.helium, com.haulmont.reports, com.haulmont.addon.bproc]
+2025-06-13 11:13:27 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from classpath:com/company/clinic/web-app.properties
+2025-06-13 11:13:27 INFO  c.h.c.c.s.AbstractWebAppContextLoader - Loading app properties from /WEB-INF/local.app.properties
+2025-06-13 11:13:27 INFO  c.h.c.c.s.AbstractWebAppContextLoader - cuba.webContextName: app
+2025-06-13 11:13:27 INFO  c.h.c.c.s.e.EnvironmentChecksRunner - Environment checks on web module completed successfully
+2025-06-13 11:13:30 INFO  c.h.c.c.s.r.d.StaticServerSelector - Server URLs: [http://localhost:8080/clinic/remoting]
+2025-06-13 11:13:30 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [cuba_AuthenticationService, cuba_TrustedClientService, cuba_ServerInfoService, cuba_UserSettingService, cuba_UserManagementService, cuba_DataService, cuba_ConfigStorageService, cuba_PersistenceManagerService, cuba_LockService, cuba_UserSessionService, cuba_FoldersService, cuba_EmailService, cuba_FileStorageService, cuba_EntitySnapshotService, cuba_UniqueNumbersService, cuba_LocalizedMessageService, cuba_ResourceService, cuba_ScheduledTasksService, cuba_EntityLogService, cuba_TestingService, cuba_DomainDescriptionService, cuba_RelatedEntitiesService, cuba_EntitySqlGenerationService, cuba_NumberIdService, cuba_QueryResultsService, cuba_DynamicAttributesCacheService, cuba_EntityRestoreService, cuba_LocalFileExchangeService, cuba_EntityImportExportService, cuba_ConstraintLocalizationService, cuba_AttributeAccessService, cuba_ExceptionReportService, cuba_BulkEditorDataService, cuba_PersistenceSecurityService, cuba_AccessGroupsService, cuba_AttributeOptionsLoaderService, cuba_RolesService, cuba_SecurityScopesService, cuba_ScreenProfilerService]
+2025-06-13 11:13:30 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [report_ReportService, report_ReportWizardService]
+2025-06-13 11:13:30 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [bproc_BprocRepositoryService, bproc_BprocFormService, bproc_BprocRuntimeService, bproc_BprocTaskService, bproc_ModelerBeansMetadataService, bproc_ClassPathScannerService, bproc_QueryExecutorService, bproc_UserGroupService, bproc_ProcessInstanceMigrationService, bproc_BprocHistoricService, bproc_BprocManagementService, bproc_BprocDmnRepositoryService, bproc_BprocDmnHistoricService, bproc_BprocModelService, bproc_ProcessInstanceEditVariableService]
+2025-06-13 11:13:30 INFO  c.h.c.w.s.r.WebRemoteProxyBeanCreator - Configuring proxy beans for local service invocations: [clinic_CitaService, clinic_EspecialistaService, clinic_PacienteService, clinic_RedisService, clinic_PruebaService, clinic_FacturaService]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210927] time[20] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210949] time[6] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210956] time[1] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210958] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210960] time[3] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210963] time[4] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210968] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210968] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210970] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210970] time[4] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210975] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210977] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210977] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210978] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210978] time[7] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210976] time[9] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210986] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210987] time[4] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210992] time[2] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210994] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210997] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:30 INFO  org.perf4j.TimingLogger - start[1749813210997] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813210999] time[1] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211004] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211008] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211009] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211010] time[5] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211001] time[14] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211016] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211019] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211019] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211019] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211020] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211020] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211021] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211023] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211025] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211026] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211026] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211027] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211027] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211028] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211028] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211027] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211031] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211031] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211033] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211033] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211034] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211035] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211035] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211035] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211036] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211037] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211037] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211035] time[3] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211039] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211040] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211040] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211041] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211041] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211041] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211042] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211043] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211045] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211045] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211045] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211046] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211046] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211046] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211047] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211046] time[2] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211049] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211049] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211050] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211051] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211053] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211053] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211054] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211055] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211055] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211055] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211056] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211055] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211056] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211057] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211057] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211060] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211060] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211061] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211062] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211062] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211062] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211062] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211063] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211065] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211066] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211066] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211066] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211065] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211067] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211070] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211070] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211070] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211070] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211071] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211071] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211071] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211071] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211072] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211074] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211071] time[2] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211074] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211075] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211075] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211077] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211077] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211077] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211078] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211078] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211082] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211082] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211082] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211083] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211083] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211083] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211083] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211083] time[3] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211086] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211087] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211087] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211087] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211087] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211088] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211088] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211088] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211088] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211088] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211089] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211088] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211089] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211089] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211090] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211090] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211091] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211091] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211095] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211095] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211095] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211096] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211096] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211097] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211098] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211099] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211099] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211097] time[2] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211099] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211100] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211100] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211100] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211100] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211100] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211101] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211103] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211103] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211106] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211107] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211102] time[4] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211107] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211107] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211108] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211108] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211108] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211108] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211111] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211111] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211111] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211111] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211112] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211112] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211112] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211112] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211113] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211112] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211113] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211113] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211114] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211115] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211115] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211115] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211119] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211119] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211119] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211120] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211123] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211119] time[3] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211123] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211124] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211124] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211124] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211124] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211124] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211125] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211125] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211125] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211125] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211126] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211126] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211126] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211126] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211126] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211126] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211127] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211127] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211127] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211127] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211128] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211131] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211131] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211132] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211132] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211132] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211132] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211132] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211133] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211134] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211134] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211134] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211135] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211135] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211136] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211136] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211137] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211139] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211139] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211143] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211143] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211144] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211144] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211143] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211145] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211145] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211145] time[1] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211147] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211147] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211147] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211148] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211148] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211149] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211151] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211151] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211148] time[3] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211155] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211155] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211156] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211156] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211156] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211157] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211159] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211159] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211160] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211160] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211160] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211161] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211161] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211161] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211162] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211161] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211162] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211163] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211167] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211167] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211168] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211168] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211168] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211169] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211172] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211173] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211173] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211169] time[4] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211174] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211174] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211174] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211175] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211175] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211176] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211177] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211177] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211177] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211178] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211178] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211181] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211181] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211181] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211181] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211178] time[3] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211183] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211183] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211183] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211184] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211184] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211184] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211185] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211185] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211185] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211186] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211186] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211185] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211189] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211193] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211193] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211193] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211194] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211194] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211194] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211194] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211194] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211195] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211195] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211195] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211195] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211196] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211197] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211195] time[1] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211197] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211198] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211198] time[3] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211201] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211201] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211202] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211202] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211202] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211202] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211202] time[0] tag[Messages.searchFiles]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211203] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:31 INFO  org.perf4j.TimingLogger - start[1749813211202] time[0] tag[Messages.searchClasspath]
+2025-06-13 11:13:32 INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator null

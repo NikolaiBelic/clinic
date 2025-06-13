@@ -212,7 +212,7 @@ task buildUberJar(type: CubaUberJarBuilding) {
             'cuba.fileStorageDir': '/app/filestorage',
             'cuba.web.pushEnabled': false,
             'cuba.webContextName': 'app',
-            'cuba.connectionUrlList': 'http://localhost:8080/clinic'
+            'cuba.connectionUrlList': 'http://localhost:8080/app'
     ]
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
