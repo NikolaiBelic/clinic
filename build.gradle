@@ -212,7 +212,7 @@ task buildUberJar(type: CubaUberJarBuilding) {
             'cuba.webContextName': 'app'
     ]
 
-    logbackConfigurationFile = 'etc/uber-jar-logback.xml'
+    logbackConfigurationFile = 'etc/logback.xml'
     webPort = 8080
 }
 
