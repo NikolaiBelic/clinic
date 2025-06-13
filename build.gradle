@@ -204,19 +204,12 @@ task buildUberJar(type: CubaUberJarBuilding) {
     coreModule = project(':app-core')
     webModule = project(':app-web')
 
-    // Configuración crítica para Jetty
     coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
 
     appProperties = [
             'cuba.logDir': '/app/logs',
             'cuba.tempDir': '/app/temp',
-            'cuba.confDir': '/app/config',
-            'cuba.fileStorageDir': '/app/filestorage',
-            'cuba.webContextName': 'app',
-            'cuba.connectionUrlList': 'http://localhost:8080/app',
-            'cuba.dataSource.jdbcUrl': 'jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true',
-            'cuba.dataSource.username': 'SA',
-            'cuba.dataSource.password': 'Elalmendro.33'
+            'cuba.webContextName': 'app'
     ]
 
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'

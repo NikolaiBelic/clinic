@@ -1,25 +1,7 @@
-<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
-
-    <!-- Configuración del DataSource para SQL Server -->
-    <New id="dsClinic" class="org.eclipse.jetty.plus.jndi.Resource">
-        <Arg>jdbc/clinic</Arg>
-        <Arg>
-            <New class="com.microsoft.sqlserver.jdbc.SQLServerDataSource">
-                <Set name="URL">jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true;loginTimeout=30</Set>
-                <Set name="user">SA</Set>
-                <Set name="password">Elalmendro.33</Set>
-            </New>
-        </Arg>
-    </New>
-
-    <!-- Configuración específica para Cuba Platform -->
     <Set name="contextPath">/app</Set>
     <Set name="tempDirectory">/app/temp</Set>
-    <Set name="logDir">/app/logs</Set>
-    <Set name="persistenceTempDir">/app/temp/persistence</Set>
 
-    <!-- Configuración de sesiones -->
     <Get name="sessionHandler">
         <Get name="sessionManager">
             <Set name="sessionTrackingModes">
