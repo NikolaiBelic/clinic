@@ -6,21 +6,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - JAVA_OPTS=-Dserver.port=8080
-        -Dcuba.webContextName=app
-        -Dvaadin.productionMode=false
-        -XX:+UseContainerSupport
-        -XX:MaxRAMPercentage=75
-        -Dcuba.dataSource.jdbcUrl=jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true
-        -Dcuba.dataSource.username=SA
-        -Dcuba.dataSource.password=Elalmendro.33
-        -Dcuba.jmx.enabled=false \
-        -Dspring.jmx.enabled=false \
-        -Dcom.sun.management.jmxremote=false \
-        -Dspring.jmx.unique-names=true
-      - CUBA_JMX_ENABLED=false  # Desactiva JMX
-      - CUBA_WEB_FORCE_CLEAN_START=true  # Limpia caché al iniciar
-      - CUBA_AUTOMATIC_DATABASE_UPDATE=false  # Asegura que NO actualice BD
+      - JAVA_OPTS=-Dserver.port=8080 -Dcuba.webContextName=app -Dvaadin.productionMode=false -XX:+UseContainerSupport -XX:MaxRAMPercentage=75 -Dcuba.dataSource.jdbcUrl=jdbc:sqlserver://51.178.137.184:1433;databaseName=clinic;encrypt=true;trustServerCertificate=true -Dcuba.dataSource.username=SA -Dcuba.dataSource.password=Elalmendro.33 -Dcuba.jmx.enabled=false -Dspring.jmx.enabled=false -Dcom.sun.management.jmxremote=false -Dspring.jmx.unique-names=true
+      - CUBA_JMX_ENABLED=false
+      - CUBA_WEB_FORCE_CLEAN_START=true
+      - CUBA_AUTOMATIC_DATABASE_UPDATE=false
     volumes:
       - clinic-data:/app/storage
       - clinic-logs:/app/logs
@@ -30,16 +19,6 @@ services:
         aliases:
           - clinic-app
     restart: unless-stopped
-    # Añade esto para problemas de DNS
     dns:
       - 8.8.8.8
       - 8.8.4.4
-
-volumes:
-  clinic-data:
-  clinic-logs:
-  clinic-temp:
-
-networks:
-  cuba-network:
-    driver: bridge
