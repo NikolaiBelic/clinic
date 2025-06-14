@@ -20,8 +20,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    depends_on:
-      - sqlserver-dev  # Opcional: asegura que SQL Server esté disponible primero
 
 # No incluyas el servicio sqlserver-dev si ya existe como contenedor externo
 networks:
