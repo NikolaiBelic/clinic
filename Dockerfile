@@ -1,16 +1,28 @@
-FROM eclipse-temurin:11-jdk-focal
+# ---- Etapa de construcción (Build) ----
+FROM eclipse-temurin:11-jdk-focal as builder
+
 WORKDIR /app
 
-RUN chmod +x ./gradlew
-RUN ./gradlew buildUberJar clean --no-daemon --build-cache
+# 1. Copia los archivos necesarios para Gradle (para mejor caché)
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
 
-# Copia el uberjar (asegúrate de que clinic.jar esté en la ruta correcta)
-COPY build/distributions/uberJar/clinic.jar /app/app.jar
-COPY keystore.jks /app/
-COPY jetty.xml /app/
+# 2. Ejecuta el build (genera el uberJar)
+RUN chmod +x gradlew && \
+    ./gradlew buildUberJar --no-daemon --build-cache
 
-# Puerto expuesto (coincide con tu configuración Cuba)
+# ---- Etapa de ejecución (Runtime) ----
+FROM eclipse-temurin:11-jdk-focal
+
+WORKDIR /app
+
+# 3. Copia SOLO el JAR generado desde la etapa builder
+COPY --from=builder /app/build/distributions/uberJar/clinic.jar app.jar
+COPY keystore.jks .
+COPY jetty.xml .
+
+# 4. Expone puertos y define el comando de arranque
 EXPOSE 8080 8443
-
-# Ejecución con ajustes para producción
 CMD ["java", "-server", "-XX:+UseG1GC", "-jar", "app.jar"]
