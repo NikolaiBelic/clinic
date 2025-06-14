@@ -10,9 +10,7 @@ COPY build.gradle .
 COPY settings.gradle .
 
 # 2. Ejecuta el clean y build con los parámetros requeridos
-RUN chmod +x gradlew && \
-    ./gradlew clean --no-daemon --build-cache && \
-    ./gradlew build --no-daemon --build-cache
+RUN chmod +x gradlew && \ ./gradlew buildUberJar clean --no-daemon --build-cache
 
 # Fase de ejecución
 FROM eclipse-temurin:11-jdk-focal
