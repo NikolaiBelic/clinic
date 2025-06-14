@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   cuba-app:
     build: .
@@ -7,13 +9,21 @@ services:
       - cuba-network
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      # Configuración de conexión a SQL Server (ajusta estos valores)
+      - DB_URL=jdbc:sqlserver://sqlserver-dev:1433;databaseName=tu_basedatos
+      - DB_USERNAME=tu_usuario_sql  # Ej: "sa" para SQL Server
+      - DB_PASSWORD=tu_contraseña_sql
+      - DB_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
       timeout: 10s
       retries: 5
+    depends_on:
+      - sqlserver-dev  # Opcional: asegura que SQL Server esté disponible primero
 
+# No incluyas el servicio sqlserver-dev si ya existe como contenedor externo
 networks:
   cuba-network:
     external: true
