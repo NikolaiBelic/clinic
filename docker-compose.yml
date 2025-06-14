@@ -10,9 +10,6 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       # Configuración de conexión a SQL Server (ajusta estos valores)
-      - DB_URL=jdbc:sqlserver://sqlserver-dev:1433;databaseName=tu_basedatos
-      - DB_USERNAME=tu_usuario_sql  # Ej: "sa" para SQL Server
-      - DB_PASSWORD=tu_contraseña_sql
       - DB_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver
     restart: always
     healthcheck:
