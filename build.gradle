@@ -196,4 +196,34 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
         }
     }
 }
+
+task buildUberJar(type: CubaUberJarBuilding) {
+    // Configuración básica
+    appName = 'clinic'
+    singleJar = true  // Genera un solo JAR para todo
+
+    // Configuración de puertos
+    webPort = 8080    // Puerto para la aplicación web
+    corePort = 8079   // Puerto para el middleware
+
+    // Configuración de base de datos
+    appProperties = [
+            'cuba.automaticDatabaseUpdate': false,  // Desactiva actualización automática de DB
+            'cuba.runDatabaseScripts': false        // Desactiva ejecución de scripts de DB
+    ]
+
+    // Configuración de logging (usa el default)
+    useDefaultLogbackConfiguration = true
+
+    // Configuración adicional para Docker
+    excludeResources = [
+            '**/*.bat',
+            '**/*.sh',
+            '**/*.bak'
+    ]
+
+    // Opcional: Si necesitas configuraciones personalizadas de Jetty
+    // webJettyConfPath = 'docker/jetty-web.xml'
+    // coreJettyConfPath = 'docker/jetty-core.xml'
+}
 restart.finalizedBy start

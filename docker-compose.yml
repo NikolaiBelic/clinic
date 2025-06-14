@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  cuba-app:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - cuba-network
+    depends_on:
+      - sqlserver-dev
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  sqlserver-dev:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Elalmendro.33
+      - MSSQL_PID=Developer
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+    networks:
+      - cuba-network
+
+networks:
+  cuba-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:
