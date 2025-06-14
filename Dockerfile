@@ -2,7 +2,7 @@ FROM eclipse-temurin:11-jdk-focal
 WORKDIR /app
 
 # Copia el uberjar (asegúrate de que clinic.jar esté en la ruta correcta)
-COPY build/distributions/clinic.jar /app/app.jar
+COPY build/distributions/uberJar/clinic.jar /app/app.jar
 
 # Puerto expuesto (coincide con tu configuración Cuba)
 EXPOSE 8080
