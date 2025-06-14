@@ -198,23 +198,4 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
-task buildUberJar(type: CubaUberJarBuilding) {
-    singleJar = true
-    appName = 'clinic'
-    coreModule = project(':app-core')
-    webModule = project(':app-web')
-
-    appProperties = [
-            'cuba.logDir'       : '/app/logs',
-            'cuba.tempDir'      : '/app/temp',
-            'cuba.webContextName': 'app',
-            'cuba.jmx.enabled'  : 'false',
-            'spring.jmx.enabled': 'false'
-    ]
-
-    webPort = 8080
-
-    logbackConfigurationFile = 'etc/logback.xml'
-}
-
 restart.finalizedBy start
