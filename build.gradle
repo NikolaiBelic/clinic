@@ -1,4 +1,3 @@
-
 buildscript {
     ext.cubaVersion = '7.2.23'
     repositories {
@@ -197,5 +196,4 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
         }
     }
 }
-
 restart.finalizedBy start
