@@ -1,28 +1,15 @@
-# Fase de construcción (Builder)
-FROM eclipse-temurin:11-jdk-focal as builder
-
-WORKDIR /app
-
-# 1. Copia solo los archivos necesarios para Gradle
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
-
-# 2. Ejecuta el clean y build con los parámetros requeridos
-RUN chmod +x gradlew && \ ./gradlew buildUberJar clean --no-daemon --build-cache
-
-# Fase de ejecución
 FROM eclipse-temurin:11-jdk-focal
-
 WORKDIR /app
 
-# 3. Copia solo el artefacto construido desde la fase builder
-COPY --from=builder /app/build/distributions/uberJar/clinic.jar /app/app.jar
+RUN chmod +x ./gradlew
+RUN ./gradlew buildUberJar clean --no-daemon --build-cache
+
+# Copia el uberjar (asegúrate de que clinic.jar esté en la ruta correcta)
+COPY build/distributions/uberJar/clinic.jar /app/app.jar
 COPY keystore.jks /app/
 COPY jetty.xml /app/
 
-# Puerto expuesto
+# Puerto expuesto (coincide con tu configuración Cuba)
 EXPOSE 8080 8443
 
 # Ejecución con ajustes para producción
