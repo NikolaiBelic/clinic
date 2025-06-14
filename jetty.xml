@@ -1,20 +1,17 @@
+<!-- jetty.xml -->
 <Configure id="Server" class="org.eclipse.jetty.server.Server">
     <Call name="addConnector">
         <Arg>
             <New class="org.eclipse.jetty.server.ServerConnector">
-                <Arg name="server">
-                    <Ref refid="Server"/>
-                </Arg>
-                <Set name="port">8090</Set>
+                <Arg name="server"><Ref refid="Server"/></Arg>
+                <Set name="port">8080</Set>
             </New>
         </Arg>
     </Call>
     <Call name="addConnector">
         <Arg>
             <New class="org.eclipse.jetty.server.ServerConnector">
-                <Arg name="server">
-                    <Ref refid="Server"/>
-                </Arg>
+                <Arg name="server"><Ref refid="Server"/></Arg>
                 <Arg>
                     <New class="org.eclipse.jetty.util.ssl.SslContextFactory">
                         <Set name="keyStorePath">keystore.jks</Set>
