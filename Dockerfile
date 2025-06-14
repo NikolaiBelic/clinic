@@ -8,7 +8,6 @@ COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
-COPY src src
 
 # 2. Ejecuta el clean y build con los parámetros requeridos
 RUN chmod +x gradlew && \
