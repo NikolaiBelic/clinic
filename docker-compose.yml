@@ -14,8 +14,6 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
       # Configuración de conexión a SQL Server (ajusta estos valores)
       - DB_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver
-      - TZ=Europe/Madrid
-      - JAVA_OPTS=-Duser.timezone=Europe/Madrid
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]

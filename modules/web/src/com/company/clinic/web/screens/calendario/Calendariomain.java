@@ -53,8 +53,17 @@ public class Calendariomain extends Screen {
 
     @Subscribe
     public void onInit(InitEvent event) {
+        // Configuración inicial
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
         System.setProperty("user.timezone", "Europe/Madrid");
+
+        // Mostrar información de zona horaria
+        log.debug("Zona horaria configurada: {}", TimeZone.getDefault().getID());
+        log.debug("Fecha actual del sistema: {}", new Date());
+
+        log.debug("Calendario creado - Fecha inicio: {}, Fecha fin: {}",
+                calendario.getStartDate(), calendario.getEndDate());
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         VBoxLayout vBox = uiComponents.create(VBoxLayout.class);
@@ -190,14 +199,13 @@ public class Calendariomain extends Screen {
         citas = citaService.getCitasCalendario(paramsFiltro);
         System.out.println(citas.size());
         for (Cita cita : citas) {
-            /*cita.toString();
-            System.out.println(cita);*/
+            log.debug("Cita ID: {} - Fecha: {} Hora Inicio: {} Hora Fin: {}",
+                    cita.getId(),
+                    cita.getDia(),
+                    cita.getHoraInicio(),
+                    cita.getHoraFinal());
             generateEvents(cita, calendario);
-            /*System.out.println("Nombre: " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellidos());
-            System.out.println("Fecha: " + cita.getDia());
-            System.out.println("Hora inicio: " + cita.getHoraInicio());
-            System.out.println("Hora final: " + cita.getHoraFinal());
-            System.out.println("Especialista: " + cita.getEspecialista().getNombre() + " " + cita.getEspecialista().getApellidos());*/
+
         }
 
         calendario.addEventClickListener(e -> {
