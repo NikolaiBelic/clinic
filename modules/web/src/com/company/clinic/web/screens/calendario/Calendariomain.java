@@ -148,21 +148,6 @@ public class Calendariomain extends Screen {
         System.out.println("Fecha de inicio: " + calendario.getStartDate());
         calendario.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 
-        try {
-            Field calendarField = calendario.getClass().getDeclaredField("calendar");
-            calendarField.setAccessible(true);
-            com.vaadin.v7.ui.Calendar vaadinCalendar = (com.vaadin.v7.ui.Calendar) calendarField.get(calendario);
-            vaadinCalendar.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
-            vaadinCalendar.setLocale(new Locale("es", "ES"));
-
-            // Fuerza la actualización del renderizado
-            Method updateWeeklyCaptions = vaadinCalendar.getClass().getDeclaredMethod("updateWeeklyCaptions");
-            updateWeeklyCaptions.setAccessible(true);
-            updateWeeklyCaptions.invoke(vaadinCalendar);
-        } catch (Exception e) {
-            log.error("Error applying calendar fix", e);
-        }
-
         calendario.setWidth("100%");
         calendario.setHeightFull();
         calendario.setNavigationButtonsVisible(true);
@@ -185,6 +170,21 @@ public class Calendariomain extends Screen {
         days.put(DayOfWeek.SATURDAY, "Sábado");
         days.put(DayOfWeek.SUNDAY, "Domingo");
         calendario.setDayNames(days);
+
+        try {
+            Field calendarField = calendario.getClass().getDeclaredField("calendar");
+            calendarField.setAccessible(true);
+            com.vaadin.v7.ui.Calendar vaadinCalendar = (com.vaadin.v7.ui.Calendar) calendarField.get(calendario);
+            vaadinCalendar.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
+            vaadinCalendar.setLocale(new Locale("es", "ES"));
+
+            // Fuerza la actualización del renderizado
+            Method updateWeeklyCaptions = vaadinCalendar.getClass().getDeclaredMethod("updateWeeklyCaptions");
+            updateWeeklyCaptions.setAccessible(true);
+            updateWeeklyCaptions.invoke(vaadinCalendar);
+        } catch (Exception e) {
+            log.error("Error applying calendar fix", e);
+        }
 
         vBox.add(calendario);
         vBox.expand(calendario);
