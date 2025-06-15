@@ -12,7 +12,9 @@ import com.haulmont.cuba.gui.components.Calendar;
 import com.haulmont.cuba.gui.components.calendar.SimpleCalendarEvent;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.security.global.UserSession;
+import com.vaadin.ui.UI;
 import org.apache.commons.lang3.time.DateUtils;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,6 +148,7 @@ public class Calendariomain extends Screen {
         calendario = uiComponents.create(Calendar.class);
 
         System.out.println("Fecha de inicio: " + calendario.getStartDate());
+        System.out.println("Fecha de fin: " + calendario.getEndDate());
         calendario.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 
         calendario.setWidth("100%");
@@ -200,6 +203,14 @@ public class Calendariomain extends Screen {
         System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
         System.out.println("Final: " + sdf.format(calendario.getEndDate()));
 
+        LocalDate fecha = LocalDate.now(); // Fecha actual
+        DayOfWeek diaDeLaSemana = fecha.getDayOfWeek(); // Obtiene el día de la semana
+        System.out.println("Hoy es: " + diaDeLaSemana);
+
+        if (diaDeLaSemana == DayOfWeek.SATURDAY || diaDeLaSemana == DayOfWeek.SUNDAY) {
+            calendario.setStartDate(DateUtils.addWeeks(calendario.getStartDate(), 1));
+            calendario.setEndDate(DateUtils.addWeeks(calendario.getEndDate(), 1));
+        }
 
         paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
         paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
@@ -210,7 +221,7 @@ public class Calendariomain extends Screen {
         }
 
         citas = citaService.getCitasCalendario(paramsFiltro);
-        System.out.println(citas.size());
+        System.out.println("Cantidad de citas: " + citas.size());
         for (Cita cita : citas) {
             /*log.debug("Cita ID: {} - Fecha: {} Hora Inicio: {} Hora Fin: {}",
                     cita.getId(),
@@ -255,6 +266,8 @@ public class Calendariomain extends Screen {
             paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
             paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
 
+            System.out.println("Start avanzar: " + sdf.format(calendario.getStartDate()));
+
             citas = citaService.getCitasCalendario(paramsFiltro);
 
             calendario.getEventProvider().removeAllEvents();
@@ -277,6 +290,8 @@ public class Calendariomain extends Screen {
 
             paramsFiltro.put("startDate", sdf.format(calendario.getStartDate()));
             paramsFiltro.put("endDate", sdf.format(calendario.getEndDate()));
+
+            System.out.println("Start retroceder: " + sdf.format(calendario.getStartDate()));
 
             citas = citaService.getCitasCalendario(paramsFiltro);
 
