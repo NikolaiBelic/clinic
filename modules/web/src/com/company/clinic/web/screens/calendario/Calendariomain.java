@@ -57,10 +57,6 @@ public class Calendariomain extends Screen {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
         System.setProperty("user.timezone", "Europe/Madrid");
 
-        // Mostrar información de zona horaria
-        System.out.println("Zona horaria configurada: " + TimeZone.getDefault().getID());
-        System.out.println(("Fecha actual del sistema: " + new Date()));
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         VBoxLayout vBox = uiComponents.create(VBoxLayout.class);
@@ -147,6 +143,7 @@ public class Calendariomain extends Screen {
 
         calendario = uiComponents.create(Calendar.class);
 
+        System.out.println("Fecha de inicio: " + calendario.getStartDate());
         calendario.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 
         /*System.out.println("Primer día: " + calendario.getStartDate());
@@ -160,7 +157,7 @@ public class Calendariomain extends Screen {
         calendario.setTimeFormat(Calendar.TimeFormat.FORMAT_24H);
         calendario.setFirstVisibleHourOfDay(10);
         calendario.setLastVisibleHourOfDay(20);
-//        calendario.setFirstDayOfWeek(2);
+        calendario.setFirstDayOfWeek(1);
         calendario.setFirstVisibleDayOfWeek(2);
         calendario.setLastVisibleDayOfWeek(6);
         calendario.setWeeklyCaptionFormat("dd/MM/yyyy");
