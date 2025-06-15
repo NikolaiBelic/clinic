@@ -155,8 +155,8 @@ public class Calendariomain extends Screen {
         calendario.setFirstVisibleHourOfDay(10);
         calendario.setLastVisibleHourOfDay(20);
 //        calendario.setFirstDayOfWeek(2);  // Usando java.util.Calendar (valor 2)
-        calendario.setFirstVisibleDayOfWeek(3);
-        calendario.setLastVisibleDayOfWeek(7);
+        /*calendario.setFirstVisibleDayOfWeek(3);
+        calendario.setLastVisibleDayOfWeek(7);*/
         /*calendario.setFirstVisibleDayOfWeek(2);
         calendario.setLastVisibleDayOfWeek(6);*/
         calendario.setWeeklyCaptionFormat("dd/MM/yyyy");
@@ -177,6 +177,9 @@ public class Calendariomain extends Screen {
             com.vaadin.v7.ui.Calendar vaadinCalendar = (com.vaadin.v7.ui.Calendar) calendarField.get(calendario);
             vaadinCalendar.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
             vaadinCalendar.setLocale(new Locale("es", "ES"));
+
+            vaadinCalendar.setFirstVisibleDayOfWeek(2);
+            vaadinCalendar.setLastVisibleDayOfWeek(6);
 
             // Fuerza la actualización del renderizado
             Method updateWeeklyCaptions = vaadinCalendar.getClass().getDeclaredMethod("updateWeeklyCaptions");
@@ -209,11 +212,11 @@ public class Calendariomain extends Screen {
         citas = citaService.getCitasCalendario(paramsFiltro);
         System.out.println(citas.size());
         for (Cita cita : citas) {
-            log.debug("Cita ID: {} - Fecha: {} Hora Inicio: {} Hora Fin: {}",
+            /*log.debug("Cita ID: {} - Fecha: {} Hora Inicio: {} Hora Fin: {}",
                     cita.getId(),
                     cita.getDia(),
                     cita.getHoraInicio(),
-                    cita.getHoraFinal());
+                    cita.getHoraFinal());*/
             generateEvents(cita, calendario);
 
         }
