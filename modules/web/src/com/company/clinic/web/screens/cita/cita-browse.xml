@@ -81,7 +81,7 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="viewBtn" caption="Ver" icon="font-icon:EYE"/>
-                <button id="createBtn" caption="Crear" primary="true" icon="font-icon:FILE"/>
+                <button id="createBtn" caption="Crear" primary="true" icon="font-icon:PLUS_SQUARE"/>
                 <button id="editBtn" caption="Editar" icon="font-icon:PENCIL"/>
                 <button id="removeBtn" caption="Borrar" icon="font-icon:TRASH" stylename="danger"/>
             </buttonsPanel>
