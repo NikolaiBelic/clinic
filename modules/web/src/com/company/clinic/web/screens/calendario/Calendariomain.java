@@ -53,6 +53,8 @@ public class Calendariomain extends Screen {
 
     @Subscribe
     public void onInit(InitEvent event) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
+        System.setProperty("user.timezone", "Europe/Madrid");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         VBoxLayout vBox = uiComponents.create(VBoxLayout.class);

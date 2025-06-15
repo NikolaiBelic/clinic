@@ -13,18 +13,12 @@ RUN chmod +x gradlew && \
 # ---- Runtime Stage ----
 FROM eclipse-temurin:11-jdk-focal
 
-WORKDIR /app
-
-# Configuración de zona horaria (AÑADIDO)
-RUN apt-get update && \
-    apt-get install -y tzdata && \
-    ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime && \
+# Configuración manual de timezone (AÑADIDO)
+RUN ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime && \
     echo "Europe/Madrid" > /etc/timezone && \
-    dpkg-reconfigure --frontend noninteractive tzdata
+    echo "export JAVA_TOOL_OPTIONS='-Duser.timezone=Europe/Madrid'" >> /etc/profile
 
-# Variables de entorno para la JVM (AÑADIDO)
-ENV TZ=Europe/Madrid
-ENV JAVA_OPTS="-Duser.timezone=Europe/Madrid"
+WORKDIR /app
 
 # Copia solo el artefacto construido (ajusta la ruta según tu proyecto)
 COPY --from=builder /app/build/distributions/uberJar/clinic.jar app.jar
@@ -33,5 +27,5 @@ COPY --from=builder /app/jetty.xml .
 
 EXPOSE 8080 8443
 
-# Modificado el CMD para incluir JAVA_OPTS (AÑADIDO)
-CMD ["sh", "-c", "java -server -XX:+UseG1GC $JAVA_OPTS -jar app.jar"]
+# CMD modificado para incluir la zona horaria (AÑADIDO)
+CMD ["sh", "-c", "java -server -XX:+UseG1GC -Duser.timezone=Europe/Madrid -jar app.jar"]
