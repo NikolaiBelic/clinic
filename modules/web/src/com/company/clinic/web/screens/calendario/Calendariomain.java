@@ -157,9 +157,10 @@ public class Calendariomain extends Screen {
         calendario.setTimeFormat(Calendar.TimeFormat.FORMAT_24H);
         calendario.setFirstVisibleHourOfDay(10);
         calendario.setLastVisibleHourOfDay(20);
-        calendario.setFirstDayOfWeek(1);
-        calendario.setFirstVisibleDayOfWeek(2);
-        calendario.setLastVisibleDayOfWeek(6);
+        calendario.setFirstVisibleDayOfWeek(3);
+        calendario.setLastVisibleDayOfWeek(7);
+        /*calendario.setFirstVisibleDayOfWeek(2);
+        calendario.setLastVisibleDayOfWeek(6);*/
         calendario.setWeeklyCaptionFormat("dd/MM/yyyy");
 
         Map<DayOfWeek, String> days = new HashMap<>(7);
