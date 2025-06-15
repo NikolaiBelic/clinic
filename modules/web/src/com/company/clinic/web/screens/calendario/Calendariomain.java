@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -55,7 +57,7 @@ public class Calendariomain extends Screen {
     public void onInit(InitEvent event) {
         // Configuración inicial
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
-        System.setProperty("user.timezone", "Europe/Madrid");
+        Locale.setDefault(new Locale("es", "ES"));
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -146,10 +148,20 @@ public class Calendariomain extends Screen {
         System.out.println("Fecha de inicio: " + calendario.getStartDate());
         calendario.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 
-        /*System.out.println("Primer día: " + calendario.getStartDate());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
-        System.out.println("Final: " + sdf.format(calendario.getEndDate()));*/
+        try {
+            Field calendarField = calendario.getClass().getDeclaredField("calendar");
+            calendarField.setAccessible(true);
+            com.vaadin.v7.ui.Calendar vaadinCalendar = (com.vaadin.v7.ui.Calendar) calendarField.get(calendario);
+            vaadinCalendar.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
+            vaadinCalendar.setLocale(new Locale("es", "ES"));
+
+            // Fuerza la actualización del renderizado
+            Method updateWeeklyCaptions = vaadinCalendar.getClass().getDeclaredMethod("updateWeeklyCaptions");
+            updateWeeklyCaptions.setAccessible(true);
+            updateWeeklyCaptions.invoke(vaadinCalendar);
+        } catch (Exception e) {
+            log.error("Error applying calendar fix", e);
+        }
 
         calendario.setWidth("100%");
         calendario.setHeightFull();
@@ -157,13 +169,14 @@ public class Calendariomain extends Screen {
         calendario.setTimeFormat(Calendar.TimeFormat.FORMAT_24H);
         calendario.setFirstVisibleHourOfDay(10);
         calendario.setLastVisibleHourOfDay(20);
-        calendario.setFirstVisibleDayOfWeek(3);
-        calendario.setLastVisibleDayOfWeek(7);
+        calendario.setFirstDayOfWeek(java.util.Calendar.MONDAY);  // Usando java.util.Calendar (valor 2)
+        calendario.setFirstVisibleDayOfWeek(java.util.Calendar.MONDAY);
+        calendario.setLastVisibleDayOfWeek(java.util.Calendar.FRIDAY);
         /*calendario.setFirstVisibleDayOfWeek(2);
         calendario.setLastVisibleDayOfWeek(6);*/
         calendario.setWeeklyCaptionFormat("dd/MM/yyyy");
 
-        Map<DayOfWeek, String> days = new HashMap<>(7);
+        Map<DayOfWeek, String> days = new EnumMap<>(DayOfWeek.class);
         days.put(DayOfWeek.MONDAY, "Lunes");
         days.put(DayOfWeek.TUESDAY, "Martes");
         days.put(DayOfWeek.WEDNESDAY, "Miércoles");
