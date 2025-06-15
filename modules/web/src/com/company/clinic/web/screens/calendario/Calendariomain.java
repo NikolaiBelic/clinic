@@ -58,6 +58,8 @@ public class Calendariomain extends Screen {
         System.setProperty("user.timezone", "Europe/Madrid");
 
         // Mostrar información de zona horaria
+        log.debug("Zona horaria configurada: {}", TimeZone.getDefault().getID());
+        log.debug("Fecha actual del sistema: {}", new Date());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -272,8 +274,7 @@ public class Calendariomain extends Screen {
             System.out.println("Final: " + sdf.format(calendario.getEndDate()));
         });
 
-        log.debug("Zona horaria configurada: {}", TimeZone.getDefault().getID());
-        log.debug("Fecha actual del sistema: {}", new Date());
+
 
         log.debug("Calendario creado - Fecha inicio: {}, Fecha fin: {}",
                 calendario.getStartDate(), calendario.getEndDate());
