@@ -147,6 +147,8 @@ public class Calendariomain extends Screen {
 
         calendario = uiComponents.create(Calendar.class);
 
+        calendario.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
+
         /*System.out.println("Primer día: " + calendario.getStartDate());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Formatted: " + sdf.format(calendario.getStartDate()));
@@ -274,7 +276,7 @@ public class Calendariomain extends Screen {
             System.out.println("Final: " + sdf.format(calendario.getEndDate()));
         });
 
-
+        System.out.println("TimeZone: " + calendario.getTimeZone());
 
         System.out.println(("Calendario creado - Fecha inicio: " + calendario.getStartDate() + "Fecha fin: " + calendario.getEndDate()));
     }
