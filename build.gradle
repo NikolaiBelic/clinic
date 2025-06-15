@@ -223,7 +223,7 @@ task buildUberJar(type: CubaUberJarBuilding) {
     ]
 
     webJettyConfPath = 'jetty.xml'
-    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
+    /*coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'*/
 
     // Opcional: Si necesitas configuraciones personalizadas de Jetty
     // webJettyConfPath = 'docker/jetty-web.xml'
